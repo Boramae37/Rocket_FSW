@@ -1,16 +1,15 @@
 #include <iostream>
-#include "shape.h"
+#include <string>
+#include "communication.h"
 
 int main() {
-  int size;
-  Rectangle nemo(3, 10);
-
-
-  size = nemo.GetSize();
-
-  std::cout << "Get Size : " << size << std::endl;
-
-  std::system("Pause");
   
-  return 0;
+  std::string str;
+
+  packet a;
+
+  str = a.packet_combine();
+
+  std::cout << str << std::endl;
+
 }

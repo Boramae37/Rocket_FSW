@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.25.1)
 project(
   Genesis
   VERSION 0.1
-  DESCRIPTION "Rocket FSW Project"
+  DESCRIPTION "Rocket_FSW_Project"
   LANGUAGES CXX)
 
 # 확인할 디렉토리 추가
