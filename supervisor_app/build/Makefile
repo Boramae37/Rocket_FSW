@@ -57,10 +57,10 @@ RM = /usr/bin/cmake -E rm -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/we/Desktop/Genesis_FSW
+CMAKE_SOURCE_DIR = /home/we/Desktop/Genesis_FSW/supervisor_app
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/we/Desktop/Genesis_FSW/build
+CMAKE_BINARY_DIR = /home/we/Desktop/Genesis_FSW/supervisor_app/build
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -87,9 +87,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/we/Desktop/Genesis_FSW/build/CMakeFiles /home/we/Desktop/Genesis_FSW/build//CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/we/Desktop/Genesis_FSW/supervisor_app/build/CMakeFiles /home/we/Desktop/Genesis_FSW/supervisor_app/build//CMakeFiles/progress.marks
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/we/Desktop/Genesis_FSW/build/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/we/Desktop/Genesis_FSW/supervisor_app/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -117,37 +117,24 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named program
+# Target rules for targets named supervisor
 
 # Build rule for target.
-program: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 program
-.PHONY : program
+supervisor: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 supervisor
+.PHONY : supervisor
 
 # fast build rule for target.
-program/fast:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/program.dir/build.make CMakeFiles/program.dir/build
-.PHONY : program/fast
-
-#=============================================================================
-# Target rules for targets named communication
-
-# Build rule for target.
-communication: cmake_check_build_system
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 communication
-.PHONY : communication
-
-# fast build rule for target.
-communication/fast:
-	$(MAKE) $(MAKESILENT) -f lib/CMakeFiles/communication.dir/build.make lib/CMakeFiles/communication.dir/build
-.PHONY : communication/fast
+supervisor/fast:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/supervisor.dir/build.make CMakeFiles/supervisor.dir/build
+.PHONY : supervisor/fast
 
 main.o: main.cc.o
 .PHONY : main.o
 
 # target to build an object file
 main.cc.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/program.dir/build.make CMakeFiles/program.dir/main.cc.o
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/supervisor.dir/build.make CMakeFiles/supervisor.dir/main.cc.o
 .PHONY : main.cc.o
 
 main.i: main.cc.i
@@ -155,7 +142,7 @@ main.i: main.cc.i
 
 # target to preprocess a source file
 main.cc.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/program.dir/build.make CMakeFiles/program.dir/main.cc.i
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/supervisor.dir/build.make CMakeFiles/supervisor.dir/main.cc.i
 .PHONY : main.cc.i
 
 main.s: main.cc.s
@@ -163,7 +150,7 @@ main.s: main.cc.s
 
 # target to generate assembly for a file
 main.cc.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/program.dir/build.make CMakeFiles/program.dir/main.cc.s
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/supervisor.dir/build.make CMakeFiles/supervisor.dir/main.cc.s
 .PHONY : main.cc.s
 
 # Help Target
@@ -174,8 +161,7 @@ help:
 	@echo "... depend"
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
-	@echo "... communication"
-	@echo "... program"
+	@echo "... supervisor"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

@@ -7,14 +7,9 @@ set(CMAKE_DEPENDS_GENERATOR "Unix Makefiles")
 # The top level Makefile was generated from the following files:
 set(CMAKE_MAKEFILE_DEPENDS
   "CMakeCache.txt"
-  "/home/we/Desktop/Genesis_FSW/CMakeLists.txt"
+  "/home/we/Desktop/Genesis_FSW/supervisor_app/CMakeLists.txt"
   "CMakeFiles/3.25.1/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.25.1/CMakeSystem.cmake"
-  "/home/we/Desktop/Genesis_FSW/lib/CMakeLists.txt"
-  "/usr/lib/aarch64-linux-gnu/cmake/fmt/fmt-config-version.cmake"
-  "/usr/lib/aarch64-linux-gnu/cmake/fmt/fmt-config.cmake"
-  "/usr/lib/aarch64-linux-gnu/cmake/fmt/fmt-targets-none.cmake"
-  "/usr/lib/aarch64-linux-gnu/cmake/fmt/fmt-targets.cmake"
   "/usr/share/cmake-3.25/Modules/CMakeCXXInformation.cmake"
   "/usr/share/cmake-3.25/Modules/CMakeCommonLanguageInclude.cmake"
   "/usr/share/cmake-3.25/Modules/CMakeGenericSystem.cmake"
@@ -40,11 +35,9 @@ set(CMAKE_MAKEFILE_OUTPUTS
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/CMakeDirectoryInformation.cmake"
-  "lib/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/program.dir/DependInfo.cmake"
-  "lib/CMakeFiles/communication.dir/DependInfo.cmake"
+  "CMakeFiles/supervisor.dir/DependInfo.cmake"
   )

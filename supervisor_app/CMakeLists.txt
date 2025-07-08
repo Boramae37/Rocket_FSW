@@ -9,9 +9,9 @@ project(
   LANGUAGES CXX)
 
 # 확인할 디렉토리 추가
-add_subdirectory(lib)
+#add_subdirectory(lib)
 
-add_executable (program main.cc)
+add_executable (supervisor main.cc)
 
 # program 에 communication 를 링크
-target_link_libraries(program communication)
+#target_link_libraries(supervisor communication)

@@ -1,0 +1,3 @@
+/home/we/Desktop/Genesis_FSW/sensor_app/build/CMakeFiles/sensor.dir
+/home/we/Desktop/Genesis_FSW/sensor_app/build/CMakeFiles/edit_cache.dir
+/home/we/Desktop/Genesis_FSW/sensor_app/build/CMakeFiles/rebuild_cache.dir
