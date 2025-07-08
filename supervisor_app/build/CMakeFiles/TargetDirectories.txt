@@ -1,0 +1,6 @@
+/home/we/Desktop/Genesis_FSW/build/CMakeFiles/program.dir
+/home/we/Desktop/Genesis_FSW/build/CMakeFiles/edit_cache.dir
+/home/we/Desktop/Genesis_FSW/build/CMakeFiles/rebuild_cache.dir
+/home/we/Desktop/Genesis_FSW/build/lib/CMakeFiles/communication.dir
+/home/we/Desktop/Genesis_FSW/build/lib/CMakeFiles/edit_cache.dir
+/home/we/Desktop/Genesis_FSW/build/lib/CMakeFiles/rebuild_cache.dir
