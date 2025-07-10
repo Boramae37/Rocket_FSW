@@ -129,6 +129,30 @@ sensor/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sensor.dir/build.make CMakeFiles/sensor.dir/build
 .PHONY : sensor/fast
 
+lib/BMP3_SensorAPI/bmp3.o: lib/BMP3_SensorAPI/bmp3.c.o
+.PHONY : lib/BMP3_SensorAPI/bmp3.o
+
+# target to build an object file
+lib/BMP3_SensorAPI/bmp3.c.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sensor.dir/build.make CMakeFiles/sensor.dir/lib/BMP3_SensorAPI/bmp3.c.o
+.PHONY : lib/BMP3_SensorAPI/bmp3.c.o
+
+lib/BMP3_SensorAPI/bmp3.i: lib/BMP3_SensorAPI/bmp3.c.i
+.PHONY : lib/BMP3_SensorAPI/bmp3.i
+
+# target to preprocess a source file
+lib/BMP3_SensorAPI/bmp3.c.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sensor.dir/build.make CMakeFiles/sensor.dir/lib/BMP3_SensorAPI/bmp3.c.i
+.PHONY : lib/BMP3_SensorAPI/bmp3.c.i
+
+lib/BMP3_SensorAPI/bmp3.s: lib/BMP3_SensorAPI/bmp3.c.s
+.PHONY : lib/BMP3_SensorAPI/bmp3.s
+
+# target to generate assembly for a file
+lib/BMP3_SensorAPI/bmp3.c.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sensor.dir/build.make CMakeFiles/sensor.dir/lib/BMP3_SensorAPI/bmp3.c.s
+.PHONY : lib/BMP3_SensorAPI/bmp3.c.s
+
 main.o: main.cc.o
 .PHONY : main.o
 
@@ -162,6 +186,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... sensor"
+	@echo "... lib/BMP3_SensorAPI/bmp3.o"
+	@echo "... lib/BMP3_SensorAPI/bmp3.i"
+	@echo "... lib/BMP3_SensorAPI/bmp3.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

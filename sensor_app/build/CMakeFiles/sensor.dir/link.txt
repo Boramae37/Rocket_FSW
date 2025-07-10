@@ -1,1 +1,1 @@
-/usr/bin/c++ CMakeFiles/sensor.dir/main.cc.o -o /home/we/Desktop/Genesis_FSW/sensor_app/run/sensor 
+/usr/bin/c++ CMakeFiles/sensor.dir/main.cc.o CMakeFiles/sensor.dir/lib/BMP3_SensorAPI/bmp3.c.o -o /home/we/Desktop/Genesis_FSW/sensor_app/run/sensor 

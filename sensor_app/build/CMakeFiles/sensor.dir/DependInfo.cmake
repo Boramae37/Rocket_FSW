@@ -8,6 +8,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
+  "/home/we/Desktop/Genesis_FSW/sensor_app/lib/BMP3_SensorAPI/bmp3.c" "CMakeFiles/sensor.dir/lib/BMP3_SensorAPI/bmp3.c.o" "gcc" "CMakeFiles/sensor.dir/lib/BMP3_SensorAPI/bmp3.c.o.d"
   "/home/we/Desktop/Genesis_FSW/sensor_app/main.cc" "CMakeFiles/sensor.dir/main.cc.o" "gcc" "CMakeFiles/sensor.dir/main.cc.o.d"
   )
 
