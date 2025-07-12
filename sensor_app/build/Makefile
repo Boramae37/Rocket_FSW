@@ -129,29 +129,29 @@ sensor/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/sensor.dir/build.make CMakeFiles/sensor.dir/build
 .PHONY : sensor/fast
 
-lib/BMP3_SensorAPI/bmp3.o: lib/BMP3_SensorAPI/bmp3.c.o
-.PHONY : lib/BMP3_SensorAPI/bmp3.o
+lib/sensor.o: lib/sensor.cc.o
+.PHONY : lib/sensor.o
 
 # target to build an object file
-lib/BMP3_SensorAPI/bmp3.c.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sensor.dir/build.make CMakeFiles/sensor.dir/lib/BMP3_SensorAPI/bmp3.c.o
-.PHONY : lib/BMP3_SensorAPI/bmp3.c.o
+lib/sensor.cc.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sensor.dir/build.make CMakeFiles/sensor.dir/lib/sensor.cc.o
+.PHONY : lib/sensor.cc.o
 
-lib/BMP3_SensorAPI/bmp3.i: lib/BMP3_SensorAPI/bmp3.c.i
-.PHONY : lib/BMP3_SensorAPI/bmp3.i
+lib/sensor.i: lib/sensor.cc.i
+.PHONY : lib/sensor.i
 
 # target to preprocess a source file
-lib/BMP3_SensorAPI/bmp3.c.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sensor.dir/build.make CMakeFiles/sensor.dir/lib/BMP3_SensorAPI/bmp3.c.i
-.PHONY : lib/BMP3_SensorAPI/bmp3.c.i
+lib/sensor.cc.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sensor.dir/build.make CMakeFiles/sensor.dir/lib/sensor.cc.i
+.PHONY : lib/sensor.cc.i
 
-lib/BMP3_SensorAPI/bmp3.s: lib/BMP3_SensorAPI/bmp3.c.s
-.PHONY : lib/BMP3_SensorAPI/bmp3.s
+lib/sensor.s: lib/sensor.cc.s
+.PHONY : lib/sensor.s
 
 # target to generate assembly for a file
-lib/BMP3_SensorAPI/bmp3.c.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/sensor.dir/build.make CMakeFiles/sensor.dir/lib/BMP3_SensorAPI/bmp3.c.s
-.PHONY : lib/BMP3_SensorAPI/bmp3.c.s
+lib/sensor.cc.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/sensor.dir/build.make CMakeFiles/sensor.dir/lib/sensor.cc.s
+.PHONY : lib/sensor.cc.s
 
 main.o: main.cc.o
 .PHONY : main.o
@@ -186,9 +186,9 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... sensor"
-	@echo "... lib/BMP3_SensorAPI/bmp3.o"
-	@echo "... lib/BMP3_SensorAPI/bmp3.i"
-	@echo "... lib/BMP3_SensorAPI/bmp3.s"
+	@echo "... lib/sensor.o"
+	@echo "... lib/sensor.i"
+	@echo "... lib/sensor.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

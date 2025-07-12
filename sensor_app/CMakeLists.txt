@@ -1,6 +1,10 @@
 # CMake 프로그램의 최소 버전
 cmake_minimum_required(VERSION 3.25.1)
 
+
+# 기본 변수 : CMAKE_SOURCE_DIR : 실행시키는 최상단 CMakeLists.txt 의 경로(위치)
+#             그냥 헤더를 추가할 경우, add_executable에 c파일 경로(상대경로) 입력, targe include directories에 참조할 폴더 경로넣기
+
 # 프로젝트 정보
 project(
   Genesis_sensor_app
@@ -10,9 +14,7 @@ project(
 
 )
 # 실행 파일 저장 위치.. run 폴더에 넣기
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../run)
-
-
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/run)
 
 
 
@@ -23,10 +25,10 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/../run)
 #add_subdirectory(lib/BMP_SensorAPI)
 
 # 실행 파일 만들
-add_executable (sensor main.cc lib/BMP3_SensorAPI/bmp3.c)
+add_executable (sensor main.cc ${CMAKE_SOURCE_DIR}/lib/sensor.cc)
 
 # include
-target_include_directories(sensor PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/lib/BMP_SensorAPI)
+target_include_directories(sensor PRIVATE ${CMAKE_SOURCE_DIR}/lib)
 
 # program 에 communication 를 링크
 #target_link_libraries(sensor)

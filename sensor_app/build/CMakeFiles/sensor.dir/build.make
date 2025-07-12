@@ -83,30 +83,30 @@ CMakeFiles/sensor.dir/main.cc.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sensor.dir/main.cc.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/we/Desktop/Genesis_FSW/sensor_app/main.cc -o CMakeFiles/sensor.dir/main.cc.s
 
-CMakeFiles/sensor.dir/lib/BMP3_SensorAPI/bmp3.c.o: CMakeFiles/sensor.dir/flags.make
-CMakeFiles/sensor.dir/lib/BMP3_SensorAPI/bmp3.c.o: /home/we/Desktop/Genesis_FSW/sensor_app/lib/BMP3_SensorAPI/bmp3.c
-CMakeFiles/sensor.dir/lib/BMP3_SensorAPI/bmp3.c.o: CMakeFiles/sensor.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/we/Desktop/Genesis_FSW/sensor_app/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building C object CMakeFiles/sensor.dir/lib/BMP3_SensorAPI/bmp3.c.o"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -MD -MT CMakeFiles/sensor.dir/lib/BMP3_SensorAPI/bmp3.c.o -MF CMakeFiles/sensor.dir/lib/BMP3_SensorAPI/bmp3.c.o.d -o CMakeFiles/sensor.dir/lib/BMP3_SensorAPI/bmp3.c.o -c /home/we/Desktop/Genesis_FSW/sensor_app/lib/BMP3_SensorAPI/bmp3.c
+CMakeFiles/sensor.dir/lib/sensor.cc.o: CMakeFiles/sensor.dir/flags.make
+CMakeFiles/sensor.dir/lib/sensor.cc.o: /home/we/Desktop/Genesis_FSW/sensor_app/lib/sensor.cc
+CMakeFiles/sensor.dir/lib/sensor.cc.o: CMakeFiles/sensor.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/we/Desktop/Genesis_FSW/sensor_app/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/sensor.dir/lib/sensor.cc.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/sensor.dir/lib/sensor.cc.o -MF CMakeFiles/sensor.dir/lib/sensor.cc.o.d -o CMakeFiles/sensor.dir/lib/sensor.cc.o -c /home/we/Desktop/Genesis_FSW/sensor_app/lib/sensor.cc
 
-CMakeFiles/sensor.dir/lib/BMP3_SensorAPI/bmp3.c.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing C source to CMakeFiles/sensor.dir/lib/BMP3_SensorAPI/bmp3.c.i"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -E /home/we/Desktop/Genesis_FSW/sensor_app/lib/BMP3_SensorAPI/bmp3.c > CMakeFiles/sensor.dir/lib/BMP3_SensorAPI/bmp3.c.i
+CMakeFiles/sensor.dir/lib/sensor.cc.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/sensor.dir/lib/sensor.cc.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/we/Desktop/Genesis_FSW/sensor_app/lib/sensor.cc > CMakeFiles/sensor.dir/lib/sensor.cc.i
 
-CMakeFiles/sensor.dir/lib/BMP3_SensorAPI/bmp3.c.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling C source to assembly CMakeFiles/sensor.dir/lib/BMP3_SensorAPI/bmp3.c.s"
-	/usr/bin/cc $(C_DEFINES) $(C_INCLUDES) $(C_FLAGS) -S /home/we/Desktop/Genesis_FSW/sensor_app/lib/BMP3_SensorAPI/bmp3.c -o CMakeFiles/sensor.dir/lib/BMP3_SensorAPI/bmp3.c.s
+CMakeFiles/sensor.dir/lib/sensor.cc.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/sensor.dir/lib/sensor.cc.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/we/Desktop/Genesis_FSW/sensor_app/lib/sensor.cc -o CMakeFiles/sensor.dir/lib/sensor.cc.s
 
 # Object files for target sensor
 sensor_OBJECTS = \
 "CMakeFiles/sensor.dir/main.cc.o" \
-"CMakeFiles/sensor.dir/lib/BMP3_SensorAPI/bmp3.c.o"
+"CMakeFiles/sensor.dir/lib/sensor.cc.o"
 
 # External object files for target sensor
 sensor_EXTERNAL_OBJECTS =
 
 /home/we/Desktop/Genesis_FSW/sensor_app/run/sensor: CMakeFiles/sensor.dir/main.cc.o
-/home/we/Desktop/Genesis_FSW/sensor_app/run/sensor: CMakeFiles/sensor.dir/lib/BMP3_SensorAPI/bmp3.c.o
+/home/we/Desktop/Genesis_FSW/sensor_app/run/sensor: CMakeFiles/sensor.dir/lib/sensor.cc.o
 /home/we/Desktop/Genesis_FSW/sensor_app/run/sensor: CMakeFiles/sensor.dir/build.make
 /home/we/Desktop/Genesis_FSW/sensor_app/run/sensor: CMakeFiles/sensor.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/we/Desktop/Genesis_FSW/sensor_app/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable /home/we/Desktop/Genesis_FSW/sensor_app/run/sensor"
