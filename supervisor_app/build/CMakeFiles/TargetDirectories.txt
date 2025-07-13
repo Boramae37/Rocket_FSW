@@ -1,3 +1,0 @@
-/home/we/Desktop/Genesis_FSW/supervisor_app/build/CMakeFiles/supervisor.dir
-/home/we/Desktop/Genesis_FSW/supervisor_app/build/CMakeFiles/edit_cache.dir
-/home/we/Desktop/Genesis_FSW/supervisor_app/build/CMakeFiles/rebuild_cache.dir
