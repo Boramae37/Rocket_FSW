@@ -2,7 +2,7 @@
 #include <iostream>
 #include <cerrno>
 #include <cstring>
-
+#include <vector>
 #include <stdio.h>
 
 #include <iomanip>
@@ -11,11 +11,12 @@
 // i2c를 위한.. linux kernel 이용하는 거임
 #include <linux/i2c-dev.h>
 #include <sys/ioctl.h>  // ioctl()
-#include <unistd.h> // write, read, close
+#include <unistd.h> // write, read, close, usleep()
 #include <fcntl.h>  // open
                     //
                     //
-         
+        
+
 /* Boash provide great data sheet
  * but, they provide bull shit API. (of course, because of my limitation)
  * It's fucking unkind. They don't say What I have to modify
@@ -76,6 +77,9 @@ int i2c_write(uint8_t slave_addr, uint8_t write_reg, uint8_t write_data){
   
   uint8_t write_arr[2]; // 쓰는 경우 보통 대상, 값 쌍으로 2개만.. 그리고 보통 1개의 register만 변경함.  
 
+  write_arr[0] = write_reg;
+  write_arr[1] = write_data;
+
   fd = open(path, O_RDWR);
   
   if (fd < -1){
@@ -93,7 +97,8 @@ int i2c_write(uint8_t slave_addr, uint8_t write_reg, uint8_t write_data){
     std::cerr << "[ERROR] : " << strerror(errno) << " : Failed to I2C write" << slave_addr << std::endl;
     return 0;
   }
-  
+  close(fd);
+
   std::cout << "Writing Complete" << std::endl;
   return 1;
 
@@ -149,7 +154,7 @@ uint32_t i2c_read(uint8_t slave_addr, uint8_t read_addr, int len){
     return 0;
   }
   
-  // read data
+  // read data ( fd, 읽은 데이터 저장할 곳, 길이) => 읽을 데이터가 있는 레지스터 주소는 write으로 가리킴. 일종의 file pointer 설정으로 write으로 한다보면됨.
   if (read(fd, data_arr, len) < 0){
     std::cerr << "[ERROR] : " << strerror(errno) << " : Failed to read I2C" << path << std::endl;  
     read_status = false;
@@ -164,7 +169,7 @@ uint32_t i2c_read(uint8_t slave_addr, uint8_t read_addr, int len){
     result |= static_cast<uint32_t>(data_arr[i]) << (8*i);
   }
   
-  std::cout << "combined 3 bytes : "
+  std::cout << "Reading" << len << "bytes : "
             << std::uppercase         // 대문자 쓰기
             << std::setfill('0')      // 빈자리 0채우기
             << std::setw(6)           // 6자리 고정
@@ -172,7 +177,7 @@ uint32_t i2c_read(uint8_t slave_addr, uint8_t read_addr, int len){
             << result
             << "(" << std::dec << result << ")" << std::endl; // 10진수 출력
   
-  read_status = treu;
+  read_status = true;
   return result; // sucess
 }
 
@@ -180,14 +185,72 @@ uint32_t i2c_read(uint8_t slave_addr, uint8_t read_addr, int len){
 
 
 
+// write을 통한 register 지정 없이 read만 하는 함수.. bmp390 normal mode 처럼 알아서 register 위치 맞춰주면 read만 하면 됨.
+uint32_t i2c_read_only(uint8_t slave_addr, uint8_t read_addr, int len){
 
-/*///////////////////////////////////////////////////////////////////
+  int fd;
+  
+  char path[] = "/dev/i2c-1"; // linux i2c device path
+  
+  //std::vecotr<uint8_t> data_arr[len];
+  uint8_t data_arr[3]; // 어차피 데이터 값이 3바이트, 나머지는 다 그 이하임..
+  
+
+  fd = open(path, O_RDWR);
+  // open check
+  if (fd < -1){
+    perror("[ERROR] : Failed to open I2C");
+    std::cerr << "[ERROR] : " << strerror(errno) << " : Failed to open I2C" << path << std::endl; 
+    read_status = false;
+    return 0;
+  }
+  // i2c bus set and check
+  if(ioctl(fd, I2C_SLAVE, slave_addr) < 0){
+    std::cerr << "[ERROR] : " << strerror(errno) << " : Failed to open I2C" << path << std::endl; 
+    read_status = false;
+    return 0;
+  }
+  
+   
+  // read data ( fd, 읽은 데이터 저장할 곳, 길이) => 읽을 데이터가 있는 레지스터 주소는 write으로 가리킴. 일종의 file pointer 설정으로 write으로 한다보면됨.
+  if (read(fd, data_arr, len) < 0){
+    std::cerr << "[ERROR] : " << strerror(errno) << " : Failed to read I2C" << path << std::endl;  
+    read_status = false;
+    return 0;  
+  }
+  close(fd); 
+  
+  // make return data
+  uint32_t result = 0;
+  for (int i = 0; i < len; i++){
+    // Little-endian
+    result |= static_cast<uint32_t>(data_arr[i]) << (8*i);
+  }
+  
+  std::cout << "Reading" << len << "bytes : "
+            << std::uppercase         // 대문자 쓰기
+            << std::setfill('0')      // 빈자리 0채우기
+            << std::setw(6)           // 6자리 고정
+            << std::hex               // 16진수
+            << result
+            << "(" << std::dec << result << ")" << std::endl; // 10진수 출력
+  
+  read_status = true;
+  return result; // sucess
+
+}
+
+
+
+
+
+/*///////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 BMP 390 member functions
 
 
-////////////////////////////////////////////////////////////////////*/
+///////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
 
 
@@ -202,52 +265,70 @@ bool BMP390::init(){
   this->slave_addr = BMP390_I2C_ADDR;
   
   // soft reset
+  std::cout << "Sensor soft resetting...." << std::endl;
   this->reset();
+  usleep(2000000);
+  std::cout << "Sensor Soft reset complete" << std::endl;
+  
 
+  ///////////////////// SENSOR MODE SETTING ///////////////////////////////////////////////////////////////////
   // pwr mode setting (00110011 = normal mode, both pressure, temperature enabled)
-  i2c_write(this->slave__addr, BMP390_PWRCTRL_ADDR, BMP390_PWR_MODE);
+  i2c_write(this->slave_addr, BMP390_PWRCTRL_ADDR, BMP390_PWR_MODE);
+  std::cout << "Power mode setting complete" << std::endl;
+  usleep(2000000);
+
+
+  // osr (oversampling rates) 
+  // osr_t = x1 / osr_p = x4 (010, standard resolution) => Register: 0x1C , value: 0x02 
+  
+  i2c_write(this->slave_addr, 0x1C, 0x02);
+
+  // ocr (Output Data Rate) max : 200Hz
+  // select : 25Hz => Register : 0x1D, value : 0x03
+  i2c_write(this->slave_addr, 0x1D, 0x03);
+
+  // iir filter : on, Register : 0x1F, 321 bit : 010 (filter coefficient = 3) => 0x04
+  i2c_write(this->slave_addr, 0x1F, 0x04);
 
 
   // Trimming Coefficients : Do not chage
   // temperature
-  this->calib_data.par_t1 = static_cast<uint16_t>i2c_read(this->slave_addr, 0x31, 2);
-  this->calib_data.par_t2 = static_cast<uint16_t>i2c_read(this->slave_addr, 0x33, 2);
-  this->calib_data.par_t3 = static_cast<int8_t>i2c_read(this->slave_addr, 0x35, 1);
+  this->nvm_calib_data.par_t1 = static_cast<uint16_t>(i2c_read(this->slave_addr, 0x31, 2));
+  this->nvm_calib_data.par_t2 = static_cast<uint16_t>(i2c_read(this->slave_addr, 0x33, 2));
+  this->nvm_calib_data.par_t3 = static_cast<int8_t>(i2c_read(this->slave_addr, 0x35, 1));
   // pressure
-  this->calib_data.par_p1 = static_cast<int16_t>i2c_read(this->slave_addr, 0x36, 2);
-  this->calib_data.par_p2 = static_cast<int16_t>i2c_read(this->slave_addr, 0x38, 2);
-  this->calib_data.par_p3 = static_cast<int8_t>i2c_read(this->slave_addr, 0x3A, 1);
-  this->calib_data.par_p4 = static_cast<int8_t>i2c_read(this->slave_addr, 0x3B, 1);
-  this->calib_data.par_p5 = static_cast<uint16_t>i2c_read(this->slave_addr, 0x3C, 2);
-  this->calib_data.par_p6 = static_cast<uint16_t>i2c_read(this->slave_addr, 0x3E, 2);
-  this->calib_data.par_p7 = static_cast<int8_t>i2c_read(this->slave_addr, 0x40, 1);
-  this->calib_data.par_p8 = static_cast<int8_t>i2c_read(this->slave_addr, 0x41, 1);
-  this->calib_data.par_p9 = static_cast<int16_t>i2c_read(this->slave_addr, 0x42, 2);
-  this->calib_data.par_p10 = static_cast<int8_t>i2c_read(this->slave_addr, 0x44, 1);
-  this->calib_data.par_p11 = static_cast<int8_t>i2c_read(this->slave_addr, 0x45, 1);
+  this->nvm_calib_data.par_p1 = static_cast<int16_t>(i2c_read(this->slave_addr, 0x36, 2));
+  this->nvm_calib_data.par_p2 = static_cast<int16_t>(i2c_read(this->slave_addr, 0x38, 2));
+  this->nvm_calib_data.par_p3 = static_cast<int8_t>(i2c_read(this->slave_addr, 0x3A, 1));
+  this->nvm_calib_data.par_p4 = static_cast<int8_t>(i2c_read(this->slave_addr, 0x3B, 1));
+  this->nvm_calib_data.par_p5 = static_cast<uint16_t>(i2c_read(this->slave_addr, 0x3C, 2));
+  this->nvm_calib_data.par_p6 = static_cast<uint16_t>(i2c_read(this->slave_addr, 0x3E, 2));
+  this->nvm_calib_data.par_p7 = static_cast<int8_t>(i2c_read(this->slave_addr, 0x40, 1));
+  this->nvm_calib_data.par_p8 = static_cast<int8_t>(i2c_read(this->slave_addr, 0x41, 1));
+  this->nvm_calib_data.par_p9 = static_cast<int16_t>(i2c_read(this->slave_addr, 0x42, 2));
+  this->nvm_calib_data.par_p10 = static_cast<int8_t>(i2c_read(this->slave_addr, 0x44, 1));
+  this->nvm_calib_data.par_p11 = static_cast<int8_t>(i2c_read(this->slave_addr, 0x45, 1));
   
   // convert calib_data into floating point number.. (parse data)
-  this->calib_data_t[0] = static_cast<float>(this->calib_data.par_t1)*const_2p8;
-  this->calib_data_t[1] = static_cast<float>(this->calib_data.par_t2)/const_2p30;
-  this->calib_data_t[2] = static_cast<float>(this->calib_data.par_t3)/const_2p48;
+  this->calib_data_t[0] = static_cast<float>(this->nvm_calib_data.par_t1)*const_2p8;
+  this->calib_data_t[1] = static_cast<float>(this->nvm_calib_data.par_t2)/const_2p30;
+  this->calib_data_t[2] = static_cast<float>(this->nvm_calib_data.par_t3)/const_2p48;
   
-  this->calib_data_p[0] = (static_cast<float>(this->calib_data.par_p1)- const_2p14) / const_2p20;
-  this->calib_data_p[1] = (static_cast<float>(this->calib_data.par_p2)- const_2p14) / const_2p29;
-  this->calib_data_p[2] = static_cast<float>(this->calib_data.par_p3) / const_2p32;
-  this->calib_data_p[3] = static_cast<float>(this->calib_data.par_p4) / const_2p37;
-  this->calib_data_p[4] = static_cast<float>(this->calib_data.par_p5) * const_2p3;
-  this->calib_data_p[5] = static_cast<float>(this->calib_data.par_p6) / const_2p6;
-  this->calib_data_p[6] = static_cast<float>(this->calib_data.par_p7) / const_2p8;
-  this->calib_data_p[7] = static_cast<float>(this->calib_data.par_p8) / const_2p15;
-  this->calib_data_p[8] = static_cast<float>(this->calib_data.par_p9) / const_2p48;
-  this->calib_data_p[9] = static_cast<float>(this->calib_data.par_p10) / const_2p48;
-  this->calib_data_p[10] = static_cast<float>(this->calib_data.par_p11) / const_2p65;
-  ////////////////////////////////////////////////////////////////////////////////////////////
+  this->calib_data_p[0] = (static_cast<float>(this->nvm_calib_data.par_p1)- const_2p14) / const_2p20;
+  this->calib_data_p[1] = (static_cast<float>(this->nvm_calib_data.par_p2)- const_2p14) / const_2p29;
+  this->calib_data_p[2] = static_cast<float>(this->nvm_calib_data.par_p3) / const_2p32;
+  this->calib_data_p[3] = static_cast<float>(this->nvm_calib_data.par_p4) / const_2p37;
+  this->calib_data_p[4] = static_cast<float>(this->nvm_calib_data.par_p5) * const_2p3;
+  this->calib_data_p[5] = static_cast<float>(this->nvm_calib_data.par_p6) / const_2p6;
+  this->calib_data_p[6] = static_cast<float>(this->nvm_calib_data.par_p7) / const_2p8;
+  this->calib_data_p[7] = static_cast<float>(this->nvm_calib_data.par_p8) / const_2p15;
+  this->calib_data_p[8] = static_cast<float>(this->nvm_calib_data.par_p9) / const_2p48;
+  this->calib_data_p[9] = static_cast<float>(this->nvm_calib_data.par_p10) / const_2p48;
+  this->calib_data_p[10] = static_cast<float>(this->nvm_calib_data.par_p11) / const_2p65;
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  
-  // mode normal 설정
-  // osr 등 설정
-  // calibration data 가져오기
+  // 여기서 한 번 읽으면, 이후 read only 함수로 read_data 구현 가능..  
+
   std::cout << "BMP390 initialized" << std::endl;
   return true;
 }
@@ -258,16 +339,23 @@ bool BMP390::init(){
 void BMP390::read_data(){
   // read pressure
   this->pressure = i2c_read(this->slave_addr, BMP390_PRESSURE_ADDR_2, 3); 
-
-  i2c_read(this->slave_addr, 0x00, 1);
-
+  
+  i2c_read(this->slave_addr, 0x03, 1);
+  
   /* parse, compensate 추가
    * this->pressure_data, barometer_data에 대입*/
-  if (!read_status){
+  if (read_status){
     this->compensate_data();
   }
-  
+  else{
+    std::cout << "Failed to read" << std::endl;
+  }
 }
+
+
+
+
+
 
 void BMP390::compensate_data(){
   // temperature
@@ -296,13 +384,13 @@ void BMP390::compensate_data(){
   partial_data1 = this->calib_data_p[1] * this->temperature;
   partial_data2 = this->calib_data_p[2] * (this->temperature * this->temperature);
   partial_data3 = this->calib_data_p[3] * (this->temperature * this->temperature * this->temperature);
-  partial_out2 = static_cast<float>this->pressure * (this->calib_data_p[0] + partial_data1 + partial_data2 + partial_data3);
+  partial_out2 = static_cast<float>(this->pressure * (this->calib_data_p[0] + partial_data1 + partial_data2 + partial_data3));
 
   partial_data1 = this->pressure * this->pressure;
-  partial_data2 = this->calib_data[8] + this->calib_data[9] * this->temperature;
+  partial_data2 = this->calib_data_p[8] + this->calib_data_p[9] * this->temperature;
   partial_data3 = partial_data1 * partial_data2;
-  partial_data4 = partial_data3 + ((this->pressure*this->pressure*this->pressure)*this->calib_data[10]);
-  this->pressure = partial_out1 + partial_out2 + partial_data4; 
+  partial_data4 = partial_data3 + ((this->pressure*this->pressure*this->pressure)*this->calib_data_p[10]);
+  this->pressure = partial_out1 + partial_out2 + partial_data4;
 
 
 }
@@ -320,5 +408,29 @@ std::vector<float> BMP390::get_data(){
 
 
 //virtual BMP390::~BMP390(){}
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///
+///
+///
+///
+///       BNO055 Sensor member function
+///
+///
+///
+///
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+
+
 
 

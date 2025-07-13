@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include <vector>
 // abstract class
 class Sensor{
 public:
@@ -16,11 +16,11 @@ class BMP390 : public Sensor{
   private:
     uint8_t slave_addr;
 
-    float temperature_data;
-    float pressure_data;
+    float temperature;
+    float pressure;
     float barometer_data;
 
-    struct nvm_calib_data{
+    struct nvm_calib_data_st{
      /*! Trim Variables */
       uint16_t par_t1;
       uint16_t par_t2;
@@ -39,6 +39,7 @@ class BMP390 : public Sensor{
       //int64_t t_lin;  // compensated temperature / got from temperature compensation
       // 그냥 멤버 변수에 저장..
     }; 
+    nvm_calib_data_st nvm_calib_data;
 
     float calib_data_t[4]; // par_t1, t2, t3, t_lin
     float calib_data_p[11]; // par_p1 ... p11

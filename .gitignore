@@ -1,5 +1,9 @@
 # 빌드 폴더 제외
+**/build/
+
+# vsconde 편집 기록 무시
+.vscode/
 
 
-#
-/.vscode/
+
+sensor_app/lib/BMP3_SensorAPI/

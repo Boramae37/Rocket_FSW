@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/sensor.dir/main.cc.o CMakeFiles/sensor.dir/lib/sensor.cc.o -o /home/we/Desktop/Genesis_FSW/sensor_app/run/sensor 
