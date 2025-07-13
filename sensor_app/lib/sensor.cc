@@ -32,12 +32,29 @@
 #define BMP390_PRESSURE_ADDR_1 0x08
 #define BMP390_PRESSURE_ADDR_2 0x07 // LSB
 
+#define BMP390_PWRCTRL_ADDR 0x1B // power mode select. sleep(00), normal(11), forced(10,01) + p,t enable check sheet
+#define BMP390_PWR_MODE 0x33 // normal, both pressure and temperature enabled
 
-#define BMP390_CMD_ADDR 0x7E;
+#define BMP390_CMD_ADDR 0x7E
+
+// constants fot compensating data
+#define const_2p3 8.0f
+#define const_2p6 64.0f
+#define const_2p8 256.0f
+#define const_2p14 16384.0f
+#define const_2p15 32768.0f
+#define const_2p20 1048576.0f
+#define const_2p29 536870912.0
+#define const_2p30 1073741824.0
+#define const_2p32 4294967296.0f
+#define const_2p37 137438953472.0f
+#define const_2p48 281474976710656.0f
+#define const_2p65 36893488147419103232.0f
 
 
-
-
+// 선언부 (추후 헤더로 옮김)
+int i2c_write(uint8_t slave_addr, uint8_t write_reg, uint8_t write_data);
+uint32_t i2c_read(uint8_t slave_addr, uint8_t read_addr, int len);
 
 
 
@@ -87,6 +104,7 @@ int i2c_write(uint8_t slave_addr, uint8_t write_reg, uint8_t write_data){
 
 
 
+
 /* bmp390 i2c read function
 * data array : i think using reference is better.. 
 * len means length of both read_addr and data_arr.
@@ -96,7 +114,10 @@ int i2c_write(uint8_t slave_addr, uint8_t write_reg, uint8_t write_data){
  * so, you just tell it the start register address by open() function,
  * and read the desired number of bits by read() function
  * */
-unsigned int i2c_read(uint8_t slave_addr, uint8_t read_addr, int len){
+
+ // read data, and convert data to uint32_t, and return it. 
+bool read_status = false;
+uint32_t i2c_read(uint8_t slave_addr, uint8_t read_addr, int len){
   
   int fd;
   
@@ -107,37 +128,40 @@ unsigned int i2c_read(uint8_t slave_addr, uint8_t read_addr, int len){
   
 
   fd = open(path, O_RDWR);
-  
+  // open check
   if (fd < -1){
     perror("[ERROR] : Failed to open I2C");
     std::cerr << "[ERROR] : " << strerror(errno) << " : Failed to open I2C" << path << std::endl; 
+    read_status = false;
     return 0;
   }
-  
+  // i2c bus set and check
   if(ioctl(fd, I2C_SLAVE, slave_addr) < 0){
     std::cerr << "[ERROR] : " << strerror(errno) << " : Failed to open I2C" << path << std::endl; 
+    read_status = false;
     return 0;
   }
   
   // write에 fd, pointer, byte 수 를 전달해줘야함. pointer는 내가 보낼 데이터의 포인터 변수임.
   if(write(fd, &read_addr, 1) != 1){ // wirte 성공시 써준 개수만큼..
     std::cerr << "[ERROR] : " << strerror(errno) << " : Failed to write slave" << path << std::endl;
+    read_status = false;
     return 0;
   }
   
-  
+  // read data
   if (read(fd, data_arr, len) < 0){
     std::cerr << "[ERROR] : " << strerror(errno) << " : Failed to read I2C" << path << std::endl;  
+    read_status = false;
     return 0;  
   }
   close(fd); 
   
-  unsigned int result = 0;
+  // make return data
+  uint32_t result = 0;
   for (int i = 0; i < len; i++){
-
     // Little-endian
-    result |= static_cast<unsigned int>(data_arr[i]) << (8*i);
-
+    result |= static_cast<uint32_t>(data_arr[i]) << (8*i);
   }
   
   std::cout << "combined 3 bytes : "
@@ -148,8 +172,7 @@ unsigned int i2c_read(uint8_t slave_addr, uint8_t read_addr, int len){
             << result
             << "(" << std::dec << result << ")" << std::endl; // 10진수 출력
   
-  
-  
+  read_status = treu;
   return result; // sucess
 }
 
@@ -158,9 +181,13 @@ unsigned int i2c_read(uint8_t slave_addr, uint8_t read_addr, int len){
 
 
 
+/*///////////////////////////////////////////////////////////////////
 
 
+BMP 390 member functions
 
+
+////////////////////////////////////////////////////////////////////*/
 
 
 
@@ -171,15 +198,53 @@ unsigned int i2c_read(uint8_t slave_addr, uint8_t read_addr, int len){
 // BMP3_ADDR_I2C_SEC     UINT8_C(0x77)
 bool BMP390::init(){
   
+  // I2c slave address set 
   this->slave_addr = BMP390_I2C_ADDR;
-  for (int i=0; i<3; i++){
-    this->row_data[i] = 0;
-  }
+  
+  // soft reset
+  this->reset();
 
-  // Trimming Coefficients (only for pressure)
-  i2c_read(this->slave_addr, 0x36, 2)
+  // pwr mode setting (00110011 = normal mode, both pressure, temperature enabled)
+  i2c_write(this->slave__addr, BMP390_PWRCTRL_ADDR, BMP390_PWR_MODE);
 
-  // reset 기능 넣기
+
+  // Trimming Coefficients : Do not chage
+  // temperature
+  this->calib_data.par_t1 = static_cast<uint16_t>i2c_read(this->slave_addr, 0x31, 2);
+  this->calib_data.par_t2 = static_cast<uint16_t>i2c_read(this->slave_addr, 0x33, 2);
+  this->calib_data.par_t3 = static_cast<int8_t>i2c_read(this->slave_addr, 0x35, 1);
+  // pressure
+  this->calib_data.par_p1 = static_cast<int16_t>i2c_read(this->slave_addr, 0x36, 2);
+  this->calib_data.par_p2 = static_cast<int16_t>i2c_read(this->slave_addr, 0x38, 2);
+  this->calib_data.par_p3 = static_cast<int8_t>i2c_read(this->slave_addr, 0x3A, 1);
+  this->calib_data.par_p4 = static_cast<int8_t>i2c_read(this->slave_addr, 0x3B, 1);
+  this->calib_data.par_p5 = static_cast<uint16_t>i2c_read(this->slave_addr, 0x3C, 2);
+  this->calib_data.par_p6 = static_cast<uint16_t>i2c_read(this->slave_addr, 0x3E, 2);
+  this->calib_data.par_p7 = static_cast<int8_t>i2c_read(this->slave_addr, 0x40, 1);
+  this->calib_data.par_p8 = static_cast<int8_t>i2c_read(this->slave_addr, 0x41, 1);
+  this->calib_data.par_p9 = static_cast<int16_t>i2c_read(this->slave_addr, 0x42, 2);
+  this->calib_data.par_p10 = static_cast<int8_t>i2c_read(this->slave_addr, 0x44, 1);
+  this->calib_data.par_p11 = static_cast<int8_t>i2c_read(this->slave_addr, 0x45, 1);
+  
+  // convert calib_data into floating point number.. (parse data)
+  this->calib_data_t[0] = static_cast<float>(this->calib_data.par_t1)*const_2p8;
+  this->calib_data_t[1] = static_cast<float>(this->calib_data.par_t2)/const_2p30;
+  this->calib_data_t[2] = static_cast<float>(this->calib_data.par_t3)/const_2p48;
+  
+  this->calib_data_p[0] = (static_cast<float>(this->calib_data.par_p1)- const_2p14) / const_2p20;
+  this->calib_data_p[1] = (static_cast<float>(this->calib_data.par_p2)- const_2p14) / const_2p29;
+  this->calib_data_p[2] = static_cast<float>(this->calib_data.par_p3) / const_2p32;
+  this->calib_data_p[3] = static_cast<float>(this->calib_data.par_p4) / const_2p37;
+  this->calib_data_p[4] = static_cast<float>(this->calib_data.par_p5) * const_2p3;
+  this->calib_data_p[5] = static_cast<float>(this->calib_data.par_p6) / const_2p6;
+  this->calib_data_p[6] = static_cast<float>(this->calib_data.par_p7) / const_2p8;
+  this->calib_data_p[7] = static_cast<float>(this->calib_data.par_p8) / const_2p15;
+  this->calib_data_p[8] = static_cast<float>(this->calib_data.par_p9) / const_2p48;
+  this->calib_data_p[9] = static_cast<float>(this->calib_data.par_p10) / const_2p48;
+  this->calib_data_p[10] = static_cast<float>(this->calib_data.par_p11) / const_2p65;
+  ////////////////////////////////////////////////////////////////////////////////////////////
+
+  
   // mode normal 설정
   // osr 등 설정
   // calibration data 가져오기
@@ -190,15 +255,55 @@ bool BMP390::init(){
 
 
 
-
 void BMP390::read_data(){
   // read pressure
   this->pressure = i2c_read(this->slave_addr, BMP390_PRESSURE_ADDR_2, 3); 
 
   i2c_read(this->slave_addr, 0x00, 1);
+
   /* parse, compensate 추가
    * this->pressure_data, barometer_data에 대입*/
+  if (!read_status){
+    this->compensate_data();
+  }
   
+}
+
+void BMP390::compensate_data(){
+  // temperature
+  float t_partial_data1;
+  float t_partial_data2;
+
+  t_partial_data1 = static_cast<float>(this->temperature - this->calib_data_t[0]);
+  t_partial_data2 = static_cast<float>(t_partial_data1 * this->calib_data_t[1]);
+
+  this->temperature = t_partial_data2 + (t_partial_data1 * t_partial_data1)*this->calib_data_t[2];
+  
+
+  // pressurre
+  float partial_data1;
+  float partial_data2;
+  float partial_data3;
+  float partial_data4;
+  float partial_out1;
+  float partial_out2;
+
+  partial_data1 = this->calib_data_p[5] * this->temperature;
+  partial_data2 = this->calib_data_p[6] * (this->temperature * this->temperature);
+  partial_data3 = this->calib_data_p[7] * (this->temperature * this->temperature * this->temperature);
+  partial_out1 = this->calib_data_p[4] + partial_data1 + partial_data2 + partial_data3;
+
+  partial_data1 = this->calib_data_p[1] * this->temperature;
+  partial_data2 = this->calib_data_p[2] * (this->temperature * this->temperature);
+  partial_data3 = this->calib_data_p[3] * (this->temperature * this->temperature * this->temperature);
+  partial_out2 = static_cast<float>this->pressure * (this->calib_data_p[0] + partial_data1 + partial_data2 + partial_data3);
+
+  partial_data1 = this->pressure * this->pressure;
+  partial_data2 = this->calib_data[8] + this->calib_data[9] * this->temperature;
+  partial_data3 = partial_data1 * partial_data2;
+  partial_data4 = partial_data3 + ((this->pressure*this->pressure*this->pressure)*this->calib_data[10]);
+  this->pressure = partial_out1 + partial_out2 + partial_data4; 
+
 
 }
 
@@ -207,6 +312,10 @@ void BMP390::reset(){
   // 0XB6 : softreset command
   i2c_write(this->slave_addr, BMP390_CMD_ADDR, 0xB6);
   
+}
+
+std::vector<float> BMP390::get_data(){
+  return {this->pressure, this->temperature};
 }
 
 
