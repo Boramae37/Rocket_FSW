@@ -46,8 +46,8 @@ class BMP390 : public Sensor{
     
 
   public:
-    BMP390() {}
-    virtual ~BMP390(){}
+    BMP390();
+    virtual ~BMP390();
 
     virtual bool init();
     virtual void read_data();
@@ -71,6 +71,9 @@ class BMP390 : public Sensor{
     void reset();
 };
 
+
+
+//////////////////////////////////////////////////////////////////////////////////
 
 class BNO055 : public Sensor{
   private:
@@ -99,8 +102,8 @@ class BNO055 : public Sensor{
     float linear_acc_z;
 
 public:
-    BNO055() {}
-    virtual ~BNO055(){}
+    BNO055();
+    virtual ~BNO055();
 
     virtual bool init();
     virtual void read_data();

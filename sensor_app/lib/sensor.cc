@@ -83,7 +83,7 @@ int i2c_write(uint8_t slave_addr, uint8_t write_reg, uint8_t write_data){
   
   int fd;
   
-  char path[] = LINUX_I2C_PATH; // linux i2c device path
+  const char* path = LINUX_I2C_PATH.data(); // linux i2c device path
   
   uint8_t write_arr[2]; // 쓰는 경우 보통 대상, 값 쌍으로 2개만.. 그리고 보통 1개의 register만 변경함.  
 
@@ -142,7 +142,7 @@ uint32_t i2c_read(uint8_t slave_addr, uint8_t read_addr, int len){
 
   int fd;
   
-  char path[] = LINUX_I2C_PATH; // linux i2c device path
+  const char* path = LINUX_I2C_PATH.data(); // linux i2c device path
   
   //std::vecotr<uint8_t> data_arr[len];
   uint8_t data_arr[4]; // 어차피 데이터 값이 3바이트, 나머지는 다 그 이하임.. 근데 혹시 모르니 4바이트까지 커버..통일 위해
@@ -185,6 +185,7 @@ uint32_t i2c_read(uint8_t slave_addr, uint8_t read_addr, int len){
     result |= static_cast<uint32_t>(data_arr[i]) << (8*i);
   }
   
+  /*
   std::cout << "Reading" << len << "bytes : "
             << std::uppercase         // 대문자 쓰기
             << std::setfill('0')      // 빈자리 0채우기
@@ -192,7 +193,7 @@ uint32_t i2c_read(uint8_t slave_addr, uint8_t read_addr, int len){
             << std::hex               // 16진수
             << result
             << "(" << std::dec << result << ")" << std::endl; // 10진수 출력
-  
+  */
   read_status = true;
   return result; // sucess
 }
@@ -206,7 +207,7 @@ uint64_t i2c_read_64(uint8_t slave_addr, uint8_t read_addr, int len){
 
   int fd;
   
-  char path[] = LINUX_I2C_PATH; // linux i2c device path
+  const char* path = LINUX_I2C_PATH.data(); // linux i2c device path
   
   //std::vecotr<uint8_t> data_arr[len];
   uint8_t data_arr[4]; // 어차피 데이터 값이 3바이트, 나머지는 다 그 이하임.. 근데 혹시 모르니 4바이트까지 커버..통일 위해
@@ -248,7 +249,7 @@ uint64_t i2c_read_64(uint8_t slave_addr, uint8_t read_addr, int len){
     // Little-endian
     result |= static_cast<uint32_t>(data_arr[i]) << (8*i);
   }
-  
+  /*
   std::cout << "Reading" << len << "bytes : "
             << std::uppercase         // 대문자 쓰기
             << std::setfill('0')      // 빈자리 0채우기
@@ -256,7 +257,7 @@ uint64_t i2c_read_64(uint8_t slave_addr, uint8_t read_addr, int len){
             << std::hex               // 16진수
             << result
             << "(" << std::dec << result << ")" << std::endl; // 10진수 출력
-  
+  */
   read_status = true;
   return result; // sucess
 }
@@ -268,7 +269,7 @@ uint32_t i2c_read_only(uint8_t slave_addr, uint8_t read_addr, int len){
 
   int fd;
   
-  char path[] = LINUX_I2C_PATH; // linux i2c device path
+  const char* path = LINUX_I2C_PATH.data(); // linux i2c device path
   
   //std::vecotr<uint8_t> data_arr[len];
   uint8_t data_arr[3]; // 어차피 데이터 값이 3바이트, 나머지는 다 그 이하임..
@@ -418,8 +419,8 @@ bool BMP390::init(){
 void BMP390::read_data(){
   // read pressure
   this->pressure = i2c_read(this->slave_addr, BMP390_PRESSURE_ADDR_2, 3); 
-  
-  i2c_read(this->slave_addr, 0x03, 1);
+  this->temperature = i2c_read(this->slave_addr, 0x07, 3);
+  //i2c_read(this->slave_addr, 0x03, 1);
   
   /* parse, compensate 추가
    * this->pressure_data, barometer_data에 대입*/
@@ -486,7 +487,7 @@ std::vector<float> BMP390::get_data(){
 }
 
 
-//virtual BMP390::~BMP390(){}
+BMP390::~BMP390(){}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
