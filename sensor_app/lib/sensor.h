@@ -70,3 +70,48 @@ class BMP390 : public Sensor{
     // soft reset function
     void reset();
 };
+
+
+class BNO055 : public Sensor{
+  private:
+    uint8_t slave_addr;
+    uint8_t status;
+
+    float acc_x;
+    float acc_y;
+    float acc_z;
+
+    float gyro_x;
+    float gyro_y;
+    float gyro_z;
+
+    float Euler_ang_x;
+    float Euler_ang_y;
+    float Euler_ang_z;
+
+    float Quternion_ang_w;
+    float Quternion_ang_x;
+    float Quternion_ang_y;
+    float Quternion_ang_z;
+
+    float linear_acc_x;
+    float linear_acc_y;
+    float linear_acc_z;
+
+public:
+    BNO055() {}
+    virtual ~BNO055(){}
+
+    virtual bool init();
+    virtual void read_data();
+    
+    // return {acc_x, acc_y, acc_z, gyro_x, gyro_y, gyro_z,
+    //         euler_x, euler_y, euler_z,
+    //         quaternion_w, quaternion_x, quaternion_y, quaternion_z,
+    //         linear_acc_x, linear_acc_y, linear_acc_z}
+    virtual std::vector<float> get_data();
+
+    // soft reset function
+    void reset();
+
+};

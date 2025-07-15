@@ -6,6 +6,7 @@
 #include <stdio.h>
 
 #include <iomanip>
+#include <string_view> // 문자열 뷰를 위해
 
 
 // i2c를 위한.. linux kernel 이용하는 거임
@@ -16,6 +17,9 @@
                     //
                     //
         
+// Raspberry Pi I2C device path
+constexpr std::string_view LINUX_I2C_PATH = "/dev/i2c-1"; 
+
 
 /* Boash provide great data sheet
  * but, they provide bull shit API. (of course, because of my limitation)
@@ -26,6 +30,8 @@
  * Of course it's possible. but I recommend you just read the datasheet,
  * find register map, and make functions. It's better to maintain codes.
 */
+
+////////////// BMP390 //////////////////////////////////////////////////////////////////////
 
 #define BMP390_I2C_ADDR 0x77 // 0x76 or 0x77
 
@@ -38,7 +44,7 @@
 
 #define BMP390_CMD_ADDR 0x7E
 
-// constants fot compensating data
+// constants fot compensating data (bmp390)
 #define const_2p3 8.0f
 #define const_2p6 64.0f
 #define const_2p8 256.0f
@@ -51,6 +57,10 @@
 #define const_2p37 137438953472.0f
 #define const_2p48 281474976710656.0f
 #define const_2p65 36893488147419103232.0f
+
+
+////////// BNO055 Sensor //////////////////////////////////////////////////////
+#define BNO055_I2C_ADDR 0x28 // 0x28, 0x29
 
 
 // 선언부 (추후 헤더로 옮김)
@@ -73,7 +83,7 @@ int i2c_write(uint8_t slave_addr, uint8_t write_reg, uint8_t write_data){
   
   int fd;
   
-  char path[] = "/dev/i2c-1"; // linux i2c device path
+  char path[] = LINUX_I2C_PATH; // linux i2c device path
   
   uint8_t write_arr[2]; // 쓰는 경우 보통 대상, 값 쌍으로 2개만.. 그리고 보통 1개의 register만 변경함.  
 
@@ -124,12 +134,82 @@ int i2c_write(uint8_t slave_addr, uint8_t write_reg, uint8_t write_data){
 bool read_status = false;
 uint32_t i2c_read(uint8_t slave_addr, uint8_t read_addr, int len){
   
+  if (len < 1 || len > 4){
+    std::cerr << "[ERROR] : Invalid length for I2C read. Length must be between 1 and 3." << std::endl;
+    std::cerr << "[ERROR] : If you want more than 4, use i2c_read_64" << len << std::endl;
+    return 0; // error
+  }
+
   int fd;
   
-  char path[] = "/dev/i2c-1"; // linux i2c device path
+  char path[] = LINUX_I2C_PATH; // linux i2c device path
   
   //std::vecotr<uint8_t> data_arr[len];
-  uint8_t data_arr[3]; // 어차피 데이터 값이 3바이트, 나머지는 다 그 이하임..
+  uint8_t data_arr[4]; // 어차피 데이터 값이 3바이트, 나머지는 다 그 이하임.. 근데 혹시 모르니 4바이트까지 커버..통일 위해
+  
+
+  fd = open(path, O_RDWR);
+  // open check
+  if (fd < -1){
+    perror("[ERROR] : Failed to open I2C");
+    std::cerr << "[ERROR] : " << strerror(errno) << " : Failed to open I2C" << path << std::endl; 
+    read_status = false;
+    return 0;
+  }
+  // i2c bus set and check
+  if(ioctl(fd, I2C_SLAVE, slave_addr) < 0){
+    std::cerr << "[ERROR] : " << strerror(errno) << " : Failed to open I2C" << path << std::endl; 
+    read_status = false;
+    return 0;
+  }
+  
+  // write에 fd, pointer, byte 수 를 전달해줘야함. pointer는 내가 보낼 데이터의 포인터 변수임.
+  if(write(fd, &read_addr, 1) != 1){ // wirte 성공시 써준 개수만큼..
+    std::cerr << "[ERROR] : " << strerror(errno) << " : Failed to write slave" << path << std::endl;
+    read_status = false;
+    return 0;
+  }
+  
+  // read data ( fd, 읽은 데이터 저장할 곳, 길이) => 읽을 데이터가 있는 레지스터 주소는 write으로 가리킴. 일종의 file pointer 설정으로 write으로 한다보면됨.
+  if (read(fd, data_arr, len) < 0){
+    std::cerr << "[ERROR] : " << strerror(errno) << " : Failed to read I2C" << path << std::endl;  
+    read_status = false;
+    return 0;  
+  }
+  close(fd); 
+  
+  // make return data
+  uint32_t result = 0;
+  for (int i = 0; i < len; i++){
+    // Little-endian
+    result |= static_cast<uint32_t>(data_arr[i]) << (8*i);
+  }
+  
+  std::cout << "Reading" << len << "bytes : "
+            << std::uppercase         // 대문자 쓰기
+            << std::setfill('0')      // 빈자리 0채우기
+            << std::setw(6)           // 6자리 고정
+            << std::hex               // 16진수
+            << result
+            << "(" << std::dec << result << ")" << std::endl; // 10진수 출력
+  
+  read_status = true;
+  return result; // sucess
+}
+
+uint64_t i2c_read_64(uint8_t slave_addr, uint8_t read_addr, int len){
+  
+  if (len < 1 || len > 8){
+    std::cerr << "[ERROR] : Invalid length for I2C read. Length must be between 1 and 8." << std::endl;
+    return 0; // error
+  }
+
+  int fd;
+  
+  char path[] = LINUX_I2C_PATH; // linux i2c device path
+  
+  //std::vecotr<uint8_t> data_arr[len];
+  uint8_t data_arr[4]; // 어차피 데이터 값이 3바이트, 나머지는 다 그 이하임.. 근데 혹시 모르니 4바이트까지 커버..통일 위해
   
 
   fd = open(path, O_RDWR);
@@ -183,14 +263,12 @@ uint32_t i2c_read(uint8_t slave_addr, uint8_t read_addr, int len){
 
 
 
-
-
 // write을 통한 register 지정 없이 read만 하는 함수.. bmp390 normal mode 처럼 알아서 register 위치 맞춰주면 read만 하면 됨.
 uint32_t i2c_read_only(uint8_t slave_addr, uint8_t read_addr, int len){
 
   int fd;
   
-  char path[] = "/dev/i2c-1"; // linux i2c device path
+  char path[] = LINUX_I2C_PATH; // linux i2c device path
   
   //std::vecotr<uint8_t> data_arr[len];
   uint8_t data_arr[3]; // 어차피 데이터 값이 3바이트, 나머지는 다 그 이하임..
@@ -227,13 +305,13 @@ uint32_t i2c_read_only(uint8_t slave_addr, uint8_t read_addr, int len){
     result |= static_cast<uint32_t>(data_arr[i]) << (8*i);
   }
   
-  std::cout << "Reading" << len << "bytes : "
-            << std::uppercase         // 대문자 쓰기
-            << std::setfill('0')      // 빈자리 0채우기
-            << std::setw(6)           // 6자리 고정
-            << std::hex               // 16진수
-            << result
-            << "(" << std::dec << result << ")" << std::endl; // 10진수 출력
+  // std::cout << "Reading" << len << "bytes : "
+  //           << std::uppercase         // 대문자 쓰기
+  //           << std::setfill('0')      // 빈자리 0채우기
+  //           << std::setw(6)           // 6자리 고정
+  //           << std::hex               // 16진수
+  //           << result
+  //           << "(" << std::dec << result << ")" << std::endl; // 10진수 출력
   
   read_status = true;
   return result; // sucess
@@ -255,14 +333,15 @@ BMP 390 member functions
 
 
 // Most Vexing Parse error.. 생성자는 기본 쓰거나 무조건 인자 받도록 하자.. default 인자 ㄴㄴ. init에서 처리하자.
-// BMP390::BMP390(){}
-
 // BMP3_ADDR_I2C_PRIM    UINT8_C(0x76)
 // BMP3_ADDR_I2C_SEC     UINT8_C(0x77)
+BMP390::BMP390() : slave_addr{BMP390_I2C_ADDR} {}
+
+
 bool BMP390::init(){
   
   // I2c slave address set 
-  this->slave_addr = BMP390_I2C_ADDR;
+  //this->slave_addr = BMP390_I2C_ADDR;
   
   // soft reset
   std::cout << "Sensor soft resetting...." << std::endl;
@@ -431,6 +510,103 @@ std::vector<float> BMP390::get_data(){
 
 
 
+BNO055::BNO055() : slave_addr{BNO055_I2C_ADDR} {}
+BNO055::~BNO055(){}
+
+bool BNO055::init(){
+  // Initialize the BNO055 sensor
+  // Set the I2C slave address (0x28)
+  //this->slave_addr = BNO055_I2C_ADDR; // Default I2C address for B
+  
+  // Soft reset the sensor
+  std::cout << "BNO055 soft resetting..." << std::endl;
+  
+  // power mode : default mode is NORMAL so, we don't need to set it.
+  // if you want to change, set resgister 0x3E
 
 
+  // Operating mode : default is Fusion mode, so we don't need to set it.
+  // if you want to change, set register 0x3D
+  i2c_write(this->slave_addr, 0x3D, 0x18); // soft reset command
 
+
+  // Unit setting : default is m/s^2 for acceleration, degrees/s for gyroscope
+  // if you want to change, set register 0x3B
+
+
+  // Each sensor(accelerometer, gyroscope, magnetometer) configuration
+  // we will use Fusion mode, so we don't need to set it.
+  // Becaues, fusion mode automatically control the configuration of each sensor.
+
+
+  // Read the system status register 0x3A
+  this->status = i2c_read(this->slave_addr, 0x3A, 1);
+  if (status != 0x00) {
+    std::cerr << "[ERROR] : BNO055 not responding. Status: " << std::hex << static_cast<int>(status) << std::endl;
+    return false;
+  }
+
+
+  std::cout << "BNO055 initialized" << std::endl;
+  return true;
+}
+
+
+void BNO055::reset(){
+  // Soft reset command for BNO055
+  // soft reset command is not exist. So, by mode change, we can reset the sensor.
+  // because, when it changed to config mode, it reset all registers to default values.
+  i2c_write(this->slave_addr, 0x3F, 0x20);
+
+  usleep(200000); // Wait for the reset to complete
+  
+}
+
+
+void BNO055::read_data(){
+  // we will use Fusion mode.
+  // Read accelerometer and gyroscope data from BNO055
+  // unit is m/s^2, degrees/s
+  uint64_t accel_data = i2c_read_64(this->slave_addr, 0x08, 6); // Read 6 bytes for accelerometer data
+  uint64_t gyro_data = i2c_read_64(this->slave_addr, 0x14, 6); // Read 6 bytes for gyroscope data
+
+  uint64_t euler_data = i2c_read_64(this->slave_addr, 0x1A, 6); // Read 6 bytes for Euler angles
+  uint64_t quaternion_data = i2c_read_64(this->slave_addr, 0x20, 8); // Read 8 bytes for Quaternion data
+
+  uint64_t linear_acc_data = i2c_read_64(this->slave_addr, 0x28, 6); // Read 6 bytes for linear acceleration data
+
+  // Parse the data
+  // fusion mode automatically parse the data.
+  // but, we need to compensate the data one more time.
+  // so, compensating function will be added later.
+
+
+  // Store the parsed data in the class members
+  this->acc_x = static_cast<float>(accel_data & 0xFFFF);
+  this->acc_y = static_cast<float>((accel_data >> 16) & 0xFFFF);
+  this->acc_z = static_cast<float>((accel_data >> 32) & 0xFFFF);
+  this->gyro_x = static_cast<float>(gyro_data & 0xFFFF);
+  this->gyro_y = static_cast<float>((gyro_data >> 16) & 0xFFFF);
+  this->gyro_z = static_cast<float>((gyro_data >> 32) & 0xFFFF);
+  this->Euler_ang_x = static_cast<float>(euler_data & 0xFFFF);
+  this->Euler_ang_y = static_cast<float>((euler_data >> 16) & 0xFFFF);
+  this->Euler_ang_z = static_cast<float>((euler_data >> 32) & 0xFFFF);
+  this->Quternion_ang_w = static_cast<float>(quaternion_data & 0xFFFF);
+  this->Quternion_ang_x = static_cast<float>((quaternion_data >> 16) & 0xFFFF);
+  this->Quternion_ang_y = static_cast<float>((quaternion_data >> 32) & 0xFFFF);
+  this->Quternion_ang_z = static_cast<float>((quaternion_data >> 48) & 0xFFFF);
+  this->linear_acc_x = static_cast<float>(linear_acc_data & 0xFFFF);
+  this->linear_acc_y = static_cast<float>((linear_acc_data >> 16) & 0xFFFF);
+  this->linear_acc_z = static_cast<float>((linear_acc_data >> 32) & 0xFFFF);
+
+}
+
+
+std::vector<float> BNO055::get_data(){
+  // Return the sensor data as a vector
+  return {this->acc_x, this->acc_y, this->acc_z, 
+          this->gyro_x, this->gyro_y, this->gyro_z,
+          this->Euler_ang_x, this->Euler_ang_y, this->Euler_ang_z,
+          this->Quternion_ang_w, this->Quternion_ang_x, this->Quternion_ang_y, this->Quternion_ang_z,
+          this->linear_acc_x, this->linear_acc_y, this->linear_acc_z};
+}
