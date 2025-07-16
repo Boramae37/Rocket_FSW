@@ -583,26 +583,30 @@ void BNO055::read_data(){
 
 
   // Store the parsed data in the class members
-  this->acc_x = static_cast<float>(accel_data & 0xFFFF);
-  this->acc_y = static_cast<float>((accel_data >> 16) & 0xFFFF);
-  this->acc_z = static_cast<float>((accel_data >> 32) & 0xFFFF);
-  this->gyro_x = static_cast<float>(gyro_data & 0xFFFF);
-  this->gyro_y = static_cast<float>((gyro_data >> 16) & 0xFFFF);
-  this->gyro_z = static_cast<float>((gyro_data >> 32) & 0xFFFF);
-  this->Euler_ang_x = static_cast<float>(euler_data & 0xFFFF);
-  this->Euler_ang_y = static_cast<float>((euler_data >> 16) & 0xFFFF);
-  this->Euler_ang_z = static_cast<float>((euler_data >> 32) & 0xFFFF);
-  this->Quternion_ang_w = static_cast<float>(quaternion_data & 0xFFFF);
-  this->Quternion_ang_x = static_cast<float>((quaternion_data >> 16) & 0xFFFF);
-  this->Quternion_ang_y = static_cast<float>((quaternion_data >> 32) & 0xFFFF);
-  this->Quternion_ang_z = static_cast<float>((quaternion_data >> 48) & 0xFFFF);
-  this->linear_acc_x = static_cast<float>(linear_acc_data & 0xFFFF);
-  this->linear_acc_y = static_cast<float>((linear_acc_data >> 16) & 0xFFFF);
-  this->linear_acc_z = static_cast<float>((linear_acc_data >> 32) & 0xFFFF);
+  // 16bit unsigned integer should be converted to int16_t first, then to float
+  // because, BNO055 uses 16bit signed integer for acceleration, gyroscope,and etc.
+  this->acc_x = static_cast<float>(static_cast<int16_t>(accel_data & 0xFFFF));
+  this->acc_y = static_cast<float>(static_cast<int16_t>((accel_data >> 16) & 0xFFFF));
+  this->acc_z = static_cast<float>(static_cast<int16_t>((accel_data >> 32) & 0xFFFF));
+  this->gyro_x = static_cast<float>(static_cast<int16_t>(gyro_data & 0xFFFF));
+  this->gyro_y = static_cast<float>(static_cast<int16_t>((gyro_data >> 16) & 0xFFFF));
+  this->gyro_z = static_cast<float>(static_cast<int16_t>((gyro_data >> 32) & 0xFFFF));
+  this->Euler_ang_x = static_cast<float>(static_cast<int16_t>(euler_data & 0xFFFF));
+  this->Euler_ang_y = static_cast<float>(static_cast<int16_t>((euler_data >> 16) & 0xFFFF));
+  this->Euler_ang_z = static_cast<float>(static_cast<int16_t>((euler_data >> 32) & 0xFFFF));
+  this->Quternion_ang_w = static_cast<float>(static_cast<int16_t>(quaternion_data & 0xFFFF));
+  this->Quternion_ang_x = static_cast<float>(static_cast<int16_t>((quaternion_data >> 16) & 0xFFFF));
+  this->Quternion_ang_y = static_cast<float>(static_cast<int16_t>((quaternion_data >> 32) & 0xFFFF));
+  this->Quternion_ang_z = static_cast<float>(static_cast<int16_t>((quaternion_data >> 48) & 0xFFFF));
+  this->linear_acc_x = static_cast<float>(static_cast<int16_t>(linear_acc_data & 0xFFFF));
+  this->linear_acc_y = static_cast<float>(static_cast<int16_t>((linear_acc_data >> 16) & 0xFFFF));
+  this->linear_acc_z = static_cast<float>(static_cast<int16_t>((linear_acc_data >> 32) & 0xFFFF));
+
+  // LSB -> m/s^2, degrees/s 등등.. 필요
 
 }
 
-
+// return the sensor data as a vector
 std::vector<float> BNO055::get_data(){
   // Return the sensor data as a vector
   return {this->acc_x, this->acc_y, this->acc_z, 

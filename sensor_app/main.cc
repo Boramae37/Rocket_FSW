@@ -1,10 +1,16 @@
 #include <iostream>
+#include <vector>
 
 // i2c를 위한.. linux kernel 이용하는 거임
 #include <linux/i2c-dev.h>
 #include <sys/ioctl.h>  // ioctl()
 #include <fcntl.h>      // open(), O_RDWR
 #include <unistd.h>     // read(), write(), close(), usleep()
+
+// threading 
+#include <thread>
+#include <chrono>
+
 
 // my includes
 #include "sensor.h"
@@ -23,6 +29,7 @@ int main(){
   usleep(10000);
   imu.init();
   usleep(2000000);
+  
   for(int i=0; i<1000; i++){
     baro.read_data();
     baro_data = baro.get_data();

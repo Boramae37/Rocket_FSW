@@ -14,7 +14,7 @@ public:
 
 class BMP390 : public Sensor{
   private:
-    uint8_t slave_addr;
+    const uint8_t slave_addr;
 
     float temperature;
     float pressure;
@@ -22,27 +22,27 @@ class BMP390 : public Sensor{
 
     struct nvm_calib_data_st{
      /*! Trim Variables */
-      uint16_t par_t1;
-      uint16_t par_t2;
-      int8_t par_t3;
-      int16_t par_p1;
-      int16_t par_p2;
-      int8_t par_p3;
-      int8_t par_p4;
-      uint16_t par_p5;
-      uint16_t par_p6;
-      int8_t par_p7;
-      int8_t par_p8;
-      int16_t par_p9;
-      int8_t par_p10;
-      int8_t par_p11;
+      const uint16_t par_t1;
+      const uint16_t par_t2;
+      const int8_t par_t3;
+      const int16_t par_p1;
+      const int16_t par_p2;
+      const int8_t par_p3;
+      const int8_t par_p4;
+      const uint16_t par_p5;
+      const uint16_t par_p6;
+      const int8_t par_p7;
+      const int8_t par_p8;
+      const int16_t par_p9;
+      const int8_t par_p10;
+      const int8_t par_p11;
       //int64_t t_lin;  // compensated temperature / got from temperature compensation
       // 그냥 멤버 변수에 저장..
     }; 
     nvm_calib_data_st nvm_calib_data;
 
-    float calib_data_t[4]; // par_t1, t2, t3, t_lin
-    float calib_data_p[11]; // par_p1 ... p11
+    const float calib_data_t[4]; // par_t1, t2, t3, t_lin
+    const float calib_data_p[11]; // par_p1 ... p11
     
 
   public:
@@ -77,9 +77,12 @@ class BMP390 : public Sensor{
 
 class BNO055 : public Sensor{
   private:
-    uint8_t slave_addr;
+    const uint8_t slave_addr;
     uint8_t status;
 
+    // 혹시 fusion mode를 쓰지 않을 까봐 이렇게 나눠놓음
+    // fusion 모드아니면 없는 데이터도 있기에.. 
+    // 만약 fusino 계속 쓰면 그냥 내부 데이터를 vector로 관리하는게 더 좋을 듯.
     float acc_x;
     float acc_y;
     float acc_z;
