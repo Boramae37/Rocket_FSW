@@ -4,6 +4,17 @@
 
     sudo apt install libfmt-dev
 
+## tmux (복붙 편하게 하려면)
+```
+sudo apt install tmux
+```
+이제 
+```
+tmux
+```
+로 실행하고 nvim 켜서, 편집 창에서 드래그한 뒤 y눌러 복사, p로 붙여넣기 가능
+
+이외 기능 더 있으니 찾아서 써도 좋음
 
 # 폴더 설명
 
