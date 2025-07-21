@@ -22,27 +22,27 @@ class BMP390 : public Sensor{
 
     struct nvm_calib_data_st{
      /*! Trim Variables */
-      const uint16_t par_t1;
-      const uint16_t par_t2;
-      const int8_t par_t3;
-      const int16_t par_p1;
-      const int16_t par_p2;
-      const int8_t par_p3;
-      const int8_t par_p4;
-      const uint16_t par_p5;
-      const uint16_t par_p6;
-      const int8_t par_p7;
-      const int8_t par_p8;
-      const int16_t par_p9;
-      const int8_t par_p10;
-      const int8_t par_p11;
+      uint16_t par_t1;
+      uint16_t par_t2;
+      int8_t par_t3;
+      int16_t par_p1;
+      int16_t par_p2;
+      int8_t par_p3;
+      int8_t par_p4;
+      uint16_t par_p5;
+      uint16_t par_p6;
+      int8_t par_p7;
+      int8_t par_p8;
+      int16_t par_p9;
+      int8_t par_p10;
+      int8_t par_p11;
       //int64_t t_lin;  // compensated temperature / got from temperature compensation
       // 그냥 멤버 변수에 저장..
     }; 
     nvm_calib_data_st nvm_calib_data;
 
-    const float calib_data_t[4]; // par_t1, t2, t3, t_lin
-    const float calib_data_p[11]; // par_p1 ... p11
+    float calib_data_t[4]; // par_t1, t2, t3, t_lin
+    float calib_data_p[11]; // par_p1 ... p11
     
 
   public:

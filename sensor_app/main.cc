@@ -9,12 +9,28 @@
 
 // threading 
 #include <thread>
+#include <mutex>
 #include <chrono>
+#include <atomic>
 
 
 // my includes
 #include "sensor.h"
 
+
+std::mutex i2c_mutex; // i2c bus mutex
+std::atomic<bool> keep_running(true);
+
+void thread_read_sensor(Sensor& sensor, int period){
+  // period should be 'ms' unit
+  while(1){
+    {
+    std::lock_guard<std::mutex> lock(i2c_mutex);
+    sensor.read_data();
+    } // mutex lock scope.. scope 나가면 자동 unlock
+    std::this_thread::sleep_for(std::chrono::milliseconds(period));
+  }
+}
 
 int main(){
   
@@ -26,10 +42,11 @@ int main(){
   
 
   baro.init();
-  usleep(10000);
+  usleep(10000); // 10ms = 0.01 sec
   imu.init();
-  usleep(2000000);
+  usleep(1000000); // 1 sec
   
+  /*
   for(int i=0; i<1000; i++){
     baro.read_data();
     baro_data = baro.get_data();
@@ -47,7 +64,16 @@ int main(){
               << std::endl;
     usleep(20000);
   }
-
+  */
+  
+  std::thread barometer_thread(thread_read_sensor, std::ref(baro), 10);
+  std::thread imu_thread(thread_read_sensor, std::ref(imu), 15);
+  
+  std::this_thread::sleep_for(std::chrono::seconds(5)); // 5초 후 종료
+  keep_running = false;
+  
+  barometer_thread.join();
+  imu_thread.join();
 
   return 0;
 }
