@@ -4,6 +4,7 @@
 # vsconde 편집 기록 무시
 .vscode/
 
-
+# README 무시
+README.md
 
 sensor_app/lib/BMP3_SensorAPI/
