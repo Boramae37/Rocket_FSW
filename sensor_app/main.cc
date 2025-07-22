@@ -72,13 +72,13 @@ int main(){
   }
   */
   
-  std::thread barometer_thread(thread_read_sensor, std::ref(baro), 100);
-  std::thread imu_thread(thread_read_sensor, std::ref(imu), 100);
+  std::thread barometer_thread(thread_read_sensor, std::ref(baro), 10);
+  std::thread imu_thread(thread_read_sensor, std::ref(imu), 12);
   
   std::this_thread::sleep_for(std::chrono::seconds(100)); // 5초 후 종료
   keep_running = false;
   
-  barometer_thread.join();
+  //barometer_thread.join();
   imu_thread.join();
 
   return 0;

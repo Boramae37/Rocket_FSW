@@ -210,8 +210,7 @@ uint64_t i2c_read_64(uint8_t slave_addr, uint8_t read_addr, int len){
   const char* path = LINUX_I2C_PATH.data(); // linux i2c device path
   
   //std::vecotr<uint8_t> data_arr[len];
-  uint8_t data_arr[4]; // 어차피 데이터 값이 3바이트, 나머지는 다 그 이하임.. 근데 혹시 모르니 4바이트까지 커버..통일 위해
-  
+  uint8_t data_arr[8]; // 64bits = 8bytes  
 
   fd = open(path, O_RDWR);
   // open check
@@ -244,10 +243,10 @@ uint64_t i2c_read_64(uint8_t slave_addr, uint8_t read_addr, int len){
   close(fd); 
   
   // make return data
-  uint32_t result = 0;
+  uint64_t result = 0;
   for (int i = 0; i < len; i++){
     // Little-endian
-    result |= static_cast<uint32_t>(data_arr[i]) << (8*i);
+    result |= static_cast<uint64_t>(data_arr[i]) << (8*i);
   }
   /*
   std::cout << "Reading" << len << "bytes : "
@@ -272,7 +271,7 @@ uint32_t i2c_read_only(uint8_t slave_addr, uint8_t read_addr, int len){
   const char* path = LINUX_I2C_PATH.data(); // linux i2c device path
   
   //std::vecotr<uint8_t> data_arr[len];
-  uint8_t data_arr[3]; // 어차피 데이터 값이 3바이트, 나머지는 다 그 이하임..
+  uint8_t data_arr[4]; // 어차피 데이터 값이 3바이트, 나머지는 다 그 이하임.. 하지만 함수명 상 4바이트까지 가능해야 이치에 맞다.
   
 
   fd = open(path, O_RDWR);
@@ -319,7 +318,58 @@ uint32_t i2c_read_only(uint8_t slave_addr, uint8_t read_addr, int len){
 
 }
 
+uint64_t i2c_read_only_64(uint8_t slave_addr, uint8_t read_addr, int len){
 
+  int fd;
+  
+  const char* path = LINUX_I2C_PATH.data(); // linux i2c device path
+  
+  // data 크기 맞는..
+  uint8_t data_arr[8]; //   
+
+  fd = open(path, O_RDWR);
+  // open check
+  if (fd < -1){
+    perror("[ERROR] : Failed to open I2C");
+    std::cerr << "[ERROR] : " << strerror(errno) << " : Failed to open I2C" << path << std::endl; 
+    read_status = false;
+    return 0;
+  }
+  // i2c bus set and check
+  if(ioctl(fd, I2C_SLAVE, slave_addr) < 0){
+    std::cerr << "[ERROR] : " << strerror(errno) << " : Failed to open I2C" << path << std::endl; 
+    read_status = false;
+    return 0;
+  }
+  
+   
+  // read data ( fd, 읽은 데이터 저장할 곳, 길이) => 읽을 데이터가 있는 레지스터 주소는 write으로 가리킴. 일종의 file pointer 설정으로 write으로 한다보면됨.
+  if (read(fd, data_arr, len) < 0){
+    std::cerr << "[ERROR] : " << strerror(errno) << " : Failed to read I2C" << path << std::endl;  
+    read_status = false;
+    return 0;  
+  }
+  close(fd); 
+  
+  // make return data
+  uint64_t result = 0;
+  for (int i = 0; i < len; i++){
+    // Little-endian
+    result |= static_cast<uint64_t>(data_arr[i]) << (8*i);
+  }
+  
+  // std::cout << "Reading" << len << "bytes : "
+  //           << std::uppercase         // 대문자 쓰기
+  //           << std::setfill('0')      // 빈자리 0채우기
+  //           << std::setw(6)           // 6자리 고정
+  //           << std::hex               // 16진수
+  //           << result
+  //           << "(" << std::dec << result << ")" << std::endl; // 10진수 출력
+  
+  read_status = true;
+  return result; // sucess
+
+}
 
 
 
