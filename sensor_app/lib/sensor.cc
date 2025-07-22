@@ -165,7 +165,7 @@ uint32_t i2c_read(uint8_t slave_addr, uint8_t read_addr, int len){
   
   // write에 fd, pointer, byte 수 를 전달해줘야함. pointer는 내가 보낼 데이터의 포인터 변수임.
   if(write(fd, &read_addr, 1) != 1){ // wirte 성공시 써준 개수만큼..
-    std::cerr << "[ERROR] : " << strerror(errno) << " : Failed to write slave" << path << std::endl;
+    std::cerr << "[ERROR] : " << strerror(errno) << " : Failed to write slave for read" << path << std::endl;
     read_status = false;
     return 0;
   }
@@ -230,7 +230,7 @@ uint64_t i2c_read_64(uint8_t slave_addr, uint8_t read_addr, int len){
   
   // write에 fd, pointer, byte 수 를 전달해줘야함. pointer는 내가 보낼 데이터의 포인터 변수임.
   if(write(fd, &read_addr, 1) != 1){ // wirte 성공시 써준 개수만큼..
-    std::cerr << "[ERROR] : " << strerror(errno) << " : Failed to write slave" << path << std::endl;
+    std::cerr << "[ERROR] : " << strerror(errno) << " : Failed to write slave for read" << path << std::endl;
     read_status = false;
     return 0;
   }
@@ -521,14 +521,18 @@ bool BNO055::init(){
   
   // Soft reset the sensor
   std::cout << "BNO055 soft resetting..." << std::endl;
+  this->reset();
+  std::cout << "BNO055 soft reset complete" << std::endl;
+  
   
   // power mode : default mode is NORMAL so, we don't need to set it.
   // if you want to change, set resgister 0x3E
 
 
-  // Operating mode : default is Fusion mode, so we don't need to set it.
+  // Operating mode : default is Fusion mode(in reset function, the mode is chagned to config mode and 
+  //                  fusion-imu mode again), so we don't need to set it.
   // if you want to change, set register 0x3D
-  i2c_write(this->slave_addr, 0x3D, 0x18); // soft reset command
+  // i2c_write(this->slave_addr, 0x3D, 0x18);
 
 
   // Unit setting : default is m/s^2 for acceleration, degrees/s for gyroscope
@@ -540,14 +544,15 @@ bool BNO055::init(){
   // Becaues, fusion mode automatically control the configuration of each sensor.
 
 
-  // Read the system status register 0x3A
-  this->status = i2c_read(this->slave_addr, 0x3A, 1);
-  if (status != 0x00) {
+  // Read the system status register 0x39
+  /* this->status = i2c_read(this->slave_addr, 0x39, 1);
+  if (status == 0x01) {
+    this->status = i2c_read(this->slave_addr, 0x3A, 1);
     std::cerr << "[ERROR] : BNO055 not responding. Status: " << std::hex << static_cast<int>(status) << std::endl;
     return false;
   }
-
-
+  */
+  
   std::cout << "BNO055 initialized" << std::endl;
   return true;
 }
@@ -557,8 +562,10 @@ void BNO055::reset(){
   // Soft reset command for BNO055
   // soft reset command is not exist. So, by mode change, we can reset the sensor.
   // because, when it changed to config mode, it reset all registers to default values.
-  i2c_write(this->slave_addr, 0x3F, 0x20);
-
+  i2c_write(this->slave_addr, 0x3D, 0x10);
+  
+  // after changing to config mode, we have to select operating mode again
+  i2c_write(this->slave_addr, 0x3D, 0x18);
   usleep(200000); // Wait for the reset to complete
   
 }
