@@ -20,7 +20,7 @@ Message::Message(int app_id) : app_id(app_id), message_id(0) {}
 Message::~Message() {}
 
 char* Message::get_message() {
-  snprintf(this->buffer, sizeof(buffer), "%d, %d, %s", this->app_id, this->message_id, this->message);
+  snprintf(this->buffer, sizeof(buffer), "%d,%d,%s", this->app_id, this->message_id, this->message);
   return this->buffer;
 }
 
