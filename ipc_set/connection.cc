@@ -1,6 +1,7 @@
 #include "connection.h"
 #include <vector>
 #include <string>
+#include <cstring> // for memset, strncpy
 
 
 
@@ -18,8 +19,8 @@ Message::Message(int app_id) : app_id(app_id), message_id(0) {}
 
 Message::~Message() {}
 
-char* Message::get_data() {
-  snprintf(this->buffer, sizeof(buffer), "%d, %d, %s", this->app_id, this->message_id, this->message.data());
+char* Message::get_message() {
+  snprintf(this->buffer, sizeof(buffer), "%d, %d, %s", this->app_id, this->message_id, this->message);
   return this->buffer;
 }
 
@@ -27,8 +28,9 @@ void Message::set_message_id(int message_id) {
   this->message_id = message_id;
 }
 
-void Message::set_data(const std::string& data) {
-  this->message = data;
+void Message::set_data(char* data) {
+  strncpy(this->message, data, sizeof(this->message) - 1);
+  this->message[sizeof(this->message) - 1] = '\0'; // Ensure null termination
 }
 
 

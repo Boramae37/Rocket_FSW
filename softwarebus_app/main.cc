@@ -21,6 +21,7 @@
 int main() {
   int app_num = APP_NUM; // 앱의 개수, connection.h에서 정의된 상수 사용
   std::vector<int> app_sockets(app_num); // 각 앱과의 소켓을 저장할 벡터
+  std::vector<std::string> app_names = {"SENSOR", "COMM", "CONTROL"}; // 앱 이름 벡터, index는 app_id와 동일
 
 
   /*/////////////////////////////////////////////////////////////
@@ -35,6 +36,8 @@ int main() {
   struct sockaddr_un name; // 소켓 이름 구조체
   struct epoll_event ev, events[MAX_EVENTS]; // epoll 이벤트 구조체
   char buffer[SB_BUFFER_SIZE]; // 데이터 전송 버퍼
+  int buffer_app_id;
+  int buffer_message_id;
   
   unlink(SOCKET_NAME); // 소켓 이름이 중복되면 안되니까 미리 삭제
 
@@ -86,29 +89,32 @@ int main() {
     nready = epoll_wait(epoll_fd, events, MAX_EVENTS, -1);
 
     for (int i = 0; i < nready; i++) {
-        if (events[i].data.fd == sb_host_socket) {
-            // 새 클라이언트 연결 요청이 들어온 경우 (복구 대비용 코드)
-            int client_fd = accept(sb_host_socket, NULL, NULL);
+      if (events[i].data.fd == sb_host_socket) {
+          // 새 클라이언트 연결 요청이 들어온 경우 (복구 대비용 코드)
+          int client_fd = accept(sb_host_socket, NULL, NULL);
             
-            // 새 클라이언트 소켓을 epoll 감시 대상에 등록
-            ev.events = EPOLLIN;
-            ev.data.fd = client_fd;
-            epoll_ctl(epoll_fd, EPOLL_CTL_ADD, client_fd, &ev);
-        } 
-        else {
-            // 기존 클라이언트 소켓에서 데이터 도착 시 처리
-            int fd = events[i].data.fd;
-            int n = recv(fd, buffer, sizeof(buffer), 0);
-            if (n <= 0) {
-                // 클라이언트 종료: epoll에서 제거 및 소켓 닫기
-                epoll_ctl(epoll_fd, EPOLL_CTL_DEL, fd, NULL);
-                close(fd);
-            } else {
-                // 받은 데이터 에코
-                buffer[n] = '\0';
-                printf("Client: %s\n", buffer);
-            }
+          // 새 클라이언트 소켓을 epoll 감시 대상에 등록
+          ev.events = EPOLLIN;
+          ev.data.fd = client_fd;
+          epoll_ctl(epoll_fd, EPOLL_CTL_ADD, client_fd, &ev);
+      } 
+      else {
+        // 기존 클라이언트 소켓에서 데이터 도착 시 처리
+        int fd = events[i].data.fd;
+        int n = recv(fd, buffer, sizeof(buffer), 0);
+        if (n <= 0) {
+          // 클라이언트 종료: epoll에서 제거 및 소켓 닫기
+          epoll_ctl(epoll_fd, EPOLL_CTL_DEL, fd, NULL);
+          close(fd);
         }
+        else {
+          // 받은 데이터 에코
+          buffer[n] = '\0';
+          buffer_app_id = buffer[0] - '0'; // 첫 번째 문자를 앱 ID로 변환
+          buffer_message_id = buffer[2] - '0'; // 세 번째 문자를 메시지 ID로 변환
+          printf("%s : %s\n", app_names[buffer_app_id].data(), buffer);
+        }
+      }
     }
   }
   ///////////////////////////////////////////////////////////////////////////////

@@ -7,6 +7,7 @@
 #include <sys/un.h>    // struct sockaddr_un
 #include <cstdlib>     // exit()
 #include <cstdio>      // snprintf()
+#include <charconv>   // std::to_chars
 
 // i2c를 위한.. linux kernel 이용하는 거임
 #include <linux/i2c-dev.h>
@@ -123,19 +124,38 @@ int main(){
 
 
 
-std::string data_to_string(const std::vector<float>& data, std::string& str) {
-  str.clear();
-  for (const float& value : data) {
-    str += std::to_string(value) + ",";
+bool data_to_string(const std::vector<float>& values, char* out_buf) {
+  char* ptr = out_buf;
+  char* buf_end = out_buf + SB_BUFFER_SIZE;
+
+  for (size_t i = 0; i < values.size(); ++i) {
+      char num_buf[32];
+      auto [num_end, ec] = std::to_chars(num_buf, num_buf + sizeof(num_buf), values[i]);
+      if (ec != std::errc()) return false;
+
+      size_t len = num_end - num_buf;
+      if (ptr + len >= buf_end) return false;
+
+      std::memcpy(ptr, num_buf, len);
+      ptr += len;
+
+      if (i + 1 < values.size()) {
+          if (ptr + 1 >= buf_end) return false;
+          *ptr++ = ',';
+      }
   }
-  return str;
+
+  if (ptr >= buf_end) return false;
+  *ptr = '\0';
+  return true;
 }
+
 
 void thread_read_sensor(Sensor& sensor, int period, int sensor_id){
   std::vector<float> data;
   Message msg(SENSOR_ID); // sensor_id is the specific sensor id (IMU or Barometer)
   msg.set_message_id(sensor_id);
-  std::string data_str; // sensor data string
+  char data_str[SB_BUFFER_SIZE]; // sensor data string
 
   // period should be 'ms' unit
   while(keep_running){
@@ -150,10 +170,11 @@ void thread_read_sensor(Sensor& sensor, int period, int sensor_id){
     // }
 
     // convert data to string and set message data
-    msg.set_data(data_to_string(data, data_str));
+    data_to_string(data, data_str);
+    msg.set_data(data_str);
     {
     std::lock_guard<std::mutex> lock(sb_mutex);
-    write(sockfd, msg.get_data(), SB_BUFFER_SIZE);
+    write(sockfd, msg.get_message(), SB_BUFFER_SIZE);
     }
     
     std::cout << std::endl;

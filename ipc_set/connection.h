@@ -30,15 +30,15 @@ class Message{
   private:
     int app_id; // 메시지 보낸 앱의 id
     int message_id; // 메시지 받을 앱의 id
-    std::string message; // 메시지 내용
+    char message[SB_BUFFER_SIZE-5]; // 메시지 내용. id 가 추가될 것이니 넉넉히 5바이트 뺌
     char buffer[SB_BUFFER_SIZE]; // 데이터 전송 버퍼
 
   public:
     Message(int);
     ~Message();
-    char* get_data(); // cstyle로 데이터 반환(for socket ipc)
+    char* get_message(); // cstyle로 데이터 반환(for socket ipc)
     void set_message_id(int);
-    void set_data(const std::string& data);
+    void set_data(char* data);
 };
 
 
