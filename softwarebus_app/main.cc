@@ -84,7 +84,7 @@ int main() {
   ev.data.fd = sb_host_socket;      // 감시 대상: 리스닝 소켓
   epoll_ctl(epoll_fd, EPOLL_CTL_ADD, sb_host_socket, &ev);
 
-  
+  int sensor_counter = 0;
 
   while(1) {
     nready = epoll_wait(epoll_fd, events, MAX_EVENTS, -1);
@@ -113,6 +113,7 @@ int main() {
           buffer[n] = '\0';
           buffer_app_id = buffer[0] - '0'; // 첫 번째 문자를 앱 ID로 변환
           buffer_message_id = buffer[2] - '0'; // 세 번째 문자를 메시지 ID로 변환
+          sensor_counter ++;
           printf("[%s][%s] : %s\n", app_names[buffer_app_id].data(), message_names[buffer_message_id].data(), buffer);
         }
       }
