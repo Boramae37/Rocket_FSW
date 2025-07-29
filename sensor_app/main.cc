@@ -1,5 +1,12 @@
 #include <iostream>
 #include <vector>
+#include <string>
+#include <cstring>
+
+#include <sys/socket.h> // socket(), connect(), write()
+#include <sys/un.h>    // struct sockaddr_un
+#include <cstdlib>     // exit()
+#include <cstdio>      // snprintf()
 
 // i2c를 위한.. linux kernel 이용하는 거임
 #include <linux/i2c-dev.h>
@@ -16,30 +23,48 @@
 
 // my includes
 #include "sensor.h"
+#include "connection.h" // for communication with software bus
+
+// function declarations
+std::string data_to_string(const std::vector<float>& data, std::string& str);
+void thread_read_sensor(Sensor& sensor, int period, int sensor_id);
 
 
+
+// global variables
 std::mutex i2c_mutex; // i2c bus mutex
+std::mutex sb_mutex; // software bus mutex
 std::atomic<bool> keep_running(true);
 
-void thread_read_sensor(Sensor& sensor, int period){
-  std::vector<float> data;
-  // period should be 'ms' unit
-  while(keep_running){
-    {
-    std::lock_guard<std::mutex> lock(i2c_mutex);
-    sensor.read_data();
-    } // mutex lock scope.. scope 나가면 자동 unlock
-    data = sensor.get_data();
-    for(int i=0; i<data.size(); i++){
-      std::cout << data[i] << " ";
-    }
-    std::cout << std::endl;
-    std::this_thread::sleep_for(std::chrono::milliseconds(period));
-  }
-}
 
+
+///////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////
+
+
+
+int sockfd; // socket file descriptor
 int main(){
+
+  // Socket setup
+  int ret; // return value
   
+  struct sockaddr_un addr;
+  char buffer[SB_BUFFER_SIZE];
+  sockfd = socket(AF_UNIX, SOCK_SEQPACKET, 0);
+  if (sockfd < 0) {
+    perror("socket");
+    exit(EXIT_FAILURE);
+  }
+
+  memset(&addr, 0, sizeof(addr));
+  addr.sun_family = AF_UNIX;
+  strncpy(addr.sun_path, SOCKET_NAME, sizeof(addr.sun_path) - 1);
+  connect(sockfd, (struct sockaddr*)&addr, sizeof(addr));
+
+  
+
+  // Sensor setup
   BMP390 baro;
   BNO055 imu;
 
@@ -52,6 +77,7 @@ int main(){
   imu.init();
   usleep(1000000); // 1 sec
   
+
   /*
   for(int i=0; i<1000; i++){
     baro.read_data();
@@ -71,10 +97,21 @@ int main(){
     usleep(20000);
   }
   */
+
   
-  std::thread barometer_thread(thread_read_sensor, std::ref(baro), 10);
-  std::thread imu_thread(thread_read_sensor, std::ref(imu), 12);
-  
+  // Sensor threads
+  // 센서 ID는 "connection.h"에서 정의된 상수 사용
+  std::thread barometer_thread(
+    [&] { thread_read_sensor (std::ref(baro), 10, BARO_ID); }
+  );
+
+  std::thread imu_thread(
+    [&] { thread_read_sensor(std::ref(imu), 12, IMU_ID); }
+  );
+
+
+
+
   std::this_thread::sleep_for(std::chrono::seconds(100)); // 5초 후 종료
   keep_running = false;
   
@@ -82,4 +119,44 @@ int main(){
   imu_thread.join();
 
   return 0;
+}
+
+
+
+std::string data_to_string(const std::vector<float>& data, std::string& str) {
+  str.clear();
+  for (const float& value : data) {
+    str += std::to_string(value) + ",";
+  }
+  return str;
+}
+
+void thread_read_sensor(Sensor& sensor, int period, int sensor_id){
+  std::vector<float> data;
+  Message msg(SENSOR_ID); // sensor_id is the specific sensor id (IMU or Barometer)
+  msg.set_message_id(sensor_id);
+  std::string data_str; // sensor data string
+
+  // period should be 'ms' unit
+  while(keep_running){
+    {
+    std::lock_guard<std::mutex> lock(i2c_mutex);
+    sensor.read_data();
+    } // mutex lock scope.. scope 나가면 자동 unlock
+    data = sensor.get_data();
+    
+    // for(int i=0; i<data.size(); i++){
+    //   std::cout << data[i] << " ";
+    // }
+
+    // convert data to string and set message data
+    msg.set_data(data_to_string(data, data_str));
+    {
+    std::lock_guard<std::mutex> lock(sb_mutex);
+    write(sockfd, msg.get_data(), SB_BUFFER_SIZE);
+    }
+    
+    std::cout << std::endl;
+    std::this_thread::sleep_for(std::chrono::milliseconds(period));
+  }
 }

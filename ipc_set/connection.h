@@ -1,8 +1,46 @@
+#include <vector>
+#include <string>
+
 #ifndef CONNECTION_H
 #define CONNECTION_H
 
+
 #define SOCKET_NAME "/tmp/9Lq7BNBnBycd6nxy.socket"
-#define BUFFER_SIZE 12
+#define SB_BUFFER_SIZE 1024 // socket message size, 센서, 특히 imu 센서 길이 잘 확인해서 결정할 것
+
+#define MAX_EVENTS 10
+
+// App ID
+constexpr int APP_NUM = 3; // 현재 3개 앱
+constexpr int SENSOR_ID = 0;
+constexpr int COMM_ID = 1;
+constexpr int CONTROL_ID = 2;
+ 
+// Message ID
+constexpr int DATA_MESSAGEID = 0;      // 데이터 메시지
+constexpr int IMU_ID = 1;              // IMU 센서 id
+constexpr int BARO_ID = 2;             // Barometer 센서 id
+constexpr int COMMAND_MESSAGEID = 3;   // 명령 메시지
+constexpr int ERROR_MESSAGEID = 4;     // 에러 메시지
+
+// Subscribe Map
+extern std::vector<std::vector<int>> subscribe_map;
+
+class Message{
+  private:
+    int app_id; // 메시지 보낸 앱의 id
+    int message_id; // 메시지 받을 앱의 id
+    std::string message; // 메시지 내용
+    char buffer[SB_BUFFER_SIZE]; // 데이터 전송 버퍼
+
+  public:
+    Message(int);
+    ~Message();
+    char* get_data(); // cstyle로 데이터 반환(for socket ipc)
+    void set_message_id(int);
+    void set_data(const std::string& data);
+};
+
 
 #endif  // include guard
 
