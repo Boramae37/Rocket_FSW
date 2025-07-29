@@ -22,6 +22,7 @@ int main() {
   int app_num = APP_NUM; // 앱의 개수, connection.h에서 정의된 상수 사용
   std::vector<int> app_sockets(app_num); // 각 앱과의 소켓을 저장할 벡터
   std::vector<std::string> app_names = {"SENSOR", "COMM", "CONTROL"}; // 앱 이름 벡터, index는 app_id와 동일
+  std::vector<std::string> message_names = {"DATA", "IMU", "BARO", "COMMAND", "ERROR"}; // 메시지 이름 벡터, index는 message_id와 동일
 
 
   /*/////////////////////////////////////////////////////////////
@@ -112,7 +113,7 @@ int main() {
           buffer[n] = '\0';
           buffer_app_id = buffer[0] - '0'; // 첫 번째 문자를 앱 ID로 변환
           buffer_message_id = buffer[2] - '0'; // 세 번째 문자를 메시지 ID로 변환
-          printf("%s : %s\n", app_names[buffer_app_id].data(), buffer);
+          printf("[%s][%s] : %s\n", app_names[buffer_app_id].data(), message_names[buffer_message_id].data(), buffer);
         }
       }
     }
