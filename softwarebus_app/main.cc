@@ -39,6 +39,10 @@ int main() {
   char buffer[SB_BUFFER_SIZE]; // 데이터 전송 버퍼
   int buffer_app_id;
   int buffer_message_id;
+
+  int n; // number of bytes read
+  int fd; // epoll에서 받은 파일 디스크립터
+
   
   unlink(SOCKET_NAME); // 소켓 이름이 중복되면 안되니까 미리 삭제
 
@@ -84,25 +88,25 @@ int main() {
   ev.data.fd = sb_host_socket;      // 감시 대상: 리스닝 소켓
   epoll_ctl(epoll_fd, EPOLL_CTL_ADD, sb_host_socket, &ev);
 
-  int sensor_counter[3] = {0, 0, 0};
+  int sensor_counter[8] = { 0 };
 
   while(1) {
     nready = epoll_wait(epoll_fd, events, MAX_EVENTS, -1);
 
     for (int i = 0; i < nready; i++) {
-      if (events[i].data.fd == sb_host_socket) {
-          // 새 클라이언트 연결 요청이 들어온 경우 (복구 대비용 코드)
-          int client_fd = accept(sb_host_socket, NULL, NULL);
-            
-          // 새 클라이언트 소켓을 epoll 감시 대상에 등록
-          ev.events = EPOLLIN;
-          ev.data.fd = client_fd;
-          epoll_ctl(epoll_fd, EPOLL_CTL_ADD, client_fd, &ev);
+      fd = events[i].data.fd;
+      if (fd == sb_host_socket) {
+        // 새 클라이언트 연결 요청이 들어온 경우 (복구 대비용 코드)
+        int client_fd = accept(sb_host_socket, NULL, NULL);
+          
+        // 새 클라이언트 소켓을 epoll 감시 대상에 등록
+        ev.events = EPOLLIN;
+        ev.data.fd = client_fd;
+        epoll_ctl(epoll_fd, EPOLL_CTL_ADD, client_fd, &ev);
       } 
       else {
         // 기존 클라이언트 소켓에서 데이터 도착 시 처리
-        int fd = events[i].data.fd;
-        int n = recv(fd, buffer, sizeof(buffer), 0);
+        n = recv(fd, buffer, sizeof(buffer), 0);
         if (n <= 0) {
           // 클라이언트 종료: epoll에서 제거 및 소켓 닫기
           epoll_ctl(epoll_fd, EPOLL_CTL_DEL, fd, NULL);

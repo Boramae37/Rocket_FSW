@@ -8,6 +8,7 @@
 #include <iomanip>
 #include <string_view> // 문자열 뷰를 위해
 
+#include <cmath> // pow() for barometric formula
 
 // i2c를 위한.. linux kernel 이용하는 거임
 #include <linux/i2c-dev.h>
@@ -57,6 +58,8 @@ constexpr std::string_view LINUX_I2C_PATH = "/dev/i2c-1";
 #define const_2p37 137438953472.0f
 #define const_2p48 281474976710656.0f
 #define const_2p65 36893488147419103232.0f
+
+constexpr double SEA_LEVEL_PRESSURE = 101325.0; // sea level pressure in pascal
 
 
 ////////// BNO055 Sensor //////////////////////////////////////////////////////
@@ -468,14 +471,15 @@ bool BMP390::init(){
 
 void BMP390::read_data(){
   // read pressure
-  this->pressure = i2c_read(this->slave_addr, BMP390_PRESSURE_ADDR_2, 3); 
-  this->temperature = i2c_read(this->slave_addr, 0x07, 3);
+  this->pressure = i2c_read(this->slave_addr, BMP390_PRESSURE_ADDR_2, 3); //  
+  this->temperature = i2c_read(this->slave_addr, 0x07, 3); // 섭씨 단위
   //i2c_read(this->slave_addr, 0x03, 1);
   
   /* parse, compensate 추가
-   * this->pressure_data, barometer_data에 대입*/
+   * this->pressure, temperature에 대입*/
   if (read_status){
     this->compensate_data();
+    this->pressure = 44330.0 * (1.0 - pow((this->pressure / SEA_LEVEL_PRESSURE), 0.1903)); // barometric formula
   }
   else{
     std::cout << "Failed to read" << std::endl;
@@ -521,8 +525,6 @@ void BMP390::compensate_data(){
   partial_data3 = partial_data1 * partial_data2;
   partial_data4 = partial_data3 + ((this->pressure*this->pressure*this->pressure)*this->calib_data_p[10]);
   this->pressure = partial_out1 + partial_out2 + partial_data4;
-
-
 }
 
 
@@ -659,8 +661,7 @@ void BNO055::read_data(){
   this->linear_acc_y = static_cast<float>(static_cast<int16_t>((linear_acc_data >> 16) & 0xFFFF));
   this->linear_acc_z = static_cast<float>(static_cast<int16_t>((linear_acc_data >> 32) & 0xFFFF));
 
-  // LSB -> m/s^2, degrees/s 등등.. 필요
-
+  // LSB -> m/s^2, degrees/s 등등.. 필요없는 듯
 }
 
 // return the sensor data as a vector

@@ -22,6 +22,9 @@ constexpr int IMU_ID = 1;              // IMU 센서 id
 constexpr int BARO_ID = 2;             // Barometer 센서 id
 constexpr int COMMAND_MESSAGEID = 3;   // 명령 메시지
 constexpr int ERROR_MESSAGEID = 4;     // 에러 메시지
+constexpr int PARACHUTE_MESSAGEID = 5; // 낙하산 메시지
+
+constexpr char PARACHUTE_STATUS[] = "1"; // 메시지 내용
 
 // Subscribe Map
 extern std::vector<std::vector<int>> subscribe_map;

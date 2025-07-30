@@ -98,7 +98,7 @@ int main(){
     usleep(20000);
   }
   */
-
+  
   
   // Sensor threads
   // 센서 ID는 "connection.h"에서 정의된 상수 사용
@@ -110,13 +110,13 @@ int main(){
     [&] { thread_read_sensor(std::ref(imu), 12, IMU_ID); }
   );
 
-
-
+  // SB에서 오는 명령 처리하는 메인 스레드 파트.. (0.5초마다 확인 예정.)
+  
 
   std::this_thread::sleep_for(std::chrono::seconds(100)); // 5초 후 종료
   keep_running = false;
   
-  //barometer_thread.join();
+  barometer_thread.join();
   imu_thread.join();
 
   return 0;
