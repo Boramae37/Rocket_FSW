@@ -26,8 +26,17 @@
 #include "sensor.h"
 #include "connection.h" // for communication with software bus
 
+
+// PMCCNTR_EL0 읽기 함수
+static inline uint64_t read_pmccntr(void) {
+    uint64_t cc = 0;
+    asm volatile("mrs %0, pmccntr_el0" : "=r"(cc));
+    return cc;
+}
+
+
 // function declarations
-std::string data_to_string(const std::vector<float>& data, std::string& str);
+bool vector_to_string(const std::vector<float>& data, std::string& str);
 void thread_read_sensor(Sensor& sensor, int period, int sensor_id);
 
 
@@ -37,7 +46,9 @@ std::mutex i2c_mutex; // i2c bus mutex
 std::mutex sb_mutex; // software bus mutex
 std::atomic<bool> keep_running(true);
 
-
+uint64_t start_time = 0; // PMCCNTR_EL0 초기화
+uint64_t elapsed_time = 0; // 경과 시간 초기화
+uint64_t now_time = 0; // 현재 시간 초기화
 
 ///////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
@@ -45,11 +56,18 @@ std::atomic<bool> keep_running(true);
 
 
 int sockfd; // socket file descriptor
+
 int main(){
+
+  //////////////////////////////////////////////////////////////////////////
+  // Software Bus 연결을 위한 공통 부분(물론 SENSOR_ID등 등록 부분은 바꿔야함)
+  //////////////////////////////////////////////////////////////////////////
+
+  start_time = read_pmccntr();
 
   // Socket setup
   int ret; // return value
-  
+  // int sockfd; // socket file descriptor
   struct sockaddr_un addr;
   char buffer[SB_BUFFER_SIZE];
   sockfd = socket(AF_UNIX, SOCK_SEQPACKET, 0);
@@ -63,9 +81,19 @@ int main(){
   strncpy(addr.sun_path, SOCKET_NAME, sizeof(addr.sun_path) - 1);
   connect(sockfd, (struct sockaddr*)&addr, sizeof(addr));
 
+  // Sensor APP FD를 SB에 등록
+  Message msg(SENSOR_ID);
+  msg.set_message_id(SET_FD_COMMAND);
+  snprintf(buffer, sizeof(buffer), "%d", sockfd);
+  msg.set_data(buffer);
+  write(sockfd, msg.get_message(), SB_BUFFER_SIZE);
+
+///////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////
   
 
-  // Sensor setup
+
+// Sensor setup
   BMP390 baro;
   BNO055 imu;
 
@@ -111,43 +139,56 @@ int main(){
   );
 
   // SB에서 오는 명령 처리하는 메인 스레드 파트.. (0.5초마다 확인 예정.)
-  
+  while(1){
+    ret = read(sockfd, buffer, SB_BUFFER_SIZE);
+    if(ret > 0) {
+      buffer[ret] = '\0'; // null-terminate the string
+      if((buffer[2] - '0' == COMMAND_MESSAGEID)&&(buffer[5] - '0' == STOP_COMMAND)){
+        printf("[COMMAND] STOP COMMAND RECEIVED\n");
+        keep_running = false; // stop the sensor threads
+        break; // exit the loop
+      }
+    }
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+  }
 
   std::this_thread::sleep_for(std::chrono::seconds(100)); // 5초 후 종료
   keep_running = false;
   
   barometer_thread.join();
   imu_thread.join();
-
+  
   return 0;
 }
 
 
-
-bool data_to_string(const std::vector<float>& values, char* out_buf) {
+// 전체 string 길이 반환(null제외)
+int vector_to_string(const std::vector<float>& values, char* out_buf) {
   char* ptr = out_buf;
   char* buf_end = out_buf + SB_BUFFER_SIZE;
+  int string_length = 0;
 
   for (size_t i = 0; i < values.size(); ++i) {
-      char num_buf[32];
-      auto [num_end, ec] = std::to_chars(num_buf, num_buf + sizeof(num_buf), values[i]);
-      if (ec != std::errc()) return false;
+    char num_buf[32];
+    auto [num_end, ec] = std::to_chars(num_buf, num_buf + sizeof(num_buf), values[i]);
+    if (ec != std::errc()) return -1;
 
-      size_t len = num_end - num_buf;
-      if (ptr + len >= buf_end) return false;
+    size_t len = num_end - num_buf;
+    if (ptr + len >= buf_end) return -1;
 
-      std::memcpy(ptr, num_buf, len);
-      ptr += len;
-
-      if (i + 1 < values.size()) {
-          if (ptr + 1 >= buf_end) return false;
-          *ptr++ = ',';
-      }
+    std::memcpy(ptr, num_buf, len);
+    ptr += len;
+    string_length += len;
+    
+    if (i + 1 < values.size()) {
+        if (ptr + 1 >= buf_end) return -1;
+        *ptr++ = ',';
+    }
   }
 
-  if (ptr >= buf_end) return false;
+  if (ptr >= buf_end) return -1;
   *ptr = '\0';
-  return true;
+  return string_length;
 }
 
 
@@ -156,6 +197,9 @@ void thread_read_sensor(Sensor& sensor, int period, int sensor_id){
   Message msg(SENSOR_ID); // sensor_id is the specific sensor id (IMU or Barometer)
   msg.set_message_id(sensor_id);
   char data_str[SB_BUFFER_SIZE]; // sensor data string
+  char time_str[23];
+  char sb_buffer[SB_BUFFER_SIZE]; // software bus buffer
+  int ret;
 
   // period should be 'ms' unit
   while(keep_running){
@@ -170,8 +214,18 @@ void thread_read_sensor(Sensor& sensor, int period, int sensor_id){
     // }
 
     // convert data to string and set message data
-    data_to_string(data, data_str);
-    msg.set_data(data_str);
+    now_time = read_pmccntr();
+    elapsed_time = now_time - start_time;
+    ret = snprintf(time_str, sizeof(time_str), "%llu", elapsed_time);
+    time_str[ret] = ','; // ensure null termination
+    time_str[ret + 1] = '\0'; // null-terminate the string
+    std::memcpy(sb_buffer, time_str, ret);
+
+    ret = vector_to_string(data, data_str);
+    std::memcpy(sb_buffer + ret, data_str, ret+1); // ret+1 for null terminator
+
+
+    msg.set_data(sb_buffer);
     {
     std::lock_guard<std::mutex> lock(sb_mutex);
     write(sockfd, msg.get_message(), SB_BUFFER_SIZE);

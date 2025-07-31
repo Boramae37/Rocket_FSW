@@ -2,13 +2,20 @@
 #include <vector>
 #include <string>
 #include <cstring> // for memset, strncpy
+#include <unordered_map>
+#include <algorithm>
 
 
+// std::vector<std::vector<int>> subscribe_map = {
+//   {1},    // sensor app => comm app
+//   {0, 2}, // comm app => sensor app, control app
+//   {0}     // control app => sensor app
+// };
 
-std::vector<std::vector<int>> subscribe_map = {
-  {1},    // sensor app => comm app
-  {0, 2}, // comm app => sensor app, control app
-  {0}     // control app => sensor app
+std::unordered_map<int, std::vector<int>> subscribe_map{
+    {SENSOR_ID, {COMM_ID}}, // sensor app => comm app
+    {COMM_ID, {SENSOR_ID, CONTROL_ID}}, // comm app => sensor app, control app
+    {CONTROL_ID, {SENSOR_ID}} // control app => sensor app
 };
 
 /*///////////////////////////////////////////////////////

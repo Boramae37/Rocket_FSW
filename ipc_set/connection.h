@@ -1,5 +1,7 @@
 #include <vector>
 #include <string>
+#include <unordered_map>
+#include <algorithm>
 
 #ifndef CONNECTION_H
 #define CONNECTION_H
@@ -17,17 +19,24 @@ constexpr int COMM_ID = 1;
 constexpr int CONTROL_ID = 2;
  
 // Message ID
-constexpr int DATA_MESSAGEID = 0;      // 데이터 메시지
-constexpr int IMU_ID = 1;              // IMU 센서 id
-constexpr int BARO_ID = 2;             // Barometer 센서 id
-constexpr int COMMAND_MESSAGEID = 3;   // 명령 메시지
-constexpr int ERROR_MESSAGEID = 4;     // 에러 메시지
-constexpr int PARACHUTE_MESSAGEID = 5; // 낙하산 메시지
+constexpr int IMU_ID = 0;              // IMU 센서 id
+constexpr int BARO_ID = 1;             // Barometer 센서 id
+constexpr int COMMAND_MESSAGEID = 2;   // 명령 메시지
+constexpr int ERROR_MESSAGEID = 3;     // 에러 메시지
+constexpr int PARACHUTE_MESSAGEID = 4; // 낙하산 메시지
+constexpr int SET_FD_COMMAND = 5;     // 데이터 메시지
+
+// Command ID (message 부분에 들어감. 맨 처음. 즉 buffer[5]에 들어감) 
+constexpr int STOP_COMMAND = 0; // stop command
+constexpr int START_COMMAND = 1; // start command
 
 constexpr char PARACHUTE_STATUS[] = "1"; // 메시지 내용
 
+// Communication App 주기 (몇 회마다 보낼지)
+constexpr int COMMUNICATION_APP_PERIOD = 20;
+
 // Subscribe Map
-extern std::vector<std::vector<int>> subscribe_map;
+extern std::unordered_map<int, std::vector<int>> subscribe_map;
 
 class Message{
   private:
