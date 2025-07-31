@@ -39,3 +39,8 @@ ls -l /dev/serial*
 ```
 
 
+시작 시에 
+```
+sudo stty -F /dev/serial0 raw 115200 cs8 clocal -cstopb
+```
+이거 해야 uart 연결될 수도..
