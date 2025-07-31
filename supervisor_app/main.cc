@@ -46,8 +46,8 @@ int main() {
   }
   else {
     int sensor_status;
-    waitpid(pid[sensor_app], &sensor_status, 0);
-    std::cout << "[supervisor] : Sensor App terminated" << std::endl;
+    //waitpid(pid[sensor_app], &sensor_status, 0);
+    //std::cout << "[supervisor] : Sensor App terminated" << std::endl;
   }
 
   pid[com_app] = fork();
@@ -57,7 +57,7 @@ int main() {
 
     std::cout << "PID["<< getpid() <<"] Launch Communication Application" << std::endl;
     // 새로운 프로그램으로 덮어 씌운다.
-    execl("../../run/communication_app", "communication_app", NULL);
+    execl("../../run/communication", "communication", NULL);
     std::cout << "Failed to launch Communication Application" << std::endl;
     exit(1);
   }
@@ -67,8 +67,8 @@ int main() {
   }
   else {
     int com_status;
-    waitpid(pid[com_app], &com_status, 0);
-    std::cout << "[supervisor] : Communication App terminated" << std::endl;
+    //waitpid(pid[com_app], &com_status, 0);
+    //std::cout << "[supervisor] : Communication App terminated" << std::endl;
   }
 
 
@@ -79,7 +79,7 @@ int main() {
 
     std::cout << "PID["<< getpid() <<"] Launch Control Application" << std::endl;
     // 새로운 프로그램으로 덮어 씌운다.
-    execl("../../run/control_app", "control_app", NULL);
+    execl("../../run/control", "control", NULL);
     std::cout << "Failed to launch Control Application" << std::endl;
     exit(1);
   }
@@ -89,9 +89,22 @@ int main() {
   }
   else {
     int ctrl_status;
-    waitpid(pid[ctrl_app], &ctrl_status, 0);
-    std::cout << "[supervisor] : Control App terminated" << std::endl;
+    //waitpid(pid[ctrl_app], &ctrl_status, 0);
+    //std::cout << "[supervisor] : Control App terminated" << std::endl;
   }
+  
+  int softwarebus_status;
+  int ctrl_status;
+  int com_status;    
+  int sensor_status;
 
+  waitpid(pid[sensor_app], &sensor_status, 0);
+  waitpid(pid[com_app], &com_status, 0);
+  waitpid(pid[ctrl_app], &ctrl_status, 0);
+  waitpid(pid[softwarebus_app], &softwarebus_status, 0);
+  std::cout << "[supervisor] : Sensor App terminated" << std::endl;
+  std::cout << "[supervisor] : Communication App terminated" << std::endl;
+  std::cout << "[supervisor] : Control App terminated" << std::endl;
+  std::cout << "[supervisor] : Software Bus App terminated" << std::endl;
   return 0;
 }

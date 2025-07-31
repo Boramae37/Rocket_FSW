@@ -147,6 +147,7 @@ int main() {
 
             // 구독자들에게 공유
             for (int subscriber_id : app_subscribers[buffer_app_id]) {
+              printf("[%s] recived send to [%s]\n", app_names[buffer_app_id].data(), app_names[subscriber_id].data());
               if (app_fd_list[subscriber_id] != -1) { // 해당 앱이 연결되어 있는지 확인
                 // communication_app쪽인 경우를 일반 SB에서 주기에 맞춰 준다.
                 if (buffer_app_id == SENSOR_ID && subscriber_id == COMM_ID ) {
