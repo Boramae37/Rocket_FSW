@@ -225,13 +225,14 @@ void thread_read_sensor(Sensor& sensor, int period, int sensor_id){
     ret = snprintf(time_str, sizeof(time_str), "%llu", elapsed_time);
     time_str[ret] = ','; // ensure null termination
     time_str[ret + 1] = '\0'; // null-terminate the string
-    std::memcpy(sb_buffer, time_str, ret);
+    //std::memcpy(sb_buffer, time_str, ret);
 
     ret = vector_to_string(data, data_str);
-    std::memcpy(sb_buffer + ret, data_str, ret+1); // ret+1 for null terminator
+    //std::memcpy(sb_buffer + ret, data_str, ret+1); // ret+1 for null terminator
 
 
-    msg.set_data(sb_buffer);
+    printf("[SENSOR] Time: %s\n", time_str);
+    msg.set_data(data_str);
     {
     std::lock_guard<std::mutex> lock(sb_mutex);
     write(sockfd, msg.get_message(), SB_BUFFER_SIZE);

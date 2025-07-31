@@ -33,7 +33,7 @@ int main() {
   std::vector<std::string> app_names = {"SENSOR", "COMM", "CONTROL"}; 
 
   // 메시지 이름 벡터, index는 message_id와 동일
-  std::vector<std::string> message_names = {"DATA", "IMU", "BARO", "COMMAND", "ERROR"};
+  std::vector<std::string> message_names = {"IMU", "BARO", "COMMAND", "ERROR", "PARACHUTE", "SET_FD_COMMAND"};
   
   // 앱 ID와 연결된 소켓 FD를 저장하는 이중리스트(맵을 바꿈. 맵이 수정에는 더 편함, 속도에선 느림)
   std::vector<std::vector<int>> app_subscribers(APP_NUM);
