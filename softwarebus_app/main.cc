@@ -152,7 +152,7 @@ int main() {
                 // communication_app쪽인 경우를 일반 SB에서 주기에 맞춰 준다.
                 if (buffer_app_id == SENSOR_ID && subscriber_id == COMM_ID ) {
                   comm_counter++;
-                  if (comm_counter % COMMUNICATION_APP_PERIOD == 0) {
+                  if (comm_counter == COMMUNICATION_APP_PERIOD) {
                     comm_counter = 0; // 주기 맞추기
                     printf("Sending to COMM app: %s\n", buffer);
                     sensor_counter[2]++;
