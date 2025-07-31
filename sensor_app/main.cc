@@ -28,10 +28,16 @@
 
 
 // PMCCNTR_EL0 읽기 함수
-static inline uint64_t read_pmccntr(void) {
-    uint64_t cc = 0;
-    asm volatile("mrs %0, pmccntr_el0" : "=r"(cc));
-    return cc;
+// static inline uint64_t read_pmccntr(void) {
+//     uint64_t cc = 0;
+//     asm volatile("mrs %0, pmccntr_el0" : "=r"(cc));
+//     return cc;
+// }
+
+static inline uint64_t read_time_ns(void) {
+    struct timespec ts;
+    clock_gettime(CLOCK_MONOTONIC_RAW, &ts);
+    return (uint64_t)ts.tv_sec * 1000000000ULL + ts.tv_nsec;
 }
 
 
@@ -63,7 +69,7 @@ int main(){
   // Software Bus 연결을 위한 공통 부분(물론 SENSOR_ID등 등록 부분은 바꿔야함)
   //////////////////////////////////////////////////////////////////////////
 
-  start_time = read_pmccntr();
+  start_time = read_time_ns();
 
   // Socket setup
   int ret; // return value
@@ -214,7 +220,7 @@ void thread_read_sensor(Sensor& sensor, int period, int sensor_id){
     // }
 
     // convert data to string and set message data
-    now_time = read_pmccntr();
+    now_time = read_time_ns();
     elapsed_time = now_time - start_time;
     ret = snprintf(time_str, sizeof(time_str), "%llu", elapsed_time);
     time_str[ret] = ','; // ensure null termination
