@@ -153,6 +153,8 @@ int main() {
                   comm_counter++;
                   if (comm_counter % COMMUNICATION_APP_PERIOD == 0) {
                     comm_counter = 0; // 주기 맞추기
+                    printf("Sending to COMM app: %s\n", buffer);
+                    sensor_counter[2]++;
                     send(app_fd_list[subscriber_id], buffer, n, 0); // 구독
                   }
                 }
