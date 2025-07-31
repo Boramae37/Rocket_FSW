@@ -7,8 +7,8 @@ make -C sensor_app/build -j4
 echo "[softwarebus_app building]"
 make -C softwarebus_app/build -j4
 
-# echo "[communication_app building]"
-# make -C communication_app/build -j4
+echo "[communication_app building]"
+make -C communication_app/build -j4
 
 echo "[control_app building]"
 make -C control_app/build -j4
