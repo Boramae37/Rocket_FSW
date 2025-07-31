@@ -50,5 +50,48 @@ int main() {
     std::cout << "[supervisor] : Sensor App terminated" << std::endl;
   }
 
+  pid[com_app] = fork();
+
+  // 0이면 자식이란 말이기에..
+  if(pid[com_app] == 0){
+
+    std::cout << "PID["<< getpid() <<"] Launch Communication Application" << std::endl;
+    // 새로운 프로그램으로 덮어 씌운다.
+    execl("../../run/communication_app", "communication_app", NULL);
+    std::cout << "Failed to launch Communication Application" << std::endl;
+    exit(1);
+  }
+  else if (pid[com_app] < 0) {
+    std::cerr << "Failed to fork Communication Application" << std::endl;
+    exit(1);
+  }
+  else {
+    int com_status;
+    waitpid(pid[com_app], &com_status, 0);
+    std::cout << "[supervisor] : Communication App terminated" << std::endl;
+  }
+
+
+  pid[ctrl_app] = fork();
+
+  // 0이면 자식이란 말이기에..
+  if(pid[ctrl_app] == 0){
+
+    std::cout << "PID["<< getpid() <<"] Launch Control Application" << std::endl;
+    // 새로운 프로그램으로 덮어 씌운다.
+    execl("../../run/control_app", "control_app", NULL);
+    std::cout << "Failed to launch Control Application" << std::endl;
+    exit(1);
+  }
+  else if (pid[ctrl_app] < 0) {
+    std::cerr << "Failed to fork Control Application" << std::endl;
+    exit(1);
+  }
+  else {
+    int ctrl_status;
+    waitpid(pid[ctrl_app], &ctrl_status, 0);
+    std::cout << "[supervisor] : Control App terminated" << std::endl;
+  }
+
   return 0;
 }
