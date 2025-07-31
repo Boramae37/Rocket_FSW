@@ -33,4 +33,9 @@ lib에서 cmake
 cmake 주소(CMakeLists.txt 파일이 있는..) => build의 바로 부모 폴더면 cmake .. 만 해도 됨
 
 
+UART 경로 확인
+```
+ls -l /dev/serial*
+```
+
 
