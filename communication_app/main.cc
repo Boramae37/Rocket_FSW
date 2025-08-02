@@ -132,7 +132,7 @@ int setup_uart(const char* device) {
     // option들을 xbee 설정(xctu 설정)과 맞춰야함.
     cfsetispeed(&options, BAUD_RATE);           // 입력 속도 설정
     cfsetospeed(&options, BAUD_RATE);           // 출력 속도 설정
-
+    
     
     options.c_cflag |= (CLOCAL | CREAD);        // UART 리시버/로컬 사용 허가
     options.c_cflag &= ~CSIZE;                  // 데이터 비트 수 마스킹
