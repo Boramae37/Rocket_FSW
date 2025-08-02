@@ -21,10 +21,11 @@ constexpr int CONTROL_ID = 2;
 // Message ID
 constexpr int IMU_ID = 0;              // IMU 센서 id
 constexpr int BARO_ID = 1;             // Barometer 센서 id
-constexpr int COMMAND_MESSAGEID = 2;   // 명령 메시지
-constexpr int ERROR_MESSAGEID = 3;     // 에러 메시지
-constexpr int PARACHUTE_MESSAGEID = 4; // 낙하산 메시지
-constexpr int SET_FD_COMMAND = 5;     // 데이터 메시지
+constexpr int GPS_ID = 2;              // GPS 센서 id
+constexpr int COMMAND_MESSAGEID = 3;   // 명령 메시지
+constexpr int ERROR_MESSAGEID = 4;     // 에러 메시지
+constexpr int PARACHUTE_MESSAGEID = 5; // 낙하산 메시지
+constexpr int SET_FD_COMMAND = 6;     // 데이터 메시지
 
 // Command ID (message 부분에 들어감. 맨 처음. 즉 buffer[5]에 들어감) 
 constexpr int STOP_COMMAND = 0; // stop command
@@ -33,7 +34,9 @@ constexpr int START_COMMAND = 1; // start command
 constexpr char PARACHUTE_STATUS[] = "1"; // 메시지 내용
 
 // Communication App 주기 (몇 회마다 보낼지)
-constexpr int COMMUNICATION_APP_PERIOD = 20;
+constexpr int COMM_PERIOD_IMU = 20;
+constexpr int COMM_PERIOD_BARO = 20;
+constexpr int COMM_PERIOD_GPS = 20;
 
 // Subscribe Map
 extern std::unordered_map<int, std::vector<int>> subscribe_map;

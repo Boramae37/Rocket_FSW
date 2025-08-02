@@ -112,9 +112,9 @@ int main(){
           read(sockfd, sb_buffer, SB_BUFFER_SIZE); 
           ret = strlen(sb_buffer);
           sb_buffer[ret] = '\0'; // 문자열 끝에 NULL 추가
-          printf("ret = %d\n", ret);
+          // printf("ret = %d\n", ret);
           write(uart_fd, sb_buffer, ret); // 읽은 데이터를 UART로 전송
-          printf("[COMM][SB] Translating %d bytes : %s\n", ret, sb_buffer); // 소프트웨어 버스로부터 받은 데이터 출력
+          // printf("[COMM][SB] Translating %d bytes : %s\n", ret, sb_buffer); // 소프트웨어 버스로부터 받은 데이터 출력
         }
       }
     }

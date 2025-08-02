@@ -107,7 +107,12 @@ int main() {
   epoll_ctl(epoll_fd, EPOLL_CTL_ADD, sb_host_socket, &ev);
 
   int sensor_counter[8] = { 0 };
-  int comm_counter = 0; 
+
+  // 각 imu, baro, gps 센서값 개수 카운터
+  // 인덱스는 connection.h에서 정의된 메시지 ID와 동일
+  int comm_counter[3] = { 0 };
+  int comm_period[3] = { COMM_PERIOD_IMU, COMM_PERIOD_BARO, COMM_PERIOD_GPS };
+
   while(1) {
     nready = epoll_wait(epoll_fd, events, MAX_EVENTS, -1);
 
@@ -143,19 +148,18 @@ int main() {
             buffer_message_id = buffer[2] - '0'; // 세 번째 문자를 메시지 ID로 변환
             
 
-            
-
             // 구독자들에게 공유
             for (int subscriber_id : app_subscribers[buffer_app_id]) {
               printf("[%s] recived send to [%s]\n", app_names[buffer_app_id].data(), app_names[subscriber_id].data());
               if (app_fd_list[subscriber_id] != -1) { // 해당 앱이 연결되어 있는지 확인
-                // communication_app쪽인 경우를 일반 SB에서 주기에 맞춰 준다.
-                if (buffer_app_id == SENSOR_ID && subscriber_id == COMM_ID ) {
-                  comm_counter++;
-                  if (comm_counter == COMMUNICATION_APP_PERIOD) {
-                    comm_counter = 0; // 주기 맞추기
+                // communication_app 통신 주기에 맞춰 일단 SB에서 주기에 맞춰 준다.
+                // 주기는 시간이 아닌 counter(횟수)로 관리
+                if (buffer_app_id == SENSOR_ID && subscriber_id == COMM_ID) {
+                  comm_counter[buffer_message_id]++;
+
+                  if (comm_counter[buffer_app_id] == comm_period[buffer_message_id]) {
+                    comm_counter[buffer_app_id] = 0;
                     printf("Sending to COMM app: %s\n", buffer);
-                    sensor_counter[2]++;
                     send(app_fd_list[subscriber_id], buffer, n, 0); // 구독
                   }
                 }
