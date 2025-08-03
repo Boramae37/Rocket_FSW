@@ -68,6 +68,8 @@ int main(){
       exit(EXIT_FAILURE);
   }
   char uart_buffer[UART_BUFFER_SIZE]; // UART로 읽어올 데이터 버퍼
+  char uart_temp_buffer[UART_BUFFER_SIZE]; // UART로 읽어올 데이터 버퍼
+  int uart_buffer_idx = 0; // UART 버퍼 인덱스
 
 //////////////////////////////////////////////////////////////////////
 // EPOLL setup for listening to UART COMMANDs
@@ -96,17 +98,37 @@ int main(){
 
       for (int i = 0; i < nready; i++) {
         temp_fd = events[i].data.fd;
+        // 지상국 명령 수신
         if (temp_fd == uart_fd) {
-          ret = read(uart_fd, uart_buffer, UART_BUFFER_SIZE); // UART로부터 데이터 읽기
-          uart_buffer[ret] = '\0'; // 문자열 끝에 NULL 추가
-          printf("[COMM][UART] Received: %s\n", uart_buffer); // UART로부터 받은 데이터 출력
-          if (uart_buffer[2] - '0' == COMMAND_MESSAGEID &&
-              uart_buffer[4] - '0' == STOP_COMMAND) {
-            keep_running = false; // stop the sensor threads
-            printf("[COMM][UART] STOP COMMAND RECEIVED\n");
-            break;
+          read(uart_fd, uart_temp_buffer, UART_BUFFER_SIZE); // UART로부터 데이터 읽기
+          ret = strlen(uart_temp_buffer);
+          uart_temp_buffer[ret] = '\0'; // 문자열 끝에 NULL 추가
+          for (int i=0; i<ret; i++){
+            strcpy(&uart_buffer[uart_buffer_idx], uart_temp_buffer);
+            uart_buffer_idx++;
+            if(static_cast<int>(uart_buffer[i]) == TELE_END) {
+              if(uart_buffer[0] -'0' == COMMAND_MESSAGEID) {
+                if (uart_buffer[2] -'0' == STOP_COMMAND){
+                  
+                  strcpy(sb_buffer, "1,3,0\n");
+                  write(sockfd, sb_buffer, SB_BUFFER_SIZE); // 소프트웨어 버스로 데이터 전송
+                  printf("[COMM][UART] STOP COMMAND RECEIVED : %s\n", uart_buffer);
+                  keep_running = false; // stop the sensor threads
+                  break;
+                }
+                else if (uart_buffer[2] -'0' == START_COMMAND){
+                  strcpy(sb_buffer, "1,3,2\n");
+                  write(sockfd, sb_buffer, SB_BUFFER_SIZE); // 소프트웨어 버스로 데이터 전송
+                  printf("[COMM][UART] START COMMAND RECEIVED : %s\n", uart_buffer);
+                }
+              }
+              memset(uart_buffer, 0, sizeof(uart_buffer)); // 버퍼 초기화
+              uart_buffer_idx = 0; // 포인터 초기화
+            }
           }
+          printf("[COMM][UART] Received: %s\n", uart_buffer); // UART로부터 받은 데이터 출력
         }
+        // 내부 소프트웨어 버스 메세지 수신
         else if (temp_fd == sockfd) {
           // 소프트웨어 버스로부터 데이터 읽기
           read(sockfd, sb_buffer, SB_BUFFER_SIZE); 

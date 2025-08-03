@@ -113,25 +113,6 @@ int main(){
   usleep(1000000); // 1 sec
   
 
-  /*
-  for(int i=0; i<1000; i++){
-    baro.read_data();
-    baro_data = baro.get_data();
-    std::cout << "Barometer Data: Pressure = " << baro_data[0] 
-              << ", Temperature = " << baro_data[1] << std::endl;
-    usleep(20000);
-    imu.read_data();
-    usleep(20000);
-    imu_data = imu.get_data();
-    std::cout << "IMU Data: Acceleration = (" << imu_data[0] << ", " << imu_data[1] << ", " << imu_data[2] << "), "
-              << "Gyroscope = (" << imu_data[3] << ", " << imu_data[4] << ", " << imu_data[5] << "), "
-              << "Euler Angles = (" << imu_data[6] << ", " << imu_data[7] << ", " << imu_data[8] << "), "
-              << "Quaternion = (" << imu_data[9] << ", " << imu_data[10] << ", " << imu_data[11] << ", " << imu_data[12] << "), "
-              << "Linear Acceleration = (" << imu_data[13] << ", " << imu_data[14] << ", " << imu_data[15] << ")" 
-              << std::endl;
-    usleep(20000);
-  }
-  */
   
   
   // Sensor threads
@@ -146,19 +127,22 @@ int main(){
 
   // SB에서 오는 명령 처리하는 메인 스레드 파트.. (0.5초마다 확인 예정.)
   while(1){
-    ret = read(sockfd, buffer, SB_BUFFER_SIZE);
-    if(ret > 0) {
-      buffer[ret] = '\0'; // null-terminate the string
-      if((buffer[2] - '0' == COMMAND_MESSAGEID)&&(buffer[5] - '0' == STOP_COMMAND)){
-        printf("[COMMAND] STOP COMMAND RECEIVED\n");
-        keep_running = false; // stop the sensor threads
-        break; // exit the loop
-      }
+    read(sockfd, buffer, SB_BUFFER_SIZE);
+    ret = strlen(buffer);
+    buffer[ret] = '\0'; // null-terminate the string
+    if((buffer[2] - '0' == COMMAND_MESSAGEID)&&(buffer[5] - '0' == STOP_COMMAND)){
+      printf("[SESOR] STOP COMMAND RECEIVED, STOP SENSOR APP\n");
+      snprintf(buffer, SB_BUFFER_SIZE, "%d,%d,%d\n", SENSOR_ID, INFO_ID, STOP_COMMAND);
+      //ret = strlen(buffer);
+      write(sockfd, buffer, SB_BUFFER_SIZE); // sb_buffer_size는 고정. 왜냐면 SB에서 읽을때 고정 길이로 읽음.
+      keep_running = false; // stop the sensor threads
+      break; // exit the loop
     }
+    
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
   }
 
-  std::this_thread::sleep_for(std::chrono::seconds(100)); // 5초 후 종료
+  std::this_thread::sleep_for(std::chrono::seconds(100));
   keep_running = false;
   
   barometer_thread.join();
@@ -230,12 +214,12 @@ void thread_read_sensor(Sensor& sensor, int period, int sensor_id){
     ret = vector_to_string(data, data_str);
     //std::memcpy(sb_buffer + ret, data_str, ret+1); // ret+1 for null terminator
 
-
+    printf("[SENSOR] ret : %d\n", ret);
     printf("[SENSOR] Time: %s\n", time_str);
     msg.set_data(data_str);
     {
     std::lock_guard<std::mutex> lock(sb_mutex);
-    write(sockfd, msg.get_message(), SB_BUFFER_SIZE);
+    write(sockfd, msg.get_message(), SB_BUFFER_SIZE); // send to software bus
     }
     
     std::cout << std::endl;
