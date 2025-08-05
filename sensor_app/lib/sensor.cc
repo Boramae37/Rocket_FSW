@@ -734,4 +734,8 @@ void ULTIMATEGPS::read_data(){
   printf("[SENSOR][GPS] : Read data from GPS: %s\n", this->buffer); // Print the read data
 }
 
+std::vector<float> ULTIMATEGPS::get_data(){
+  return {0,0,0};
+}
+
 

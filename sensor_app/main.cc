@@ -117,7 +117,6 @@ int main(){
   printf("SENSOR APP READ. Waiting Command");
   write(sockfd, temp_msg, SB_BUFFER_SIZE);
 
-  
 
   while(1){
     gps.read_data();
