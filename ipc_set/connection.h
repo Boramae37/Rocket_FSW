@@ -37,7 +37,7 @@ constexpr char PARACHUTE_STATUS[] = "1"; // 메시지 내용
 
 // Telemetry structure
 constexpr int TELE_SEPERATOR = static_cast<int>(',');
-constexpr int TELE_END = static_cast<int>('\n'); // Telemetry end character
+constexpr int TELE_END = static_cast<int>(';'); // Telemetry end character
 
 // Communication App 주기 (몇 회마다 보낼지)
 constexpr int COMM_PERIOD_IMU = 20;

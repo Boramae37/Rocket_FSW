@@ -112,15 +112,26 @@ int main(){
   imu.init();
   usleep(1000000); // 1 sec
   
-
+  while(1){
+    read(sockfd, buffer, SB_BUFFER_SIZE);
+    ret = strlen(buffer);
+    buffer[ret] = '\0'; // null-terminate the string
+    if((buffer[2] - '0' == COMMAND_MESSAGEID)&&(buffer[5] - '0' == START_COMMAND)){
+      printf("[SESOR] START COMMAND RECEIVED, STOP SENSOR APP\n");
+      break;
+    }
+    
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+  }
   
   
   // Sensor threads
   // 센서 ID는 "connection.h"에서 정의된 상수 사용
+  printf("[SENSOR] Starting Barometer threads...\n");
   std::thread barometer_thread(
     [&] { thread_read_sensor (std::ref(baro), 10, BARO_ID); }
   );
-
+  printf("[SENSOR] Starting IMU threads...\n");
   std::thread imu_thread(
     [&] { thread_read_sensor(std::ref(imu), 12, IMU_ID); }
   );
