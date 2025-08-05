@@ -100,26 +100,36 @@ int main(){
         temp_fd = events[i].data.fd;
         // 지상국 명령 수신
         if (temp_fd == uart_fd) {
-          read(uart_fd, uart_temp_buffer, UART_BUFFER_SIZE); // UART로부터 데이터 읽기
+          read(uart_fd, uart_temp_buffer, UART_BUFFER_SIZE); // UART로부터 데이터 읽기(1바이트씩 읽어야 함)
           ret = strlen(uart_temp_buffer);
           uart_temp_buffer[ret] = '\0'; // 문자열 끝에 NULL 추가
+
           for (int i=0; i<ret; i++){
             strcpy(&uart_buffer[uart_buffer_idx], uart_temp_buffer);
             uart_buffer_idx++;
+
+            // end of message detection
             if(static_cast<int>(uart_buffer[i]) == TELE_END) {
               if(uart_buffer[0] -'0' == COMMAND_MESSAGEID) {
-                if (uart_buffer[2] -'0' == STOP_COMMAND){
-                  
-                  strcpy(sb_buffer, "1,3,0\n");
+                int command_id = uart_buffer[2] - '0'; // 명령 ID는 3번째 문자에 위치
+                // stop command
+                if (command_id == STOP_COMMAND){
+                  snprintf(sb_buffer, SB_BUFFER_SIZE, "%d,%d,%d\n", COMM_ID, COMMAND_MESSAGEID, STOP_COMMAND);
                   write(sockfd, sb_buffer, SB_BUFFER_SIZE); // 소프트웨어 버스로 데이터 전송
                   printf("[COMM][UART] STOP COMMAND RECEIVED : %s\n", uart_buffer);
                   keep_running = false; // stop the sensor threads
                   break;
                 }
-                else if (uart_buffer[2] -'0' == START_COMMAND){
-                  strcpy(sb_buffer, "1,3,2\n");
+                // start command
+                else if (command_id == START_COMMAND){
+                  snprintf(sb_buffer, SB_BUFFER_SIZE, "%d,%d,%d\n", COMM_ID, COMMAND_MESSAGEID, START_COMMAND);
                   write(sockfd, sb_buffer, SB_BUFFER_SIZE); // 소프트웨어 버스로 데이터 전송
                   printf("[COMM][UART] START COMMAND RECEIVED : %s\n", uart_buffer);
+                }
+                // echo
+                else{
+                  ret = strlen(uart_buffer);
+                  write(uart_fd, uart_buffer,ret);
                 }
               }
               memset(uart_buffer, 0, sizeof(uart_buffer)); // 버퍼 초기화
