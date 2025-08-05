@@ -108,9 +108,10 @@ int main(){
             strcpy(&uart_buffer[uart_buffer_idx], uart_temp_buffer);
             uart_buffer_idx++;
             printf("i : %d\n", i);
-
+            printf("buffer : %s\n", uart_buffer);
             // end of message detection
-            if(uart_buffer[i] - '\0' == TELE_END) {
+            if(uart_temp_buffer[i] - '\0' == TELE_END) {
+              printf("end of str detected\n");
               if(uart_buffer[0] -'0' == COMMAND_MESSAGEID) {
                 int command_id = uart_buffer[2] - '0'; // 명령 ID는 3번째 문자에 위치
                 // stop command

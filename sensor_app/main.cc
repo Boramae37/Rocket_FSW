@@ -111,12 +111,16 @@ int main(){
   usleep(1000000); // 1 sec
   imu.init();
   usleep(1000000); // 1 sec
-  
+ 
+  printf("SENSOR APP READ. Waiting Command");
+  write(sockfd, "SENSOR APP READY, WAITING FOR A COMMAND", SB_BUFFER_SIZE);
   while(1){
     read(sockfd, buffer, SB_BUFFER_SIZE);
     ret = strlen(buffer);
+    printf("SENSOR read buffer : %s", buffer);
+    
     buffer[ret] = '\0'; // null-terminate the string
-    if((buffer[2] - '0' == COMMAND_MESSAGEID)&&(buffer[5] - '0' == START_COMMAND)){
+    if((buffer[2] - '0' == COMMAND_MESSAGEID)&&(buffer[4] - '0' == START_COMMAND)){
       printf("[SESOR] START COMMAND RECEIVED, STOP SENSOR APP\n");
       break;
     }
@@ -225,7 +229,7 @@ void thread_read_sensor(Sensor& sensor, int period, int sensor_id){
     ret = vector_to_string(data, data_str);
     //std::memcpy(sb_buffer + ret, data_str, ret+1); // ret+1 for null terminator
 
-    printf("[SENSOR] ret : %d\n", ret);
+    //printf("[SENSOR] ret : %d\n", ret);
     printf("[SENSOR] Time: %s\n", time_str);
     msg.set_data(data_str);
     {
