@@ -120,18 +120,17 @@ int main(){
 
   while(1){
     gps.read_data();
+    // unix domain socket에서 read 기본적으로 blocking 되어 있음.
     read(sockfd, buffer, SB_BUFFER_SIZE);
     ret = strlen(buffer);
-    if (ret > 0){
-      printf("SENSOR read buffer : %s\n", buffer);
     
-      buffer[ret] = '\0'; // null-terminate the string
-      if((buffer[2] - '0' == COMMAND_MESSAGEID)&&(buffer[4] - '0' == START_COMMAND)){
-        printf("[SESOR] START COMMAND RECEIVED, STOP SENSOR APP\n");
-        break;
-      } 
-    }
- 
+    printf("SENSOR read buffer : %s\n", buffer);
+  
+    buffer[ret] = '\0'; // null-terminate the string
+    if((buffer[2] - '0' == COMMAND_MESSAGEID)&&(buffer[4] - '0' == START_COMMAND)){
+      printf("[SESOR] START COMMAND RECEIVED, STOP SENSOR APP\n");
+      break;
+    } 
     
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
   }
