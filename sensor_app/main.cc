@@ -114,7 +114,7 @@ int main(){
   usleep(1000000); // 1 sec
   
   char temp_msg[SB_BUFFER_SIZE] = "SENSOR APP READY, WAITING FOR A COMMAND";
-  printf("SENSOR APP READ. Waiting Command");
+  printf("SENSOR APP READ. Waiting Command\n");
   write(sockfd, temp_msg, SB_BUFFER_SIZE);
 
 
@@ -122,15 +122,18 @@ int main(){
     gps.read_data();
     read(sockfd, buffer, SB_BUFFER_SIZE);
     ret = strlen(buffer);
-    printf("SENSOR read buffer : %s", buffer);
+    if (ret > 0){
+      printf("SENSOR read buffer : %s\n", buffer);
     
-    buffer[ret] = '\0'; // null-terminate the string
-    if((buffer[2] - '0' == COMMAND_MESSAGEID)&&(buffer[4] - '0' == START_COMMAND)){
-      printf("[SESOR] START COMMAND RECEIVED, STOP SENSOR APP\n");
-      break;
+      buffer[ret] = '\0'; // null-terminate the string
+      if((buffer[2] - '0' == COMMAND_MESSAGEID)&&(buffer[4] - '0' == START_COMMAND)){
+        printf("[SESOR] START COMMAND RECEIVED, STOP SENSOR APP\n");
+        break;
+      } 
     }
+ 
     
-    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+    std::this_thread::sleep_for(std::chrono::milliseconds(500));
   }
   
   

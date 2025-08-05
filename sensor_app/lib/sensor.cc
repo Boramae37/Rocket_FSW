@@ -729,6 +729,7 @@ bool ULTIMATEGPS::init(){return true;}
 
 
 void ULTIMATEGPS::read_data(){
+  memset(this->buffer, '0', sizeof(this->buffer));
   bb_serial_read(this->pi, this->RX_PIN, this->buffer, sizeof(this->buffer) - 1); // Read data from the serial port
   this->buffer[sizeof(this->buffer) - 1] = '\0'; // Null-terminate the string
   printf("[SENSOR][GPS] : Read data from GPS: %s\n", this->buffer); // Print the read data
