@@ -121,3 +121,26 @@ public:
     void reset();
 
 };
+
+/////////////////////////////////////////////////////////////////
+
+class ULTIMATEGPS : public Sensor{
+  private:
+    char buffer[512];
+    int BAUD_RATE; // GPS 모듈의 기본 보드레이트
+    int RX_PIN; // RX 핀 번호
+    int TX_PIN; // TX 핀 번호
+    int pi; // pigpio 
+  public:
+    ULTIMATEGPS(int, int, int);
+    virtual ~ULTIMATEGPS();
+
+    virtual bool init();
+    virtual void read_data();
+    
+    // return {latitude, longitude, altitude, speed, date, time}
+    virtual std::vector<float> get_data();
+
+    // soft reset function
+    void reset();
+};

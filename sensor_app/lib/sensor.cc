@@ -17,7 +17,11 @@
 #include <fcntl.h>  // open
                     //
                     //
-        
+
+
+// pigpio 사용위함(gps 센서용.. soft uart 사용해야함... xbee가 hardware uart를 사용하기에)
+#include <pigpiod_if2.h>
+
 // Raspberry Pi I2C device path
 constexpr std::string_view LINUX_I2C_PATH = "/dev/i2c-1"; 
 
@@ -673,3 +677,61 @@ std::vector<float> BNO055::get_data(){
           this->Quternion_ang_w, this->Quternion_ang_x, this->Quternion_ang_y, this->Quternion_ang_z,
           this->linear_acc_x, this->linear_acc_y, this->linear_acc_z};
 }
+
+
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///
+///
+///
+///
+///       ULTIMATE GPS MODULE member function
+///
+///
+///
+///
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+ULTIMATEGPS::ULTIMATEGPS(int baud_rate, int tx, int rx) : BAUD_RATE(baud_rate), TX_PIN(tx), RX_PIN(rx) {
+  int ret;
+  this->pi = pigpio_start(NULL, NULL); // Initialize pigpio library
+  if (this->pi < 0) {
+    std::cerr << "[ERROR] : Failed to initialize pigpio library" << std::endl;
+    while(this->pi < 0){
+      usleep(100000); // Wait for 100ms before retrying
+      printf("[SENSOR][GPS][ERROR] : Retrying to initialize pigpio library...\n");
+      this->pi = pigpio_start(NULL, NULL); // Initialize pigpio library
+    }
+    printf("[SENSOR][GPS] : pigpio library initialized successfully\n");
+  }
+  printf("[SENSOR][GPS] : pigpio started successfully\n");
+
+
+  ret = bb_serial_read_open(this->pi, this->RX_PIN, this->BAUD_RATE, 8); // Open the serial port for reading
+  while(ret < 0){
+    std::cerr << "[ERROR] : Failed to open serial port for reading" << std::endl;
+    usleep(100000); // Wait for 100ms before retrying
+    printf("[SENSOR][GPS][ERROR] : Retrying to open serial port for reading...\n");
+    ret = bb_serial_read_open(this->pi, this->RX_PIN, this->BAUD_RATE, 0); // Open the serial port for reading
+  }
+
+  printf("[SENSOR][GPS] : Serial port opened for reading successfully\n");
+  memset(this->buffer, 0, sizeof(this->buffer)); // Initialize the buffer to zero
+}
+
+
+ULTIMATEGPS::~ULTIMATEGPS() {
+  bb_serial_read_close(this->pi, this->RX_PIN);
+  pigpio_stop(this->pi); // Stop pigpio library
+}
+
+bool ULTIMATEGPS::init(){return true;}
+
+
+void ULTIMATEGPS::read_data(){
+  bb_serial_read(this->pi, this->RX_PIN, this->buffer, sizeof(this->buffer) - 1); // Read data from the serial port
+  this->buffer[sizeof(this->buffer) - 1] = '\0'; // Null-terminate the string
+  printf("[SENSOR][GPS] : Read data from GPS: %s\n", this->buffer); // Print the read data
+}
+
+

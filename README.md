@@ -4,6 +4,21 @@
 
     sudo apt install libfmt-dev
 
+## pigpio
+
+아래 사이트 참고해서 설치
+https://abyz.me.uk/rpi/pigpio/download.html
+
+wget, unzip 안되면 sudo apt install 하면 됨
+
+오래 걸린다고 하니 천천히 기다릴 것...
+
+프로그램 실행전에 
+```
+sudo systemctl start pigpiod
+```
+로 데몬 실행 후에 프로그램 실행해야함
+
 ## tmux (복붙 편하게 하려면)
 ```
 sudo apt install tmux
@@ -44,3 +59,5 @@ ls -l /dev/serial*
 sudo stty -F /dev/serial0 raw 115200 cs8 clocal -cstopb
 ```
 이거 해야 uart 연결될 수도..
+
+

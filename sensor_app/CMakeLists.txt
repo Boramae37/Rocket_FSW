@@ -30,5 +30,8 @@ add_executable (sensor main.cc ${CMAKE_SOURCE_DIR}/lib/sensor.cc ${CMAKE_SOURCE_
 target_include_directories(sensor PRIVATE ${CMAKE_SOURCE_DIR}/lib)
 target_include_directories(sensor PRIVATE ${CMAKE_SOURCE_DIR}/../ipc_set)
 
+# pigpio 라이브러리 링크
+target_link_libraries(sensor PRIVATE pigpiod_if2)
+
 # program 에 communication 를 링크
 #target_link_libraries(sensor)

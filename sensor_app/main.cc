@@ -102,6 +102,7 @@ int main(){
 // Sensor setup
   BMP390 baro;
   BNO055 imu;
+  ULTIMATEGPS gps(9600, 27, 22);
 
   std::vector<float> baro_data;
   std::vector<float> imu_data;
@@ -111,10 +112,15 @@ int main(){
   usleep(1000000); // 1 sec
   imu.init();
   usleep(1000000); // 1 sec
- 
+  
+  char temp_msg[SB_BUFFER_SIZE] = "SENSOR APP READY, WAITING FOR A COMMAND";
   printf("SENSOR APP READ. Waiting Command");
-  write(sockfd, "SENSOR APP READY, WAITING FOR A COMMAND", SB_BUFFER_SIZE);
+  write(sockfd, temp_msg, SB_BUFFER_SIZE);
+
+  
+
   while(1){
+    gps.read_data();
     read(sockfd, buffer, SB_BUFFER_SIZE);
     ret = strlen(buffer);
     printf("SENSOR read buffer : %s", buffer);
@@ -125,7 +131,7 @@ int main(){
       break;
     }
     
-    std::this_thread::sleep_for(std::chrono::milliseconds(500));
+    std::this_thread::sleep_for(std::chrono::milliseconds(1000));
   }
   
   
