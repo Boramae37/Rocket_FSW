@@ -107,9 +107,10 @@ int main(){
           for (int i=0; i<ret; i++){
             strcpy(&uart_buffer[uart_buffer_idx], uart_temp_buffer);
             uart_buffer_idx++;
+            printf("i : %d\n", i);
 
             // end of message detection
-            if(static_cast<int>(uart_buffer[i]) == TELE_END) {
+            if(uart_buffer[i] - '\0' == TELE_END) {
               if(uart_buffer[0] -'0' == COMMAND_MESSAGEID) {
                 int command_id = uart_buffer[2] - '0'; // 명령 ID는 3번째 문자에 위치
                 // stop command
@@ -132,11 +133,11 @@ int main(){
                   write(uart_fd, uart_buffer,ret);
                 }
               }
+              printf("[COMM][UART] Received: %s\n", uart_buffer); // UART로부터 받은 데이터 출력
               memset(uart_buffer, 0, sizeof(uart_buffer)); // 버퍼 초기화
               uart_buffer_idx = 0; // 포인터 초기화
             }
           }
-          printf("[COMM][UART] Received: %s\n", uart_buffer); // UART로부터 받은 데이터 출력
         }
         // 내부 소프트웨어 버스 메세지 수신
         else if (temp_fd == sockfd) {
