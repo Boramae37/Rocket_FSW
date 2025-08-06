@@ -7,8 +7,11 @@
 
 #include <iomanip>
 #include <string_view> // 문자열 뷰를 위해
+#include <charconv> // std::to_chars
 
 #include <cmath> // pow() for barometric formula
+
+
 
 // i2c를 위한.. linux kernel 이용하는 거임
 #include <linux/i2c-dev.h>
@@ -734,10 +737,54 @@ void ULTIMATEGPS::read_data(){
   this->buffer[sizeof(this->buffer) - 1] = '\0'; // Null-terminate the string
   printf("[SENSOR][GPS] : Read data from GPS: %s\n", this->buffer); // Print the read data
   
+  std::string_view view(this->buffer);
+
+  this->start_idx = view.find("$GPGGA");
+  this->end_idx = view.find("\r\n", this->start_idx);
+
+  std::string_view gpgga_message = view.substr(this->start_idx, this->end_idx - this->start_idx);
+  
+  std::vector<std::string_view> fields;
+  size_t curret_pos = 0;
+
+  while(true){
+    size_t next_comma = gpgga_message.find(',', curret_pos);
+
+    fields.push_back(gpgga_message.substr(curret_pos, next_comma - curret_pos));
+    if (next_comma == std::string_view::npos) {
+      break; // No more commas found, exit the loop
+    }
+    // Move to the next position after the comma
+    curret_pos = next_comma + 1;
+  }
+
+  if (fields.size() > 5){
+    if(fields[6] != "0"){
+      // std::string_view lat_str = fields[2];
+      // std::string_view ns_indicator = fields[3];
+      // std::string_view lon_str = fields[4];
+      // std::string_view ew_indicator = fields[5];
+
+      std::from_chars(fields[2].data(), fields[2].data() + fields[2].size(), this->latitude);
+      std::from_chars(fields[4].data(), fields[4].data() + fields[4].size(),  this->longitude);
+      if (fields[3] == "S") {
+        this->latitude = -this->latitude; // South latitude
+      }
+      if (fields[5] == "W") {
+        this->longitude = -this->longitude; // West longitude
+      }
+    }
+    else{
+      printf("[SENSOR][GPS] : No GPS fix. Data is not valid\n");
+    }
+  }
+  else{
+    printf("Message has too few fields.");
+  }
 }
 
 std::vector<float> ULTIMATEGPS::get_data(){
-  return {0,0,0};
+  return {this->latitude, this->longitude, this->altitude};
 }
 
 

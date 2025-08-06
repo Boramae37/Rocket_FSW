@@ -4,5 +4,6 @@ sudo killall pigpiod
 
 sudo pigpiod
 
-./supervisor_app/build/supervisor
+cd supervisor_app/build/
 
+./supervisor

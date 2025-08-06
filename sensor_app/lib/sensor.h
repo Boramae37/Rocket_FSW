@@ -131,6 +131,14 @@ class ULTIMATEGPS : public Sensor{
     int RX_PIN; // RX 핀 번호
     int TX_PIN; // TX 핀 번호
     int pi; // pigpio 
+
+    int start_idx; // parsing을 위한 시작 인덱스
+    int end_idx; // parsing을 위한 끝 인덱스
+
+    float latitude;
+    float longitude;
+    float altitude;
+
   public:
     ULTIMATEGPS(int, int, int);
     virtual ~ULTIMATEGPS();
