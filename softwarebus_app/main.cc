@@ -23,6 +23,8 @@
 
 #include "spdlog/fmt/fmt.h" // spdlog에 내장된 fmt 헤더를 포함
 
+#include <memory>
+
 #include <csignal> // signal handling
 
 #include "connection.h" // SOCKET_NAME
