@@ -96,23 +96,24 @@ int main(){
   std::thread listen_thread([&](){
     while(keep_running) {
       nready = epoll_wait(epoll_fd, events, 1, -1); // -1은 타임아웃(즉, 무한대기)
-
+      memset(uart_temp_buffer, 0, sizeof(uart_temp_buffer));
       for (int i = 0; i < nready; i++) {
         temp_fd = events[i].data.fd;
         // 지상국 명령 수신
         if (temp_fd == uart_fd) {
-          read(uart_fd, uart_temp_buffer, UART_BUFFER_SIZE); // UART로부터 데이터 읽기(1바이트씩 읽어야 함)
+          ret = read(uart_fd, uart_temp_buffer, UART_BUFFER_SIZE); // UART로부터 데이터 읽기(1바이트씩 읽어야 함)
+          uart_temp_buffer[ret] = '\0';
           ret = strlen(uart_temp_buffer);
           uart_temp_buffer[ret] = '\0'; // 문자열 끝에 NULL 추가
-
-          for (int i=0; i<ret; i++){
-            strcpy(&uart_buffer[uart_buffer_idx], uart_temp_buffer);
+          //fmt::print("ret:{}, tmep: {}", ret, uart_temp_buffer);
+          for (int j=0; j<ret; j++){
+            strcpy(&uart_buffer[uart_buffer_idx], &uart_temp_buffer[j]);
             uart_buffer_idx++;
-            fmt::print("i : {}\n", i);
-            fmt::print("buffer : {}\n", uart_buffer);
+            //fmt::print("j : {}\n", j);
+            //fmt::print("buffer : {}\n", uart_buffer);
 
             // end of message detection
-            if(uart_temp_buffer[i] - '\0' == TELE_END) {
+            if(uart_temp_buffer[j] - '\0' == TELE_END) {
               fmt::print("end of str detected\n");
               if(uart_buffer[0] -'0' == COMMAND_MESSAGEID) {
                 int command_id = uart_buffer[2] - '0'; // 명령 ID는 3번째 문자에 위치
@@ -139,6 +140,9 @@ int main(){
               }
               
               fmt::print("[COMM][UART] Received: {}\n", uart_buffer); // UART로부터 받은 데이터 출력
+              auto result = fmt::format_to_n(sb_buffer, SB_BUFFER_SIZE - 1, "{},{},{} : received", COMM_ID, INFO_ID, uart_buffer);
+              *result.out = '\0';
+              write(uart_fd, sb_buffer, result.size);
               memset(uart_buffer, 0, sizeof(uart_buffer)); // 버퍼 초기화
               uart_buffer_idx = 0; // 포인터 초기화
             }

@@ -118,7 +118,7 @@ int main(){
   imu.init();
   usleep(1000000); // 1 sec
   
-  char temp_msg[SB_BUFFER_SIZE] = "SENSOR APP READY, WAITING FOR A COMMAND";
+  char temp_msg[SB_BUFFER_SIZE] = "0,7,SENSOR APP READY, WAITING FOR A COMMAND";
   fmt::print("SENSOR APP READ. Waiting Command\n");
   write(sockfd, temp_msg, SB_BUFFER_SIZE);
 
@@ -163,7 +163,7 @@ int main(){
       snprintf(buffer, SB_BUFFER_SIZE, "%d,%d,%d\n", SENSOR_ID, INFO_ID, STOP_COMMAND);
       //ret = strlen(buffer);
       write(sockfd, buffer, SB_BUFFER_SIZE); // sb_buffer_size는 고정. 왜냐면 SB에서 읽을때 고정 길이로 읽음.
-      keep_running = false; // stop the sensor threads
+      //keep_running = false; // stop the sensor threads
       break; // exit the loop
     }
     
@@ -217,7 +217,7 @@ void thread_read_sensor(Sensor& sensor, int period, int sensor_id){
   char data_str[SB_BUFFER_SIZE]; // sensor data string
 
   char sb_buffer[SB_BUFFER_SIZE]; // software bus buffer
-  int ret;
+  //int ret;
 
   // period should be 'ms' unit
   while(keep_running){
@@ -234,9 +234,10 @@ void thread_read_sensor(Sensor& sensor, int period, int sensor_id){
     // convert data to string and set message data
     auto now_time = std::chrono::system_clock::now();
 
-    fmt::format_to_n(data_str, SB_BUFFER_SIZE, "{:%Y-%m-%d %H:%M:%S.%e},{}", now_time, fmt::join(data, ","));
+    auto ret = fmt::format_to_n(data_str, SB_BUFFER_SIZE -1, "{:%H:%M:%S.%e},{}", now_time, fmt::join(data, ","));
+    *ret.out = '\0';
 
-    fmt::print("SENSOR APP RUNNING at {}\n", fmt::format("{:%Y-%m-%d %H:%M:%S.%e}", now_time));
+    fmt::print("SENSOR APP RUNNING at {:%Y-%m-%d %H:%M:%S}\n", now_time);
   
 
     msg.set_data(data_str);
