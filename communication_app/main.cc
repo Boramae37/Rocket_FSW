@@ -14,6 +14,7 @@
 #include <sys/epoll.h>      // epoll_create1(), epoll_ctl(), epoll_wait()
 #include <cstring>      // memset(), strerror()
 
+#include "spdlog/fmt/fmt.h" // fmt library for formatting strings
 
 
 #include "connection.h" // for communication with software bus
@@ -28,7 +29,7 @@ std::atomic<bool> keep_running(true); // 프로그램 종료 플래그
 int setup_uart(const char* device);
 
 int main(){
-  std::cout << "this is communication_application" << std::endl; 
+  fmt::print("this is communication_application\n");
 
   //////////////////////////////////////////////////////////////////////////
   // Software Bus 연결을 위한 공통 부분(물론 SENSOR_ID등 등록 부분은 바꿔야함)
@@ -64,8 +65,8 @@ int main(){
   // uart setup
   int uart_fd = setup_uart(SERIAL_PORT);
   if (uart_fd == -1) {
-      perror("setup_uart");
-      exit(EXIT_FAILURE);
+    perror("setup_uart");
+    exit(EXIT_FAILURE);
   }
   char uart_buffer[UART_BUFFER_SIZE]; // UART로 읽어올 데이터 버퍼
   char uart_temp_buffer[UART_BUFFER_SIZE]; // UART로 읽어올 데이터 버퍼
@@ -107,18 +108,20 @@ int main(){
           for (int i=0; i<ret; i++){
             strcpy(&uart_buffer[uart_buffer_idx], uart_temp_buffer);
             uart_buffer_idx++;
-            printf("i : %d\n", i);
-            printf("buffer : %s\n", uart_buffer);
+            fmt::print("i : {}\n", i);
+            fmt::print("buffer : {}\n", uart_buffer);
+
             // end of message detection
             if(uart_temp_buffer[i] - '\0' == TELE_END) {
-              printf("end of str detected\n");
+              fmt::print("end of str detected\n");
               if(uart_buffer[0] -'0' == COMMAND_MESSAGEID) {
                 int command_id = uart_buffer[2] - '0'; // 명령 ID는 3번째 문자에 위치
+
                 // stop command
                 if (command_id == STOP_COMMAND){
                   snprintf(sb_buffer, SB_BUFFER_SIZE, "%d,%d,%d\n", COMM_ID, COMMAND_MESSAGEID, STOP_COMMAND);
                   write(sockfd, sb_buffer, SB_BUFFER_SIZE); // 소프트웨어 버스로 데이터 전송
-                  printf("[COMM][UART] STOP COMMAND RECEIVED : %s\n", uart_buffer);
+                  fmt::print("[COMM][UART] STOP COMMAND RECEIVED : {}\n", uart_buffer);
                   keep_running = false; // stop the sensor threads
                   break;
                 }
@@ -126,7 +129,7 @@ int main(){
                 else if (command_id == START_COMMAND){
                   snprintf(sb_buffer, SB_BUFFER_SIZE, "%d,%d,%d\n", COMM_ID, COMMAND_MESSAGEID, START_COMMAND);
                   write(sockfd, sb_buffer, SB_BUFFER_SIZE); // 소프트웨어 버스로 데이터 전송
-                  printf("[COMM][UART] START COMMAND RECEIVED : %s\n", uart_buffer);
+                  fmt::print("[COMM][UART] START COMMAND RECEIVED : {}\n", uart_buffer);
                 }
                 // echo
                 else{
@@ -134,7 +137,8 @@ int main(){
                   write(uart_fd, uart_buffer,ret);
                 }
               }
-              printf("[COMM][UART] Received: %s\n", uart_buffer); // UART로부터 받은 데이터 출력
+              
+              fmt::print("[COMM][UART] Received: {}\n", uart_buffer); // UART로부터 받은 데이터 출력
               memset(uart_buffer, 0, sizeof(uart_buffer)); // 버퍼 초기화
               uart_buffer_idx = 0; // 포인터 초기화
             }

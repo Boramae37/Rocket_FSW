@@ -124,7 +124,7 @@ int main(){
 
 
   while(1){
-    gps.read_data();
+    
     // unix domain socket에서 read 기본적으로 blocking 되어 있음.
     read(sockfd, buffer, SB_BUFFER_SIZE);
     ret = strlen(buffer);
