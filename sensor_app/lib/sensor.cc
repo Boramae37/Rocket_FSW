@@ -11,7 +11,7 @@
 
 #include <cmath> // pow() for barometric formula
 
-
+#include "spdlog/fmt/fmt.h" // fmt library for formatting strings
 
 // i2c를 위한.. linux kernel 이용하는 거임
 #include <linux/i2c-dev.h>
@@ -119,7 +119,7 @@ int i2c_write(uint8_t slave_addr, uint8_t write_reg, uint8_t write_data){
   }
   close(fd);
 
-  std::cout << "Writing Complete" << std::endl;
+  fmt::print("Writing Complete\n");
   return 1;
 
 }
@@ -405,16 +405,15 @@ bool BMP390::init(){
   //this->slave_addr = BMP390_I2C_ADDR;
   
   // soft reset
-  std::cout << "Sensor soft resetting...." << std::endl;
+  fmt::print("Sensor soft resetting....\n");
   this->reset();
   usleep(2000000);
-  std::cout << "Sensor Soft reset complete" << std::endl;
-  
+  fmt::print("Sensor Soft reset complete\n");
 
   ///////////////////// SENSOR MODE SETTING ///////////////////////////////////////////////////////////////////
   // pwr mode setting (00110011 = normal mode, both pressure, temperature enabled)
   i2c_write(this->slave_addr, BMP390_PWRCTRL_ADDR, BMP390_PWR_MODE);
-  std::cout << "Power mode setting complete" << std::endl;
+  fmt::print("Power mode setting complete\n");
   usleep(2000000);
 
 
@@ -469,7 +468,7 @@ bool BMP390::init(){
 
   // 여기서 한 번 읽으면, 이후 read only 함수로 read_data 구현 가능..  
 
-  std::cout << "BMP390 initialized" << std::endl;
+  fmt::print("BMP390 initialized\n");
   return true;
 }
 
@@ -489,7 +488,7 @@ void BMP390::read_data(){
     this->pressure = 44330.0 * (1.0 - pow((this->pressure / SEA_LEVEL_PRESSURE), 0.1903)); // barometric formula
   }
   else{
-    std::cout << "Failed to read" << std::endl;
+    fmt::print("Failed to read\n");
   }
 }
 
@@ -579,11 +578,11 @@ bool BNO055::init(){
   //this->slave_addr = BNO055_I2C_ADDR; // Default I2C address for B
   
   // Soft reset the sensor
-  std::cout << "BNO055 soft resetting..." << std::endl;
+  fmt::print("BNO055 soft resetting...\n");
   this->reset();
-  std::cout << "BNO055 soft reset complete" << std::endl;
-  
-  
+  fmt::print("BNO055 soft reset complete\n");
+
+
   // power mode : default mode is NORMAL so, we don't need to set it.
   // if you want to change, set resgister 0x3E
 
@@ -611,8 +610,8 @@ bool BNO055::init(){
     return false;
   }
   */
-  
-  std::cout << "BNO055 initialized" << std::endl;
+
+  fmt::print("BNO055 initialized\n");
   return true;
 }
 
@@ -702,23 +701,23 @@ ULTIMATEGPS::ULTIMATEGPS(int baud_rate, int tx, int rx) : BAUD_RATE(baud_rate), 
     std::cerr << "[ERROR] : Failed to initialize pigpio library" << std::endl;
     while(this->pi < 0){
       usleep(100000); // Wait for 100ms before retrying
-      printf("[SENSOR][GPS][ERROR] : Retrying to initialize pigpio library...\n");
+      fmt::print("[SENSOR][GPS][ERROR] : Retrying to initialize pigpio library...\n");
       this->pi = pigpio_start(NULL, NULL); // Initialize pigpio library
     }
-    printf("[SENSOR][GPS] : pigpio library initialized successfully\n");
+    fmt::print("[SENSOR][GPS] : pigpio library initialized successfully\n");
   }
-  printf("[SENSOR][GPS] : pigpio started successfully\n");
+  fmt::print("[SENSOR][GPS] : pigpio started successfully\n");
 
 
   ret = bb_serial_read_open(this->pi, this->RX_PIN, this->BAUD_RATE, 8); // Open the serial port for reading
   while(ret < 0){
     std::cerr << "[ERROR] : Failed to open serial port for reading" << std::endl;
     usleep(100000); // Wait for 100ms before retrying
-    printf("[SENSOR][GPS][ERROR] : Retrying to open serial port for reading...\n");
+    fmt::print("[SENSOR][GPS][ERROR] : Retrying to open serial port for reading...\n");
     ret = bb_serial_read_open(this->pi, this->RX_PIN, this->BAUD_RATE, 0); // Open the serial port for reading
   }
 
-  printf("[SENSOR][GPS] : Serial port opened for reading successfully\n");
+  fmt::print("[SENSOR][GPS] : Serial port opened for reading successfully\n");
   memset(this->buffer, 0, sizeof(this->buffer)); // Initialize the buffer to zero
 }
 
@@ -735,8 +734,8 @@ void ULTIMATEGPS::read_data(){
   memset(this->buffer, '0', sizeof(this->buffer));
   bb_serial_read(this->pi, this->RX_PIN, this->buffer, sizeof(this->buffer) - 1); // Read data from the serial port
   this->buffer[sizeof(this->buffer) - 1] = '\0'; // Null-terminate the string
-  printf("[SENSOR][GPS] : Read data from GPS: %s\n", this->buffer); // Print the read data
-  
+  fmt::print("[SENSOR][GPS] : Read data from GPS: {}\n", this->buffer); // Print the read data
+
   std::string_view view(this->buffer);
 
   this->start_idx = view.find("$GPGGA");
@@ -775,11 +774,11 @@ void ULTIMATEGPS::read_data(){
       }
     }
     else{
-      printf("[SENSOR][GPS] : No GPS fix. Data is not valid\n");
+      fmt::print("[SENSOR][GPS] : No GPS fix. Data is not valid\n");
     }
   }
   else{
-    printf("Message has too few fields.");
+    fmt::print("Message has too few fields.");
   }
 }
 

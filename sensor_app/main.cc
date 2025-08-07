@@ -3,11 +3,13 @@
 #include <string>
 #include <cstring>
 
+
 #include <sys/socket.h> // socket(), connect(), write()
 #include <sys/un.h>    // struct sockaddr_un
 #include <cstdlib>     // exit()
 #include <cstdio>      // snprintf()
 #include <charconv>   // std::to_chars
+
 
 // i2c를 위한.. linux kernel 이용하는 거임
 #include <linux/i2c-dev.h>
@@ -21,6 +23,10 @@
 #include <chrono>
 #include <atomic>
 
+// fmt
+#include "spdlog/fmt/fmt.h"
+#include "spdlog/fmt/chrono.h"
+#include "spdlog/fmt/ranges.h" // join, range
 
 // my includes
 #include "sensor.h"
@@ -34,11 +40,11 @@
 //     return cc;
 // }
 
-static inline uint64_t read_time_ns(void) {
-    struct timespec ts;
-    clock_gettime(CLOCK_MONOTONIC_RAW, &ts);
-    return (uint64_t)ts.tv_sec * 1000000000ULL + ts.tv_nsec;
-}
+// static inline uint64_t read_time_ns(void) {
+//     struct timespec ts;
+//     clock_gettime(CLOCK_MONOTONIC_RAW, &ts);
+//     return (uint64_t)ts.tv_sec * 1000000000ULL + ts.tv_nsec;
+// }
 
 
 // function declarations
@@ -52,9 +58,6 @@ std::mutex i2c_mutex; // i2c bus mutex
 std::mutex sb_mutex; // software bus mutex
 std::atomic<bool> keep_running(true);
 
-uint64_t start_time = 0; // PMCCNTR_EL0 초기화
-uint64_t elapsed_time = 0; // 경과 시간 초기화
-uint64_t now_time = 0; // 현재 시간 초기화
 
 ///////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////
@@ -65,11 +68,13 @@ int sockfd; // socket file descriptor
 
 int main(){
 
+  auto now_time = std::chrono::system_clock::now();
+  fmt::print("SENSOR APP STARTED at {}\n", fmt::format("{:%Y-%m-%d %H:%M:%S.%e}", now_time));
+
   //////////////////////////////////////////////////////////////////////////
   // Software Bus 연결을 위한 공통 부분(물론 SENSOR_ID등 등록 부분은 바꿔야함)
   //////////////////////////////////////////////////////////////////////////
 
-  start_time = read_time_ns();
 
   // Socket setup
   int ret; // return value
@@ -114,7 +119,7 @@ int main(){
   usleep(1000000); // 1 sec
   
   char temp_msg[SB_BUFFER_SIZE] = "SENSOR APP READY, WAITING FOR A COMMAND";
-  printf("SENSOR APP READ. Waiting Command\n");
+  fmt::print("SENSOR APP READ. Waiting Command\n");
   write(sockfd, temp_msg, SB_BUFFER_SIZE);
 
 
@@ -124,11 +129,11 @@ int main(){
     read(sockfd, buffer, SB_BUFFER_SIZE);
     ret = strlen(buffer);
     
-    printf("SENSOR read buffer : %s\n", buffer);
+    fmt::print("SENSOR read buffer : {}\n", buffer);
   
     buffer[ret] = '\0'; // null-terminate the string
     if((buffer[2] - '0' == COMMAND_MESSAGEID)&&(buffer[4] - '0' == START_COMMAND)){
-      printf("[SESOR] START COMMAND RECEIVED, STOP SENSOR APP\n");
+      fmt::print("[SESOR] START COMMAND RECEIVED, STOP SENSOR APP\n");
       break;
     } 
     
@@ -138,11 +143,11 @@ int main(){
   
   // Sensor threads
   // 센서 ID는 "connection.h"에서 정의된 상수 사용
-  printf("[SENSOR] Starting Barometer threads...\n");
+  fmt::print("[SENSOR] Starting Barometer threads...\n");
   std::thread barometer_thread(
     [&] { thread_read_sensor (std::ref(baro), 10, BARO_ID); }
   );
-  printf("[SENSOR] Starting IMU threads...\n");
+  fmt::print("[SENSOR] Starting IMU threads...\n");
   std::thread imu_thread(
     [&] { thread_read_sensor(std::ref(imu), 12, IMU_ID); }
   );
@@ -153,7 +158,7 @@ int main(){
     ret = strlen(buffer);
     buffer[ret] = '\0'; // null-terminate the string
     if((buffer[2] - '0' == COMMAND_MESSAGEID)&&(buffer[5] - '0' == STOP_COMMAND)){
-      printf("[SESOR] STOP COMMAND RECEIVED, STOP SENSOR APP\n");
+      fmt::print("[SESOR] STOP COMMAND RECEIVED, STOP SENSOR APP\n");
       snprintf(buffer, SB_BUFFER_SIZE, "%d,%d,%d\n", SENSOR_ID, INFO_ID, STOP_COMMAND);
       //ret = strlen(buffer);
       write(sockfd, buffer, SB_BUFFER_SIZE); // sb_buffer_size는 고정. 왜냐면 SB에서 읽을때 고정 길이로 읽음.
@@ -174,34 +179,34 @@ int main(){
 }
 
 
-// 전체 string 길이 반환(null제외)
-int vector_to_string(const std::vector<float>& values, char* out_buf) {
-  char* ptr = out_buf;
-  char* buf_end = out_buf + SB_BUFFER_SIZE;
-  int string_length = 0;
+// 전체 string 길이 반환(null제외) -> fmt::join으로 대체
+// int vector_to_string(const std::vector<float>& values, char* out_buf) {
+//   char* ptr = out_buf;
+//   char* buf_end = out_buf + SB_BUFFER_SIZE;
+//   int string_length = 0;
 
-  for (size_t i = 0; i < values.size(); ++i) {
-    char num_buf[32];
-    auto [num_end, ec] = std::to_chars(num_buf, num_buf + sizeof(num_buf), values[i]);
-    if (ec != std::errc()) return -1;
+//   for (size_t i = 0; i < values.size(); ++i) {
+//     char num_buf[32];
+//     auto [num_end, ec] = std::to_chars(num_buf, num_buf + sizeof(num_buf), values[i]);
+//     if (ec != std::errc()) return -1;
 
-    size_t len = num_end - num_buf;
-    if (ptr + len >= buf_end) return -1;
+//     size_t len = num_end - num_buf;
+//     if (ptr + len >= buf_end) return -1;
 
-    std::memcpy(ptr, num_buf, len);
-    ptr += len;
-    string_length += len;
+//     std::memcpy(ptr, num_buf, len);
+//     ptr += len;
+//     string_length += len;
     
-    if (i + 1 < values.size()) {
-        if (ptr + 1 >= buf_end) return -1;
-        *ptr++ = ',';
-    }
-  }
+//     if (i + 1 < values.size()) {
+//         if (ptr + 1 >= buf_end) return -1;
+//         *ptr++ = ',';
+//     }
+//   }
 
-  if (ptr >= buf_end) return -1;
-  *ptr = '\0';
-  return string_length;
-}
+//   if (ptr >= buf_end) return -1;
+//   *ptr = '\0';
+//   return string_length;
+// }
 
 
 void thread_read_sensor(Sensor& sensor, int period, int sensor_id){
@@ -209,7 +214,7 @@ void thread_read_sensor(Sensor& sensor, int period, int sensor_id){
   Message msg(SENSOR_ID); // sensor_id is the specific sensor id (IMU or Barometer)
   msg.set_message_id(sensor_id);
   char data_str[SB_BUFFER_SIZE]; // sensor data string
-  char time_str[23];
+
   char sb_buffer[SB_BUFFER_SIZE]; // software bus buffer
   int ret;
 
@@ -226,25 +231,19 @@ void thread_read_sensor(Sensor& sensor, int period, int sensor_id){
     // }
 
     // convert data to string and set message data
-    now_time = read_time_ns();
-    elapsed_time = now_time - start_time;
-    ret = snprintf(time_str, sizeof(time_str), "%llu", elapsed_time);
-    time_str[ret] = ','; // ensure null termination
-    time_str[ret + 1] = '\0'; // null-terminate the string
-    //std::memcpy(sb_buffer, time_str, ret);
+    auto now_time = std::chrono::system_clock::now();
 
-    ret = vector_to_string(data, data_str);
-    //std::memcpy(sb_buffer + ret, data_str, ret+1); // ret+1 for null terminator
+    fmt::format_to_n(data_str, SB_BUFFER_SIZE, "{:%Y-%m-%d %H:%M:%S.%e},{}", now_time, fmt::join(data, ","));
 
-    //printf("[SENSOR] ret : %d\n", ret);
-    printf("[SENSOR] Time: %s\n", time_str);
+    fmt::print("SENSOR APP RUNNING at {}\n", fmt::format("{:%Y-%m-%d %H:%M:%S.%e}", now_time));
+  
+
     msg.set_data(data_str);
     {
     std::lock_guard<std::mutex> lock(sb_mutex);
     write(sockfd, msg.get_message(), SB_BUFFER_SIZE); // send to software bus
     }
-    
-    std::cout << std::endl;
+
     std::this_thread::sleep_for(std::chrono::milliseconds(period));
   }
 }

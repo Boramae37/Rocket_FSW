@@ -17,7 +17,8 @@ set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/../run)
 
 
 
-
+# spdlog 패키지 찾기
+find_package(spdlog REQUIRED)
 
 
 # 확인할 디렉토리 추가
@@ -32,6 +33,7 @@ target_include_directories(sensor PRIVATE ${CMAKE_SOURCE_DIR}/../ipc_set)
 
 # pigpio 라이브러리 링크
 target_link_libraries(sensor PRIVATE pigpiod_if2)
+target_link_libraries(softwarebus PRIVATE spdlog::spdlog)
 
 # program 에 communication 를 링크
 #target_link_libraries(sensor)

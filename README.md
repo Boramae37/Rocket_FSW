@@ -1,5 +1,12 @@
 # 미리 설치할 파일(외부 라이브러리)-------------
 
+## spdlog
+
+```
+sudo apt install libspdlog-dev
+```
+이게 fmt 포함함
+
 <!-- ## fmt library
 
     sudo apt install libfmt-dev -->
