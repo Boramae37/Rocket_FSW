@@ -126,17 +126,18 @@ int main(){
   while(1){
     
     // unix domain socket에서 read 기본적으로 blocking 되어 있음.
-    read(sockfd, buffer, SB_BUFFER_SIZE);
+    ret = read(sockfd, buffer, SB_BUFFER_SIZE);
+    buffer[ret] = '\0';
     ret = strlen(buffer);
-    
-    fmt::print("SENSOR read buffer : {}\n", buffer);
+    buffer[ret] = '\0'; // null-terminate the string 
+    fmt::print("SENSOR read buffer : size {} : {}\n", ret,buffer);
   
-    buffer[ret] = '\0'; // null-terminate the string
+    
     if((buffer[2] - '0' == COMMAND_MESSAGEID)&&(buffer[4] - '0' == START_COMMAND)){
       fmt::print("[SESOR] START COMMAND RECEIVED, STOP SENSOR APP\n");
       break;
     } 
-    
+    memset(buffer, 0, SB_BUFFER_SIZE); 
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
   }
   

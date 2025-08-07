@@ -252,7 +252,7 @@ int main() {
             // 받은 데이터 에코
             sensor_counter[buffer_message_id]++;
             SB::logger->info("{} {} {}", sensor_counter[0], sensor_counter[1], sensor_counter[2]);
-            SB::logger->info("[{}][{}] : {}", app_names[buffer_app_id].data(), message_names[buffer_message_id].data(), buffer);
+            fmt::print("[{}][{}] : {}", app_names[buffer_app_id].data(), message_names[buffer_message_id].data(), buffer);
           }
         }
       }
