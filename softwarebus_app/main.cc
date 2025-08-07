@@ -4,6 +4,7 @@
 #include <sys/epoll.h>
 #include <stdio.h>
 #include <vector>
+#include <filesystem>
 
 #include <cstring>     // memset()
 #include <unistd.h>    // close()
@@ -67,12 +68,13 @@ int main() {
   // 4. 조건부 콘솔 싱크 추가 (디버그 모드에서만 활성화)
   #ifdef DEBUG
     // 컬러 콘솔 싱크를 생성하여 sinks 벡터에 추가
-    sinks.push_back(std::make_shared<spdlog::sinks::stdout_color_sink_mt>());
+    sinks.push_back(std::make_shared<spdlog::sinks::stdout_sink_mt>());
     std::cout << "[알림] 디버그 모드로 실행되어 콘솔 출력이 활성화되었습니다.\n";
   #endif
 
   // 5. 파일 싱크 추가 (항상 활성화)
   // "logs/app_log.txt" 파일에 로그를 기록하고, 기존 내용에 이어붙입니다.
+  std::filesystem::create_directories("logs/");
   sinks.push_back(std::make_shared<spdlog::sinks::basic_file_sink_mt>("logs/app_log.txt", true));
 
   // 6. 비동기(async) 로거 생성
