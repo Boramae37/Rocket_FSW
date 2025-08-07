@@ -15,9 +15,15 @@ project(
 # 실행 파일 저장 위치.. run 폴더에 넣기
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/../run)
 
+# spdlog 패키지 찾기
+find_package(spdlog REQUIRED)
+
 
 # 실행 파일 만들
 add_executable (communication main.cc ${CMAKE_SOURCE_DIR}/../ipc_set/connection.cc)
 
 # include
 target_include_directories(communication PRIVATE ${CMAKE_SOURCE_DIR}/../ipc_set)
+
+
+target_link_libraries(communication PRIVATE spdlog::spdlog)
