@@ -26,7 +26,7 @@ int main() {
     exit(1);
   }
   else{
-    usleep(500000); // sb_app이 완전히 시작될 때까지 기다리기 위함
+    sleep(2); // sb_app이 완전히 시작될 때까지 기다리기 위함
   }
 
   pid[sensor_app] = fork();

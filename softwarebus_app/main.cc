@@ -27,6 +27,7 @@
 
 #include "connection.h" // SOCKET_NAME
 
+#define DEBUG
 
 // 시그널 핸들러에서 전역 로거에 접근할 수 있도록 전역 네임스페이스에 선언
 namespace SB {
@@ -69,13 +70,13 @@ int main() {
   #ifdef DEBUG
     // 컬러 콘솔 싱크를 생성하여 sinks 벡터에 추가
     sinks.push_back(std::make_shared<spdlog::sinks::stdout_sink_mt>());
-    std::cout << "[알림] 디버그 모드로 실행되어 콘솔 출력이 활성화되었습니다.\n";
+    fmt::print("[알림] 디버그 모드로 실행되어 콘솔 출력이 활성화되었습니다.\n");
   #endif
 
   // 5. 파일 싱크 추가 (항상 활성화)
   // "logs/app_log.txt" 파일에 로그를 기록하고, 기존 내용에 이어붙입니다.
-  std::filesystem::create_directories("logs/");
-  sinks.push_back(std::make_shared<spdlog::sinks::basic_file_sink_mt>("logs/app_log.txt", true));
+  //std::filesystem::create_directories("logs/");
+  sinks.push_back(std::make_shared<spdlog::sinks::basic_file_sink_mt>("../logs/app_log.txt", true));
 
   // 6. 비동기(async) 로거 생성
   // 위에서 만든 싱크 목록을 사용하여 "main_logger"라는 이름의 비동기 로거를 만듭니다.
@@ -181,6 +182,8 @@ int main() {
     exit(EXIT_FAILURE);
   }
 
+  SB::logger->info("소프트웨어 버스 소켓이 {}로 시작되었습니다.", SOCKET_NAME);
+
   // epoll 생성 및 리스닝 소켓 등록
   epoll_fd = epoll_create1(0);
   ev.events = EPOLLIN;         // 읽기 이벤트 감시
@@ -252,7 +255,7 @@ int main() {
             // 받은 데이터 에코
             sensor_counter[buffer_message_id]++;
             SB::logger->info("{} {} {}", sensor_counter[0], sensor_counter[1], sensor_counter[2]);
-            fmt::print("[{}][{}] : {}", app_names[buffer_app_id].data(), message_names[buffer_message_id].data(), buffer);
+            SB::logger->info("[{}][{}] : {}", app_names[buffer_app_id].data(), message_names[buffer_message_id].data(), buffer);
           }
         }
       }

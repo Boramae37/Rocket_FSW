@@ -23,7 +23,7 @@ for APP_DIR in */; do
         cmake -S "${APP_DIR}" -B "${BUILD_DIR}"
 
         # 2. 실제 빌드를 실행합니다.
-        cmake --build "${BUILD_DIR}"
+        #cmake --build "${BUILD_DIR}"
 
         echo "Build successful for: ${APP_DIR}"
         echo "" # 가독성을 위해 한 줄 띄우기
