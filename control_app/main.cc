@@ -9,23 +9,22 @@
 #include <unistd.h>     // close(), usleep()
 
 #include <pigpiod_if2.h>
+#include <chrono>
+#include <thread>
 
+#include "spdlog/fmt/fmt.h"
 #include "connection.h"
 
 // 사용할 GPIO 핀 (하드웨어 PWM 지원 핀)
 const int PWM_PIN = 12;
 
-// PWM 주파수 (Hz)
-const int FREQUENCY = 500; // 500Hz
+
 
 int main(){
 
   int pi = pigpio_start(NULL, NULL); // localhost:8888
-  set_mode(pi, PWM_PIN, PI_OUTPUT);
-  set_PWM_frequency(pi, PWM_PIN, FREQUENCY);
-  set_PWM_range(pi, PWM_PIN, 100);
-  set_PWM_dutycycle(pi, PWM_PIN, 50);
-  
+  set_servo_pulsewidth(pi, PWM_PIN, 1500); // 고정
+  std::this_thread::sleep_for(std::chrono::seconds(1));
   
 
   
@@ -41,8 +40,8 @@ int main(){
   char *token;
 
   // message class
-  Message msg(CONTROL_ID);
-  msg.set_message_id(COMMAND_MESSAGEID);
+  
+  ;
   char message_buf[SB_BUFFER_SIZE];
 
   //////////////////////////////////////////////////////////////////////////
@@ -66,12 +65,12 @@ int main(){
   connect(sockfd, (struct sockaddr*)&addr, sizeof(addr));
 
   // Sensor APP FD를 SB에 등록
-  Message msg(SENSOR_ID);
+  Message msg(CONTROL_ID);
   msg.set_message_id(SET_FD_COMMAND);
   snprintf(buffer, sizeof(buffer), "%d", sockfd);
   msg.set_data(buffer);
   write(sockfd, msg.get_message(), SB_BUFFER_SIZE);
-
+  msg.set_message_id(COMMAND_MESSAGEID); 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 
@@ -81,7 +80,7 @@ int main(){
   int epoll_fd; // epoll file descriptor
   int nready; // number of ready events
   int temp_fd;
-  struct epoll_event ev, events[1]; // epoll 이벤트 구조체
+  struct epoll_event ev, events[10]; // epoll 이벤트 구조체
 
   
   // SB 용 소켓 등록
@@ -93,7 +92,7 @@ int main(){
 ////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 
-  gpioHardwarePWM(PWM_PIN, FREQUENCY, 0);
+  
 
   while (!parachute_deployed) {
     nready = epoll_wait(epoll_fd, events, MAX_EVENTS, -1);
@@ -103,6 +102,7 @@ int main(){
         // 데이터가 도착함 → read/recv 사용
         ret = recv(temp_fd, buffer, sizeof(buffer), 0);
         buffer[ret] = '\0';
+        printf("CONTROL: RECIEVED : %s", buffer);
         if (ret > 0) {
           // 낙하산 전개 조건
           // barometer 데이터 인지 확인 ... 근데 이거 software bus에서 해도 될듯?
@@ -113,8 +113,10 @@ int main(){
             token = strtok(NULL, ",");
             // 세 번째 토큰
             token = strtok(NULL, ",");
-            
+            // 네 번쨰 토큰 = 고도
+            token = strtok(NULL, ","); 
             temp_barometer = atof(token);
+            printf("CONTROL : RECEIVED : %f", temp_barometer);
             if (max_barometer < temp_barometer) {
               max_barometer = temp_barometer;
             }
@@ -122,7 +124,7 @@ int main(){
               parachute_counter++;
               if (parachute_counter > 5) {
                 parachute_deployed = true;
-                gpioHardwarePWM(PWM_PIN, FREQUENCY, 500000);
+                set_servo_pulsewidth(pi, PWM_PIN, 500); // 해제 
                 printf("Parachute Deployed\n");
                 strcpy(message_buf, PARACHUTE_STATUS);
                 msg.set_message_id(PARACHUTE_MESSAGEID);

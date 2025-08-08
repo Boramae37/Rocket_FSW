@@ -242,9 +242,11 @@ int main() {
                 // 주기는 시간이 아닌 counter(횟수)로 관리
                 if (buffer_app_id == SENSOR_ID && subscriber_id == COMM_ID) {
                   comm_counter[buffer_message_id]++;
+                  SB::logger->debug("COMM_COUNTER : {}/{}", comm_counter[buffer_message_id], comm_period[buffer_message_id]);
 
-                  if (comm_counter[buffer_app_id] == comm_period[buffer_message_id]) {
-                    comm_counter[buffer_app_id] = 0;
+
+                  if (comm_counter[buffer_message_id] == comm_period[buffer_message_id]) {
+                    comm_counter[buffer_message_id] = 0;
                     SB::logger->info("Sending to COMM app: {}", buffer);
                     send(app_fd_list[subscriber_id], buffer, n, 0); // 구독
                   }
@@ -256,7 +258,7 @@ int main() {
             }
             // 받은 데이터 에코
             sensor_counter[buffer_message_id]++;
-            SB::logger->info("{} {} {}", sensor_counter[0], sensor_counter[1], sensor_counter[2]);
+            //SB::logger->info("{} {} {}", sensor_counter[0], sensor_counter[1], sensor_counter[2]);
             SB::logger->info("[{}][{}] : {}", app_names[buffer_app_id].data(), message_names[buffer_message_id].data(), buffer);
           }
         }

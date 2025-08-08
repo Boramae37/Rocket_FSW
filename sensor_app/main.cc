@@ -143,15 +143,19 @@ int main(){
   
   
   // Sensor threads
-  // 센서 ID는 "connection.h"에서 정의된 상수 사용
+  //* 센서 ID는 "connection.h"에서 정의된 상수 사용
   fmt::print("[SENSOR] Starting Barometer threads...\n");
   std::thread barometer_thread(
-    [&] { thread_read_sensor (std::ref(baro), 10, BARO_ID); }
+    [&] { thread_read_sensor (std::ref(baro), 100, BARO_ID); }
   );
+  
+
+  /*
   fmt::print("[SENSOR] Starting IMU threads...\n");
   std::thread imu_thread(
     [&] { thread_read_sensor(std::ref(imu), 12, IMU_ID); }
   );
+  */
 
   // SB에서 오는 명령 처리하는 메인 스레드 파트.. (0.5초마다 확인 예정.)
   while(1){
@@ -175,7 +179,7 @@ int main(){
   
 
   barometer_thread.join();
-  imu_thread.join();
+  //imu_thread.join();
   
   fmt::print("[SENSOR] Sensor threads stopped.\n");
   // sensor 죽어요 메세지 보내고, sb에서느 각 앱 죽는지 모두 확인하고, 종료하면 될듯?
@@ -236,12 +240,12 @@ void thread_read_sensor(Sensor& sensor, int period, int sensor_id){
 
     // convert data to string and set message data
     auto now_time = std::chrono::system_clock::now();
-    auto now_ms = time_point_cast<milliseconds>(now_time);
+    auto now_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(now_time);
 
-    auto ret = fmt::format_to_n(data_str, SB_BUFFER_SIZE -1, "{:%H:%M:%S},{}", now_ms fmt::join(data, ","));
+    auto ret = fmt::format_to_n(data_str, SB_BUFFER_SIZE -1, "{:%H:%M:%S},{}", now_time, fmt::join(data, ","));
     *ret.out = '\0';
     
-    fmt::print("SENSOR APP RUNNING at {:%Y-%m-%d %H:%M:%S}\n", now_time);
+    //fmt::print("SENSOR APP RUNNING at {:%Y-%m-%d %H:%M:%S}\n", now_ms);
   
 
     msg.set_data(data_str);

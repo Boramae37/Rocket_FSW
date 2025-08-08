@@ -151,10 +151,11 @@ int main(){
         // 내부 소프트웨어 버스 메세지 수신
         else if (temp_fd == sockfd) {
           // 소프트웨어 버스로부터 데이터 읽기
-          read(sockfd, sb_buffer, SB_BUFFER_SIZE); 
+          read(sockfd, sb_buffer, SB_BUFFER_SIZE);
           ret = strlen(sb_buffer);
           sb_buffer[ret] = '\0'; // 문자열 끝에 NULL 추가
           // printf("ret = %d\n", ret);
+          fmt::print("COMM received {}\n", sb_buffer);
           write(uart_fd, sb_buffer, ret); // 읽은 데이터를 UART로 전송
           // printf("[COMM][SB] Translating %d bytes : %s\n", ret, sb_buffer); // 소프트웨어 버스로부터 받은 데이터 출력
         }
