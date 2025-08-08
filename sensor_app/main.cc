@@ -170,12 +170,15 @@ int main(){
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
   }
 
-  std::this_thread::sleep_for(std::chrono::seconds(100));
+  std::this_thread::sleep_for(std::chrono::seconds(1));
   keep_running = false;
   
+
   barometer_thread.join();
   imu_thread.join();
   
+  fmt::print("[SENSOR] Sensor threads stopped.\n");
+  // sensor 죽어요 메세지 보내고, sb에서느 각 앱 죽는지 모두 확인하고, 종료하면 될듯?
   return 0;
 }
 

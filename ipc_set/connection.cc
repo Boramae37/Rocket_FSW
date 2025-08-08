@@ -39,7 +39,7 @@ void Message::set_data(char* data) {
   // this->message[sizeof(this->message) - 1] = '\0'; // Ensure null termination
   
   // snprintf guarantees null-termination
-  this->message_length = snprintf(this->buffer, sizeof(buffer), "%d,%d,%s", this->app_id, this->message_id, data);
+  this->message_length = snprintf(this->buffer, sizeof(buffer), "%d,%d,%s%c", this->app_id, this->message_id, data, TELE_END);
 }
 
 
