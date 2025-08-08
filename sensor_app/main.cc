@@ -236,10 +236,11 @@ void thread_read_sensor(Sensor& sensor, int period, int sensor_id){
 
     // convert data to string and set message data
     auto now_time = std::chrono::system_clock::now();
+    auto now_ms = time_point_cast<milliseconds>(now_time);
 
-    auto ret = fmt::format_to_n(data_str, SB_BUFFER_SIZE -1, "{:%H:%M:%S.%e},{}", now_time, fmt::join(data, ","));
+    auto ret = fmt::format_to_n(data_str, SB_BUFFER_SIZE -1, "{:%H:%M:%S},{}", now_ms fmt::join(data, ","));
     *ret.out = '\0';
-
+    
     fmt::print("SENSOR APP RUNNING at {:%Y-%m-%d %H:%M:%S}\n", now_time);
   
 
