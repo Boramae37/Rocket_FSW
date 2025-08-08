@@ -41,7 +41,7 @@ int main(){
 
   // message class
   
-  ;
+  
   char message_buf[SB_BUFFER_SIZE];
 
   //////////////////////////////////////////////////////////////////////////
@@ -70,7 +70,7 @@ int main(){
   snprintf(buffer, sizeof(buffer), "%d", sockfd);
   msg.set_data(buffer);
   write(sockfd, msg.get_message(), SB_BUFFER_SIZE);
-  msg.set_message_id(COMMAND_MESSAGEID); 
+  msg.set_message_id(PARACHUTE_MESSAGEID); 
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 
@@ -92,17 +92,17 @@ int main(){
 ////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 
-  
+  printf("THIS IS FUCKING CONTROL APP\n"); 
 
   while (!parachute_deployed) {
     nready = epoll_wait(epoll_fd, events, MAX_EVENTS, -1);
     for (int i = 0; i < nready; i++) {
       temp_fd = events[i].data.fd;
-      if (temp_fd != sockfd) {
+      if (temp_fd == sockfd) {
         // 데이터가 도착함 → read/recv 사용
         ret = recv(temp_fd, buffer, sizeof(buffer), 0);
         buffer[ret] = '\0';
-        printf("CONTROL: RECIEVED : %s", buffer);
+        
         if (ret > 0) {
           // 낙하산 전개 조건
           // barometer 데이터 인지 확인 ... 근데 이거 software bus에서 해도 될듯?
@@ -116,13 +116,13 @@ int main(){
             // 네 번쨰 토큰 = 고도
             token = strtok(NULL, ","); 
             temp_barometer = atof(token);
-            printf("CONTROL : RECEIVED : %f", temp_barometer);
+            printf("CONTROL : RECEIVED : %f\n", temp_barometer);
             if (max_barometer < temp_barometer) {
               max_barometer = temp_barometer;
             }
-            else if(max_barometer - temp_barometer > 0.1){ // m 단위
+            else if(max_barometer - temp_barometer > 1){ // m 단위
               parachute_counter++;
-              if (parachute_counter > 5) {
+              if (parachute_counter > 1) {
                 parachute_deployed = true;
                 set_servo_pulsewidth(pi, PWM_PIN, 500); // 해제 
                 printf("Parachute Deployed\n");
@@ -134,9 +134,13 @@ int main(){
             }
 
           }
-          std::cout << "[Control_APP Received]: " << buffer << std::endl;
+          
         }
       }
+      
     }
   }
+
+  printf("[TERMINATING CONTORL APP]\n");
+
 }

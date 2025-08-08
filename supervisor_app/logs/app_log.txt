@@ -1,242 +1,972 @@
-[2025-08-08 10:02:19.782] [main_logger] [info] ========================================
-[2025-08-08 10:02:19.782] [main_logger] [info] 애플리케이션 시작 (PID: 2580)
-[2025-08-08 10:02:19.782] [main_logger] [info] ========================================
-[2025-08-08 10:02:19.791] [main_logger] [info] 소프트웨어 버스 소켓이 /tmp/9Lq7BNBnBycd6nxy.socket로 시작되었습니다.
-[2025-08-08 10:02:21.776] [main_logger] [info] App COMM connected with fd 6
-[2025-08-08 10:02:21.795] [main_logger] [info] App SENSOR connected with fd 7
-[2025-08-08 10:02:22.800] [main_logger] [info] App CONTROL connected with fd 8
-[2025-08-08 10:02:28.022] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:28.022] [main_logger] [debug] COMM_COUNTER : 1/0
-[2025-08-08 10:02:28.022] [main_logger] [info] [SENSOR][INFO] : 0,7,SENSOR APP READY, WAITING FOR A COMMAND
-[2025-08-08 10:02:39.046] [main_logger] [info] [COMM] received send to [SENSOR]
-[2025-08-08 10:02:39.046] [main_logger] [info] [COMM] received send to [CONTROL]
-[2025-08-08 10:02:39.047] [main_logger] [info] [COMM][COMMAND] : 1,3,1
+[2025-08-08 16:38:15.696] [main_logger] [info] ========================================
+[2025-08-08 16:38:15.696] [main_logger] [info] 애플리케이션 시작 (PID: 4126)
+[2025-08-08 16:38:15.696] [main_logger] [info] ========================================
+[2025-08-08 16:38:15.696] [main_logger] [info] 소프트웨어 버스 소켓이 /tmp/9Lq7BNBnBycd6nxy.socket로 시작되었습니다.
+[2025-08-08 16:38:17.690] [main_logger] [info] App SENSOR connected with fd 6
+[2025-08-08 16:38:17.693] [main_logger] [info] App COMM connected with fd 7
+[2025-08-08 16:38:18.698] [main_logger] [info] App CONTROL connected with fd 8
+[2025-08-08 16:38:23.912] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:23.912] [main_logger] [debug] SENDING TO SUBSCRIBER COMM
+[2025-08-08 16:38:23.912] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:23.913] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:23.913] [main_logger] [info] [SENSOR][INFO] : 0,7,SENSOR APP READY, WAITING FOR A COMMAND
+[2025-08-08 16:38:26.039] [main_logger] [info] [COMM] received send to [SENSOR]
+[2025-08-08 16:38:26.039] [main_logger] [debug] SENDING TO SUBSCRIBER SENSOR
+[2025-08-08 16:38:26.039] [main_logger] [info] [COMM] received send to [CONTROL]
+[2025-08-08 16:38:26.039] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:26.039] [main_logger] [info] [COMM][COMMAND] : 1,3,1
 
-[2025-08-08 10:02:39.064] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:39.064] [main_logger] [debug] COMM_COUNTER : 1/20
-[2025-08-08 10:02:39.064] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:39,1736.883,26.454084;
-[2025-08-08 10:02:39.166] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:39.166] [main_logger] [debug] COMM_COUNTER : 2/20
-[2025-08-08 10:02:39.166] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:39,1737.2407,26.46626;
-[2025-08-08 10:02:39.268] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:39.268] [main_logger] [debug] COMM_COUNTER : 3/20
-[2025-08-08 10:02:39.268] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:39,1737.3602,26.46681;
-[2025-08-08 10:02:39.369] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:39.369] [main_logger] [debug] COMM_COUNTER : 4/20
-[2025-08-08 10:02:39.369] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:39,1737.203,26.464935;
-[2025-08-08 10:02:39.471] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:39.471] [main_logger] [debug] COMM_COUNTER : 5/20
-[2025-08-08 10:02:39.471] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:39,1737.1228,26.462214;
-[2025-08-08 10:02:39.572] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:39.572] [main_logger] [debug] COMM_COUNTER : 6/20
-[2025-08-08 10:02:39.572] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:39,1737.1028,26.461508;
-[2025-08-08 10:02:39.674] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:39.674] [main_logger] [debug] COMM_COUNTER : 7/20
-[2025-08-08 10:02:39.674] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:39,1737.0819,26.460835;
-[2025-08-08 10:02:39.776] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:39.776] [main_logger] [debug] COMM_COUNTER : 8/20
-[2025-08-08 10:02:39.776] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:39,1737.0526,26.459883;
-[2025-08-08 10:02:39.877] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:39.877] [main_logger] [debug] COMM_COUNTER : 9/20
-[2025-08-08 10:02:39.877] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:39,1737.0665,26.460289;
-[2025-08-08 10:02:39.979] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:39.979] [main_logger] [debug] COMM_COUNTER : 10/20
-[2025-08-08 10:02:39.979] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:39,1737.0873,26.460995;
-[2025-08-08 10:02:40.080] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:40.081] [main_logger] [debug] COMM_COUNTER : 11/20
-[2025-08-08 10:02:40.081] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:40,1737.0465,26.459635;
-[2025-08-08 10:02:40.182] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:40.182] [main_logger] [debug] COMM_COUNTER : 12/20
-[2025-08-08 10:02:40.182] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:40,1737.0812,26.460817;
-[2025-08-08 10:02:40.284] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:40.284] [main_logger] [debug] COMM_COUNTER : 13/20
-[2025-08-08 10:02:40.284] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:40,1737.0781,26.460732;
-[2025-08-08 10:02:40.385] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:40.385] [main_logger] [debug] COMM_COUNTER : 14/20
-[2025-08-08 10:02:40.385] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:40,1737.0433,26.459528;
-[2025-08-08 10:02:40.487] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:40.487] [main_logger] [debug] COMM_COUNTER : 15/20
-[2025-08-08 10:02:40.487] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:40,1736.991,26.457726;
-[2025-08-08 10:02:40.589] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:40.589] [main_logger] [debug] COMM_COUNTER : 16/20
-[2025-08-08 10:02:40.589] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:40,1736.9778,26.457266;
-[2025-08-08 10:02:40.690] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:40.690] [main_logger] [debug] COMM_COUNTER : 17/20
-[2025-08-08 10:02:40.690] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:40,1736.9609,26.456736;
-[2025-08-08 10:02:40.792] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:40.792] [main_logger] [debug] COMM_COUNTER : 18/20
-[2025-08-08 10:02:40.792] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:40,1737.0349,26.459246;
-[2025-08-08 10:02:40.893] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:40.894] [main_logger] [debug] COMM_COUNTER : 19/20
-[2025-08-08 10:02:40.894] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:40,1736.9609,26.456736;
-[2025-08-08 10:02:40.995] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:40.995] [main_logger] [debug] COMM_COUNTER : 20/20
-[2025-08-08 10:02:40.995] [main_logger] [info] Sending to COMM app: 0,1,10:02:40,1737.0457,26.459599;
-[2025-08-08 10:02:40.995] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:40,1737.0457,26.459599;
-[2025-08-08 10:02:41.097] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:41.097] [main_logger] [debug] COMM_COUNTER : 1/20
-[2025-08-08 10:02:41.097] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:41,1737.2323,26.465908;
-[2025-08-08 10:02:41.198] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:41.198] [main_logger] [debug] COMM_COUNTER : 2/20
-[2025-08-08 10:02:41.198] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:41,1737.2539,26.466686;
-[2025-08-08 10:02:41.300] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:41.300] [main_logger] [debug] COMM_COUNTER : 3/20
-[2025-08-08 10:02:41.300] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:41,1737.294,26.468048;
-[2025-08-08 10:02:41.402] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:41.402] [main_logger] [debug] COMM_COUNTER : 4/20
-[2025-08-08 10:02:41.402] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:41,1737.2316,26.465925;
-[2025-08-08 10:02:41.503] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:41.503] [main_logger] [debug] COMM_COUNTER : 5/20
-[2025-08-08 10:02:41.503] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:41,1737.1598,26.46347;
-[2025-08-08 10:02:41.605] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:41.605] [main_logger] [debug] COMM_COUNTER : 6/20
-[2025-08-08 10:02:41.605] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:41,1737.213,26.465326;
-[2025-08-08 10:02:41.706] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:41.706] [main_logger] [debug] COMM_COUNTER : 7/20
-[2025-08-08 10:02:41.706] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:41,1737.1598,26.463507;
-[2025-08-08 10:02:41.808] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:41.808] [main_logger] [debug] COMM_COUNTER : 8/20
-[2025-08-08 10:02:41.808] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:41,1737.1783,26.464088;
-[2025-08-08 10:02:41.910] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:41.910] [main_logger] [debug] COMM_COUNTER : 9/20
-[2025-08-08 10:02:41.910] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:41,1737.1914,26.464548;
-[2025-08-08 10:02:42.011] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:42.011] [main_logger] [debug] COMM_COUNTER : 10/20
-[2025-08-08 10:02:42.011] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:42,1737.1652,26.463682;
-[2025-08-08 10:02:42.113] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:42.113] [main_logger] [debug] COMM_COUNTER : 11/20
-[2025-08-08 10:02:42.113] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:42,1737.1837,26.4643;
-[2025-08-08 10:02:42.215] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:42.215] [main_logger] [debug] COMM_COUNTER : 12/20
-[2025-08-08 10:02:42.215] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:42,1737.1968,26.464779;
-[2025-08-08 10:02:42.316] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:42.316] [main_logger] [debug] COMM_COUNTER : 13/20
-[2025-08-08 10:02:42.316] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:42,1737.1783,26.464088;
-[2025-08-08 10:02:42.418] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:42.418] [main_logger] [debug] COMM_COUNTER : 14/20
-[2025-08-08 10:02:42.418] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:42,1737.2632,26.467022;
-[2025-08-08 10:02:42.519] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:42.519] [main_logger] [debug] COMM_COUNTER : 15/20
-[2025-08-08 10:02:42.519] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:42,1737.2655,26.467041;
-[2025-08-08 10:02:42.621] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:42.621] [main_logger] [debug] COMM_COUNTER : 16/20
-[2025-08-08 10:02:42.621] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:42,1737.2462,26.466421;
-[2025-08-08 10:02:42.723] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:42.723] [main_logger] [debug] COMM_COUNTER : 17/20
-[2025-08-08 10:02:42.723] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:42,1737.1652,26.463682;
-[2025-08-08 10:02:42.824] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:42.824] [main_logger] [debug] COMM_COUNTER : 18/20
-[2025-08-08 10:02:42.824] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:42,1737.2091,26.465166;
-[2025-08-08 10:02:42.926] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:42.926] [main_logger] [debug] COMM_COUNTER : 19/20
-[2025-08-08 10:02:42.926] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:42,1737.2223,26.465626;
-[2025-08-08 10:02:43.027] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:43.027] [main_logger] [debug] COMM_COUNTER : 20/20
-[2025-08-08 10:02:43.027] [main_logger] [info] Sending to COMM app: 0,1,10:02:43,1737.2253,26.465696;
-[2025-08-08 10:02:43.027] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:43,1737.2253,26.465696;
-[2025-08-08 10:02:43.129] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:43.129] [main_logger] [debug] COMM_COUNTER : 1/20
-[2025-08-08 10:02:43.129] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:43,1737.2863,26.467764;
-[2025-08-08 10:02:43.231] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:43.231] [main_logger] [debug] COMM_COUNTER : 2/20
-[2025-08-08 10:02:43.231] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:43,1737.3672,26.470575;
-[2025-08-08 10:02:43.332] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:43.332] [main_logger] [debug] COMM_COUNTER : 3/20
-[2025-08-08 10:02:43.332] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:43,1737.3958,26.471512;
-[2025-08-08 10:02:43.434] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:43.434] [main_logger] [debug] COMM_COUNTER : 4/20
-[2025-08-08 10:02:43.434] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:43,1737.3795,26.470982;
-[2025-08-08 10:02:43.535] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:43.535] [main_logger] [debug] COMM_COUNTER : 5/20
-[2025-08-08 10:02:43.535] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:43,1737.3741,26.470839;
-[2025-08-08 10:02:43.637] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:43.637] [main_logger] [debug] COMM_COUNTER : 6/20
-[2025-08-08 10:02:43.637] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:43,1737.2786,26.467535;
-[2025-08-08 10:02:43.739] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:43.739] [main_logger] [debug] COMM_COUNTER : 7/20
-[2025-08-08 10:02:43.739] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:43,1737.24,26.466192;
-[2025-08-08 10:02:43.840] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:43.840] [main_logger] [debug] COMM_COUNTER : 8/20
-[2025-08-08 10:02:43.840] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:43,1737.3402,26.469603;
-[2025-08-08 10:02:43.942] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:43.942] [main_logger] [debug] COMM_COUNTER : 9/20
-[2025-08-08 10:02:43.942] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:43,1737.3163,26.468771;
-[2025-08-08 10:02:44.043] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:44.044] [main_logger] [debug] COMM_COUNTER : 10/20
-[2025-08-08 10:02:44.044] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:44,1737.3302,26.469284;
-[2025-08-08 10:02:44.145] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:44.145] [main_logger] [debug] COMM_COUNTER : 11/20
-[2025-08-08 10:02:44.145] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:44,1737.3356,26.469442;
-[2025-08-08 10:02:44.247] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:44.247] [main_logger] [debug] COMM_COUNTER : 12/20
-[2025-08-08 10:02:44.247] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:44,1737.2878,26.467854;
-[2025-08-08 10:02:44.348] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:44.348] [main_logger] [debug] COMM_COUNTER : 13/20
-[2025-08-08 10:02:44.348] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:44,1737.3895,26.471298;
-[2025-08-08 10:02:44.450] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:44.450] [main_logger] [debug] COMM_COUNTER : 14/20
-[2025-08-08 10:02:44.450] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:44,1737.3672,26.470575;
-[2025-08-08 10:02:44.552] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:44.552] [main_logger] [debug] COMM_COUNTER : 15/20
-[2025-08-08 10:02:44.552] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:44,1737.3634,26.470469;
-[2025-08-08 10:02:44.653] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:44.653] [main_logger] [debug] COMM_COUNTER : 16/20
-[2025-08-08 10:02:44.653] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:44,1737.378,26.470945;
-[2025-08-08 10:02:44.755] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:44.755] [main_logger] [debug] COMM_COUNTER : 17/20
-[2025-08-08 10:02:44.755] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:44,1737.4281,26.472607;
-[2025-08-08 10:02:44.856] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:44.856] [main_logger] [debug] COMM_COUNTER : 18/20
-[2025-08-08 10:02:44.856] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:44,1737.3804,26.471016;
-[2025-08-08 10:02:44.958] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:44.958] [main_logger] [debug] COMM_COUNTER : 19/20
-[2025-08-08 10:02:44.958] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:44,1737.4528,26.473475;
-[2025-08-08 10:02:45.060] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:45.060] [main_logger] [debug] COMM_COUNTER : 20/20
-[2025-08-08 10:02:45.060] [main_logger] [info] Sending to COMM app: 0,1,10:02:45,1737.3958,26.471512;
-[2025-08-08 10:02:45.060] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:45,1737.3958,26.471512;
-[2025-08-08 10:02:45.161] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:45.161] [main_logger] [debug] COMM_COUNTER : 1/20
-[2025-08-08 10:02:45.161] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:45,1737.5222,26.475805;
-[2025-08-08 10:02:45.263] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:45.263] [main_logger] [debug] COMM_COUNTER : 2/20
-[2025-08-08 10:02:45.263] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:45,1737.5376,26.476353;
-[2025-08-08 10:02:45.364] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:45.365] [main_logger] [debug] COMM_COUNTER : 3/20
-[2025-08-08 10:02:45.365] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:45,1737.4836,26.47455;
-[2025-08-08 10:02:45.466] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:45.466] [main_logger] [debug] COMM_COUNTER : 4/20
-[2025-08-08 10:02:45.466] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:45,1737.432,26.472765;
-[2025-08-08 10:02:45.568] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:45.568] [main_logger] [debug] COMM_COUNTER : 5/20
-[2025-08-08 10:02:45.568] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:45,1737.4174,26.472254;
-[2025-08-08 10:02:45.669] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:45.669] [main_logger] [debug] COMM_COUNTER : 6/20
-[2025-08-08 10:02:45.669] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:45,1737.4058,26.471882;
-[2025-08-08 10:02:45.771] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:45.771] [main_logger] [debug] COMM_COUNTER : 7/20
-[2025-08-08 10:02:45.771] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:45,1737.3765,26.470892;
-[2025-08-08 10:02:45.873] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:45.873] [main_logger] [debug] COMM_COUNTER : 8/20
-[2025-08-08 10:02:45.873] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:45,1737.3418,26.469673;
-[2025-08-08 10:02:45.974] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:45.974] [main_logger] [debug] COMM_COUNTER : 9/20
-[2025-08-08 10:02:45.974] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:45,1737.2739,26.467394;
-[2025-08-08 10:02:46.076] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:46.076] [main_logger] [debug] COMM_COUNTER : 10/20
-[2025-08-08 10:02:46.076] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:46,1737.1968,26.464743;
-[2025-08-08 10:02:46.177] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:46.177] [main_logger] [debug] COMM_COUNTER : 11/20
-[2025-08-08 10:02:46.177] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:46,1737.1312,26.46248;
-[2025-08-08 10:02:46.279] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:46.279] [main_logger] [debug] COMM_COUNTER : 12/20
-[2025-08-08 10:02:46.279] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:46,1737.1312,26.462515;
-[2025-08-08 10:02:46.381] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:46.381] [main_logger] [debug] COMM_COUNTER : 13/20
-[2025-08-08 10:02:46.381] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:46,1737.149,26.463099;
-[2025-08-08 10:02:46.482] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:46.482] [main_logger] [debug] COMM_COUNTER : 14/20
-[2025-08-08 10:02:46.482] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:46,1737.2,26.46483;
-[2025-08-08 10:02:46.584] [main_logger] [info] [SENSOR] received send to [COMM]
-[2025-08-08 10:02:46.584] [main_logger] [debug] COMM_COUNTER : 15/20
-[2025-08-08 10:02:46.584] [main_logger] [info] [SENSOR][BARO] : 0,1,10:02:46,1737.1298,26.462463;
+[2025-08-08 16:38:26.057] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:26.057] [main_logger] [debug] COMM_COUNTER : 1/20
+[2025-08-08 16:38:26.057] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:26.057] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:26.057] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:26,1947.4429,33.3652;
+[2025-08-08 16:38:26.159] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:26.159] [main_logger] [debug] COMM_COUNTER : 2/20
+[2025-08-08 16:38:26.159] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:26.159] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:26.159] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:26,1947.5421,33.368275;
+[2025-08-08 16:38:26.260] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:26.260] [main_logger] [debug] COMM_COUNTER : 3/20
+[2025-08-08 16:38:26.260] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:26.260] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:26.260] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:26,1947.617,33.37069;
+[2025-08-08 16:38:26.362] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:26.362] [main_logger] [debug] COMM_COUNTER : 4/20
+[2025-08-08 16:38:26.362] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:26.362] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:26.362] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:26,1947.7422,33.37461;
+[2025-08-08 16:38:26.464] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:26.464] [main_logger] [debug] COMM_COUNTER : 5/20
+[2025-08-08 16:38:26.464] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:26.464] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:26.464] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:26,1947.8059,33.376656;
+[2025-08-08 16:38:26.566] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:26.566] [main_logger] [debug] COMM_COUNTER : 6/20
+[2025-08-08 16:38:26.566] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:26.566] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:26.566] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:26,1947.8177,33.37705;
+[2025-08-08 16:38:26.667] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:26.667] [main_logger] [debug] COMM_COUNTER : 7/20
+[2025-08-08 16:38:26.667] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:26.667] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:26.667] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:26,1947.8485,33.378033;
+[2025-08-08 16:38:26.769] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:26.769] [main_logger] [debug] COMM_COUNTER : 8/20
+[2025-08-08 16:38:26.769] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:26.769] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:26.769] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:26,1947.8052,33.37664;
+[2025-08-08 16:38:26.871] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:26.871] [main_logger] [debug] COMM_COUNTER : 9/20
+[2025-08-08 16:38:26.871] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:26.871] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:26.871] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:26,1947.8406,33.377808;
+[2025-08-08 16:38:26.973] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:26.973] [main_logger] [debug] COMM_COUNTER : 10/20
+[2025-08-08 16:38:26.973] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:26.973] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:26.973] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:26,1947.8682,33.37867;
+[2025-08-08 16:38:27.075] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:27.075] [main_logger] [debug] COMM_COUNTER : 11/20
+[2025-08-08 16:38:27.075] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:27.075] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:27.075] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:27,1947.8713,33.382133;
+[2025-08-08 16:38:27.176] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:27.176] [main_logger] [debug] COMM_COUNTER : 12/20
+[2025-08-08 16:38:27.176] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:27.177] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:27.177] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:27,1948.0359,33.384003;
+[2025-08-08 16:38:27.278] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:27.278] [main_logger] [debug] COMM_COUNTER : 13/20
+[2025-08-08 16:38:27.278] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:27.278] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:27.278] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:27,1947.9768,33.382133;
+[2025-08-08 16:38:27.380] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:27.380] [main_logger] [debug] COMM_COUNTER : 14/20
+[2025-08-08 16:38:27.380] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:27.380] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:27.380] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:27,1948.0981,33.38598;
+[2025-08-08 16:38:27.482] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:27.482] [main_logger] [debug] COMM_COUNTER : 15/20
+[2025-08-08 16:38:27.482] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:27.482] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:27.482] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:27,1948.0352,33.38395;
+[2025-08-08 16:38:27.583] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:27.583] [main_logger] [debug] COMM_COUNTER : 16/20
+[2025-08-08 16:38:27.583] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:27.583] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:27.583] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:27,1948.0603,33.384743;
+[2025-08-08 16:38:27.685] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:27.685] [main_logger] [debug] COMM_COUNTER : 17/20
+[2025-08-08 16:38:27.685] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:27.685] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:27.685] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:27,1948.043,33.384197;
+[2025-08-08 16:38:27.787] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:27.787] [main_logger] [debug] COMM_COUNTER : 18/20
+[2025-08-08 16:38:27.787] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:27.787] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:27.787] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:27,1948.1532,33.38771;
+[2025-08-08 16:38:27.889] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:27.889] [main_logger] [debug] COMM_COUNTER : 19/20
+[2025-08-08 16:38:27.889] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:27.889] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:27.889] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:27,1948.2013,33.389194;
+[2025-08-08 16:38:27.990] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:27.990] [main_logger] [debug] COMM_COUNTER : 20/20
+[2025-08-08 16:38:27.990] [main_logger] [info] Sending to COMM app: 0,1,16:38:27,1948.2878,33.39195;
+[2025-08-08 16:38:27.990] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:27.991] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:27.991] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:27,1948.2878,33.39195;
+[2025-08-08 16:38:28.092] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:28.092] [main_logger] [debug] COMM_COUNTER : 1/20
+[2025-08-08 16:38:28.092] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:28.092] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:28.092] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:28,1948.3895,33.395176;
+[2025-08-08 16:38:28.194] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:28.194] [main_logger] [debug] COMM_COUNTER : 2/20
+[2025-08-08 16:38:28.194] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:28.194] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:28.194] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:28,1948.3154,33.39285;
+[2025-08-08 16:38:28.296] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:28.296] [main_logger] [debug] COMM_COUNTER : 3/20
+[2025-08-08 16:38:28.296] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:28.296] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:28.296] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:28,1948.1635,33.388042;
+[2025-08-08 16:38:28.397] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:28.397] [main_logger] [debug] COMM_COUNTER : 4/20
+[2025-08-08 16:38:28.397] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:28.397] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:28.397] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:28,1947.9957,33.382713;
+[2025-08-08 16:38:28.499] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:28.499] [main_logger] [debug] COMM_COUNTER : 5/20
+[2025-08-08 16:38:28.499] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:28.499] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:28.499] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:28,1947.8768,33.378952;
+[2025-08-08 16:38:28.601] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:28.601] [main_logger] [debug] COMM_COUNTER : 6/20
+[2025-08-08 16:38:28.601] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:28.601] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:28.601] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:28,1947.8627,33.378513;
+[2025-08-08 16:38:28.703] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:28.703] [main_logger] [debug] COMM_COUNTER : 7/20
+[2025-08-08 16:38:28.703] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:28.703] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:28.703] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:28,1947.935,33.37869;
+[2025-08-08 16:38:28.804] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:28.804] [main_logger] [debug] COMM_COUNTER : 8/20
+[2025-08-08 16:38:28.804] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:28.804] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:28.804] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:28,1947.7902,33.37613;
+[2025-08-08 16:38:28.906] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:28.906] [main_logger] [debug] COMM_COUNTER : 9/20
+[2025-08-08 16:38:28.906] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:28.906] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:28.906] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:28,1947.7358,33.37443;
+[2025-08-08 16:38:29.008] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:29.008] [main_logger] [debug] COMM_COUNTER : 10/20
+[2025-08-08 16:38:29.008] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:29.008] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:29.008] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:29,1947.6783,33.372597;
+[2025-08-08 16:38:29.110] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:29.110] [main_logger] [debug] COMM_COUNTER : 11/20
+[2025-08-08 16:38:29.110] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:29.110] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:29.110] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:29,1947.7367,33.374416;
+[2025-08-08 16:38:29.211] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:29.211] [main_logger] [debug] COMM_COUNTER : 12/20
+[2025-08-08 16:38:29.211] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:29.211] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:29.211] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:29,1947.7406,33.374573;
+[2025-08-08 16:38:29.313] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:29.313] [main_logger] [debug] COMM_COUNTER : 13/20
+[2025-08-08 16:38:29.313] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:29.313] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:29.313] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:29,1947.8406,33.377808;
+[2025-08-08 16:38:29.415] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:29.415] [main_logger] [debug] COMM_COUNTER : 14/20
+[2025-08-08 16:38:29.415] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:29.415] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:29.415] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:29,1947.8887,33.379303;
+[2025-08-08 16:38:29.517] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:29.517] [main_logger] [debug] COMM_COUNTER : 15/20
+[2025-08-08 16:38:29.517] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:29.517] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:29.517] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:29,1947.9161,33.380154;
+[2025-08-08 16:38:29.618] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:29.618] [main_logger] [debug] COMM_COUNTER : 16/20
+[2025-08-08 16:38:29.618] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:29.618] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:29.618] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:29,1947.8989,33.379658;
+[2025-08-08 16:38:29.720] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:29.720] [main_logger] [debug] COMM_COUNTER : 17/20
+[2025-08-08 16:38:29.720] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:29.720] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:29.720] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:29,1947.8855,33.37922;
+[2025-08-08 16:38:29.822] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:29.822] [main_logger] [debug] COMM_COUNTER : 18/20
+[2025-08-08 16:38:29.822] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:29.822] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:29.822] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:29,1947.7233,33.374046;
+[2025-08-08 16:38:29.924] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:29.924] [main_logger] [debug] COMM_COUNTER : 19/20
+[2025-08-08 16:38:29.924] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:29.924] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:29.924] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:29,1947.7067,33.373516;
+[2025-08-08 16:38:30.025] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:30.025] [main_logger] [debug] COMM_COUNTER : 20/20
+[2025-08-08 16:38:30.025] [main_logger] [info] Sending to COMM app: 0,1,16:38:30,1947.6681,33.37226;
+[2025-08-08 16:38:30.025] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:30.025] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:30.026] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:30,1947.6681,33.37226;
+[2025-08-08 16:38:30.127] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:30.127] [main_logger] [debug] COMM_COUNTER : 1/20
+[2025-08-08 16:38:30.127] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:30.127] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:30.127] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:30,1947.5768,33.3694;
+[2025-08-08 16:38:30.229] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:30.229] [main_logger] [debug] COMM_COUNTER : 2/20
+[2025-08-08 16:38:30.229] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:30.229] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:30.229] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:30,1947.6776,33.37258;
+[2025-08-08 16:38:30.331] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:30.331] [main_logger] [debug] COMM_COUNTER : 3/20
+[2025-08-08 16:38:30.331] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:30.331] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:30.331] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:30,1947.7178,33.373833;
+[2025-08-08 16:38:30.432] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:30.433] [main_logger] [debug] COMM_COUNTER : 4/20
+[2025-08-08 16:38:30.433] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:30.433] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:30.433] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:30,1947.6523,33.37177;
+[2025-08-08 16:38:30.534] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:30.534] [main_logger] [debug] COMM_COUNTER : 5/20
+[2025-08-08 16:38:30.534] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:30.534] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:30.534] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:30,1947.6594,33.372017;
+[2025-08-08 16:38:30.636] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:30.636] [main_logger] [debug] COMM_COUNTER : 6/20
+[2025-08-08 16:38:30.636] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:30.636] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:30.636] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:30,1947.698,33.373234;
+[2025-08-08 16:38:30.738] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:30.738] [main_logger] [debug] COMM_COUNTER : 7/20
+[2025-08-08 16:38:30.738] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:30.738] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:30.738] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:30,1947.6729,33.37242;
+[2025-08-08 16:38:30.840] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:30.840] [main_logger] [debug] COMM_COUNTER : 8/20
+[2025-08-08 16:38:30.840] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:30.840] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:30.840] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:30,1947.7319,33.37431;
+[2025-08-08 16:38:30.941] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:30.941] [main_logger] [debug] COMM_COUNTER : 9/20
+[2025-08-08 16:38:30.941] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:30.941] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:30.941] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:30,1947.6587,33.371964;
+[2025-08-08 16:38:31.043] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:31.043] [main_logger] [debug] COMM_COUNTER : 10/20
+[2025-08-08 16:38:31.043] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:31.043] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:31.043] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:31,1947.7343,33.374325;
+[2025-08-08 16:38:31.145] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:31.145] [main_logger] [debug] COMM_COUNTER : 11/20
+[2025-08-08 16:38:31.145] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:31.145] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:31.145] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:31,1947.7217,33.37396;
+[2025-08-08 16:38:31.247] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:31.247] [main_logger] [debug] COMM_COUNTER : 12/20
+[2025-08-08 16:38:31.247] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:31.247] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:31.247] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:31,1947.7004,33.373302;
+[2025-08-08 16:38:31.348] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:31.348] [main_logger] [debug] COMM_COUNTER : 13/20
+[2025-08-08 16:38:31.349] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:31.349] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:31.349] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:31,1947.7555,33.37507;
+[2025-08-08 16:38:31.450] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:31.450] [main_logger] [debug] COMM_COUNTER : 14/20
+[2025-08-08 16:38:31.450] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:31.450] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:31.450] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:31,1947.8123,33.37689;
+[2025-08-08 16:38:31.552] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:31.552] [main_logger] [debug] COMM_COUNTER : 15/20
+[2025-08-08 16:38:31.552] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:31.552] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:31.552] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:31,1947.7839,33.37595;
+[2025-08-08 16:38:31.654] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:31.654] [main_logger] [debug] COMM_COUNTER : 16/20
+[2025-08-08 16:38:31.654] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:31.654] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:31.654] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:31,1947.9161,33.380154;
+[2025-08-08 16:38:31.755] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:31.756] [main_logger] [debug] COMM_COUNTER : 17/20
+[2025-08-08 16:38:31.756] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:31.756] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:31.756] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:31,1947.8673,33.37865;
+[2025-08-08 16:38:31.857] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:31.857] [main_logger] [debug] COMM_COUNTER : 18/20
+[2025-08-08 16:38:31.857] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:31.857] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:31.857] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:31,1947.9595,33.381565;
+[2025-08-08 16:38:31.959] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:31.959] [main_logger] [debug] COMM_COUNTER : 19/20
+[2025-08-08 16:38:31.959] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:31.959] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:31.959] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:31,1948.0532,33.384533;
+[2025-08-08 16:38:32.061] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:32.061] [main_logger] [debug] COMM_COUNTER : 20/20
+[2025-08-08 16:38:32.061] [main_logger] [info] Sending to COMM app: 0,1,16:38:32,1947.9729,33.381992;
+[2025-08-08 16:38:32.061] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:32.061] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:32.061] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:32,1947.9729,33.381992;
+[2025-08-08 16:38:32.163] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:32.163] [main_logger] [debug] COMM_COUNTER : 1/20
+[2025-08-08 16:38:32.163] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:32.163] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:32.163] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:32,1947.9083,33.379944;
+[2025-08-08 16:38:32.264] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:32.264] [main_logger] [debug] COMM_COUNTER : 2/20
+[2025-08-08 16:38:32.264] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:32.265] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:32.265] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:32,1947.961,33.381638;
+[2025-08-08 16:38:32.366] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:32.366] [main_logger] [debug] COMM_COUNTER : 3/20
+[2025-08-08 16:38:32.366] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:32.366] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:32.366] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:32,1947.9099,33.379997;
+[2025-08-08 16:38:32.468] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:32.468] [main_logger] [debug] COMM_COUNTER : 4/20
+[2025-08-08 16:38:32.468] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:32.468] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:32.468] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:32,1947.9375,33.38082;
+[2025-08-08 16:38:32.570] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:32.570] [main_logger] [debug] COMM_COUNTER : 5/20
+[2025-08-08 16:38:32.570] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:32.570] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:32.570] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:32,1947.8201,33.377117;
+[2025-08-08 16:38:32.672] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:32.672] [main_logger] [debug] COMM_COUNTER : 6/20
+[2025-08-08 16:38:32.672] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:32.672] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:32.672] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:32,1947.7972,33.376377;
+[2025-08-08 16:38:32.773] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:32.773] [main_logger] [debug] COMM_COUNTER : 7/20
+[2025-08-08 16:38:32.773] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:32.773] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:32.773] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:32,1947.6776,33.372562;
+[2025-08-08 16:38:32.875] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:32.875] [main_logger] [debug] COMM_COUNTER : 8/20
+[2025-08-08 16:38:32.875] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:32.875] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:32.875] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:32,1947.6808,33.372704;
+[2025-08-08 16:38:32.977] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:32.977] [main_logger] [debug] COMM_COUNTER : 9/20
+[2025-08-08 16:38:32.977] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:32.977] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:32.977] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:32,1947.665,33.372208;
+[2025-08-08 16:38:33.079] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:33.079] [main_logger] [debug] COMM_COUNTER : 10/20
+[2025-08-08 16:38:33.079] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:33.079] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:33.079] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:33,1947.7043,33.37341;
+[2025-08-08 16:38:33.180] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:33.180] [main_logger] [debug] COMM_COUNTER : 11/20
+[2025-08-08 16:38:33.181] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:33.181] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:33.181] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:33,1947.6973,33.37316;
+[2025-08-08 16:38:33.282] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:33.282] [main_logger] [debug] COMM_COUNTER : 12/20
+[2025-08-08 16:38:33.282] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:33.282] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:33.282] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:33,1947.7217,33.37396;
+[2025-08-08 16:38:33.384] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:33.384] [main_logger] [debug] COMM_COUNTER : 13/20
+[2025-08-08 16:38:33.384] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:33.384] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:33.384] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:33,1947.6965,33.37318;
+[2025-08-08 16:38:33.486] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:33.486] [main_logger] [debug] COMM_COUNTER : 14/20
+[2025-08-08 16:38:33.486] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:33.486] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:33.486] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:33,1947.6902,33.372967;
+[2025-08-08 16:38:33.588] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:33.588] [main_logger] [debug] COMM_COUNTER : 15/20
+[2025-08-08 16:38:33.588] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:33.588] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:33.588] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:33,1947.7153,33.37376;
+[2025-08-08 16:38:33.690] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:33.690] [main_logger] [debug] COMM_COUNTER : 16/20
+[2025-08-08 16:38:33.690] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:33.690] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:33.690] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:33,1947.7429,33.374626;
+[2025-08-08 16:38:33.791] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:33.791] [main_logger] [debug] COMM_COUNTER : 17/20
+[2025-08-08 16:38:33.791] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:33.791] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:33.791] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:33,1947.8177,33.37705;
+[2025-08-08 16:38:33.893] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:33.893] [main_logger] [debug] COMM_COUNTER : 18/20
+[2025-08-08 16:38:33.893] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:33.893] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:33.893] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:33,1947.902,33.37973;
+[2025-08-08 16:38:33.995] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:33.995] [main_logger] [debug] COMM_COUNTER : 19/20
+[2025-08-08 16:38:33.995] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:33.995] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:33.995] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:33,1947.8303,33.377506;
+[2025-08-08 16:38:34.097] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:34.097] [main_logger] [debug] COMM_COUNTER : 20/20
+[2025-08-08 16:38:34.097] [main_logger] [info] Sending to COMM app: 0,1,16:38:34,1947.891,33.37941;
+[2025-08-08 16:38:34.097] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:34.097] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:34.097] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:34,1947.891,33.37941;
+[2025-08-08 16:38:34.198] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:34.199] [main_logger] [debug] COMM_COUNTER : 1/20
+[2025-08-08 16:38:34.199] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:34.199] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:34.199] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:34,1947.917,33.380188;
+[2025-08-08 16:38:34.300] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:34.300] [main_logger] [debug] COMM_COUNTER : 2/20
+[2025-08-08 16:38:34.300] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:34.300] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:34.300] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:34,1947.7461,33.374718;
+[2025-08-08 16:38:34.402] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:34.402] [main_logger] [debug] COMM_COUNTER : 3/20
+[2025-08-08 16:38:34.402] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:34.402] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:34.402] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:34,1947.5704,33.369244;
+[2025-08-08 16:38:34.504] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:34.504] [main_logger] [debug] COMM_COUNTER : 4/20
+[2025-08-08 16:38:34.504] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:34.504] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:34.504] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:34,1947.4515,33.365448;
+[2025-08-08 16:38:34.605] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:34.606] [main_logger] [debug] COMM_COUNTER : 5/20
+[2025-08-08 16:38:34.606] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:34.606] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:34.606] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:34,1947.3209,33.361336;
+[2025-08-08 16:38:34.707] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:34.707] [main_logger] [debug] COMM_COUNTER : 6/20
+[2025-08-08 16:38:34.707] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:34.707] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:34.707] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:34,1947.1547,33.356037;
+[2025-08-08 16:38:34.809] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:34.809] [main_logger] [debug] COMM_COUNTER : 7/20
+[2025-08-08 16:38:34.809] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:34.809] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:34.809] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:34,1947.1028,33.35436;
+[2025-08-08 16:38:34.911] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:34.911] [main_logger] [debug] COMM_COUNTER : 8/20
+[2025-08-08 16:38:34.911] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:34.911] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:34.911] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:34,1947.1445,33.3557;
+[2025-08-08 16:38:35.013] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:35.013] [main_logger] [debug] COMM_COUNTER : 9/20
+[2025-08-08 16:38:35.013] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:35.013] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:35.013] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:35,1947.2563,33.35925;
+[2025-08-08 16:38:35.114] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:35.114] [main_logger] [debug] COMM_COUNTER : 10/20
+[2025-08-08 16:38:35.114] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:35.114] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:35.114] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:35,1947.3531,33.36236;
+[2025-08-08 16:38:35.216] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:35.216] [main_logger] [debug] COMM_COUNTER : 11/20
+[2025-08-08 16:38:35.216] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:35.216] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:35.216] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:35,1947.3634,33.362713;
+[2025-08-08 16:38:35.318] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:35.318] [main_logger] [debug] COMM_COUNTER : 12/20
+[2025-08-08 16:38:35.318] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:35.318] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:35.318] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:35,1947.4469,33.365307;
+[2025-08-08 16:38:35.420] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:35.420] [main_logger] [debug] COMM_COUNTER : 13/20
+[2025-08-08 16:38:35.420] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:35.420] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:35.420] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:35,1947.5303,33.367954;
+[2025-08-08 16:38:35.522] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:35.522] [main_logger] [debug] COMM_COUNTER : 14/20
+[2025-08-08 16:38:35.522] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:35.522] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:35.522] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:35,1947.5973,33.37009;
+[2025-08-08 16:38:35.623] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:35.623] [main_logger] [debug] COMM_COUNTER : 15/20
+[2025-08-08 16:38:35.623] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:35.623] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:35.623] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:35,1947.5193,33.367584;
+[2025-08-08 16:38:35.725] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:35.725] [main_logger] [debug] COMM_COUNTER : 16/20
+[2025-08-08 16:38:35.725] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:35.725] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:35.725] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:35,1947.4303,33.364796;
+[2025-08-08 16:38:35.827] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:35.827] [main_logger] [debug] COMM_COUNTER : 17/20
+[2025-08-08 16:38:35.827] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:35.827] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:35.827] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:35,1947.2626,33.35948;
+[2025-08-08 16:38:35.929] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:35.929] [main_logger] [debug] COMM_COUNTER : 18/20
+[2025-08-08 16:38:35.929] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:35.929] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:35.929] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:35,1947.1973,33.357414;
+[2025-08-08 16:38:36.030] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:36.030] [main_logger] [debug] COMM_COUNTER : 19/20
+[2025-08-08 16:38:36.030] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:36.030] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:36.030] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:36,1947.0901,33.353973;
+[2025-08-08 16:38:36.132] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:36.132] [main_logger] [debug] COMM_COUNTER : 20/20
+[2025-08-08 16:38:36.132] [main_logger] [info] Sending to COMM app: 0,1,16:38:36,1947.1405,33.355545;
+[2025-08-08 16:38:36.132] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:36.132] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:36.132] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:36,1947.1405,33.355545;
+[2025-08-08 16:38:36.234] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:36.234] [main_logger] [debug] COMM_COUNTER : 1/20
+[2025-08-08 16:38:36.234] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:36.234] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:36.234] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:36,1947.1902,33.357185;
+[2025-08-08 16:38:36.336] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:36.336] [main_logger] [debug] COMM_COUNTER : 2/20
+[2025-08-08 16:38:36.336] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:36.336] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:36.336] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:36,1947.339,33.36192;
+[2025-08-08 16:38:36.437] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:36.437] [main_logger] [debug] COMM_COUNTER : 3/20
+[2025-08-08 16:38:36.437] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:36.438] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:36.438] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:36,1947.3666,33.362747;
+[2025-08-08 16:38:36.539] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:36.539] [main_logger] [debug] COMM_COUNTER : 4/20
+[2025-08-08 16:38:36.539] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:36.539] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:36.539] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:36,1947.4083,33.364056;
+[2025-08-08 16:38:36.641] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:36.641] [main_logger] [debug] COMM_COUNTER : 5/20
+[2025-08-08 16:38:36.641] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:36.641] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:36.641] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:36,1947.4657,33.365925;
+[2025-08-08 16:38:36.743] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:36.743] [main_logger] [debug] COMM_COUNTER : 6/20
+[2025-08-08 16:38:36.743] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:36.743] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:36.743] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:36,1947.6083,33.370407;
+[2025-08-08 16:38:36.845] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:36.845] [main_logger] [debug] COMM_COUNTER : 7/20
+[2025-08-08 16:38:36.845] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:36.845] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:36.845] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:36,1947.6705,33.372314;
+[2025-08-08 16:38:36.946] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:36.946] [main_logger] [debug] COMM_COUNTER : 8/20
+[2025-08-08 16:38:36.946] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:36.946] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:36.946] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:36,1947.7153,33.373745;
+[2025-08-08 16:38:37.048] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:37.048] [main_logger] [debug] COMM_COUNTER : 9/20
+[2025-08-08 16:38:37.048] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:37.048] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:37.048] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:37,1947.7808,33.375828;
+[2025-08-08 16:38:37.150] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:37.150] [main_logger] [debug] COMM_COUNTER : 10/20
+[2025-08-08 16:38:37.150] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:37.150] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:37.150] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:37,1947.8618,33.37848;
+[2025-08-08 16:38:37.252] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:37.252] [main_logger] [debug] COMM_COUNTER : 11/20
+[2025-08-08 16:38:37.252] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:37.252] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:37.252] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:37,1947.9398,33.380928;
+[2025-08-08 16:38:37.354] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:37.354] [main_logger] [debug] COMM_COUNTER : 12/20
+[2025-08-08 16:38:37.354] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:37.354] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:37.354] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:37,1948.0398,33.384163;
+[2025-08-08 16:38:37.455] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:37.455] [main_logger] [debug] COMM_COUNTER : 13/20
+[2025-08-08 16:38:37.455] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:37.455] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:37.455] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:37,1948.1178,33.386578;
+[2025-08-08 16:38:37.557] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:37.557] [main_logger] [debug] COMM_COUNTER : 14/20
+[2025-08-08 16:38:37.557] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:37.557] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:37.557] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:37,1948.2036,33.389317;
+[2025-08-08 16:38:37.659] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:37.659] [main_logger] [debug] COMM_COUNTER : 15/20
+[2025-08-08 16:38:37.659] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:37.659] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:37.659] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:37,1948.1871,33.388752;
+[2025-08-08 16:38:37.761] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:37.761] [main_logger] [debug] COMM_COUNTER : 16/20
+[2025-08-08 16:38:37.761] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:37.761] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:37.761] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:37,1948.1075,33.386246;
+[2025-08-08 16:38:37.862] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:37.862] [main_logger] [debug] COMM_COUNTER : 17/20
+[2025-08-08 16:38:37.862] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:37.862] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:37.862] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:37,1948.1005,33.386032;
+[2025-08-08 16:38:37.964] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:37.964] [main_logger] [debug] COMM_COUNTER : 18/20
+[2025-08-08 16:38:37.964] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:37.964] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:37.964] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:37,1947.7902,33.37613;
+[2025-08-08 16:38:38.066] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:38.066] [main_logger] [debug] COMM_COUNTER : 19/20
+[2025-08-08 16:38:38.066] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:38.066] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:38.066] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:38,1947.6375,33.37131;
+[2025-08-08 16:38:38.168] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:38.168] [main_logger] [debug] COMM_COUNTER : 20/20
+[2025-08-08 16:38:38.168] [main_logger] [info] Sending to COMM app: 0,1,16:38:38,1947.3689,33.36285;
+[2025-08-08 16:38:38.168] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:38.168] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:38.168] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:38,1947.3689,33.36285;
+[2025-08-08 16:38:38.269] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:38.269] [main_logger] [debug] COMM_COUNTER : 1/20
+[2025-08-08 16:38:38.269] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:38.270] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:38.270] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:38,1947.2224,33.358192;
+[2025-08-08 16:38:38.371] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:38.371] [main_logger] [debug] COMM_COUNTER : 2/20
+[2025-08-08 16:38:38.371] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:38.371] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:38.371] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:38,1947.098,33.354218;
+[2025-08-08 16:38:38.473] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:38.473] [main_logger] [debug] COMM_COUNTER : 3/20
+[2025-08-08 16:38:38.473] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:38.473] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:38.473] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:38,1947.1058,33.35445;
+[2025-08-08 16:38:38.575] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:38.575] [main_logger] [debug] COMM_COUNTER : 4/20
+[2025-08-08 16:38:38.575] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:38.575] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:38.575] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:38,1947.1815,33.356888;
+[2025-08-08 16:38:38.677] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:38.677] [main_logger] [debug] COMM_COUNTER : 5/20
+[2025-08-08 16:38:38.677] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:38.677] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:38.677] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:38,1947.1768,33.35678;
+[2025-08-08 16:38:38.778] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:38.778] [main_logger] [debug] COMM_COUNTER : 6/20
+[2025-08-08 16:38:38.778] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:38.778] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:38.778] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:38,1947.239,33.35872;
+[2025-08-08 16:38:38.880] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:38.880] [main_logger] [debug] COMM_COUNTER : 7/20
+[2025-08-08 16:38:38.880] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:38.880] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:38.880] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:38,1947.3271,33.36151;
+[2025-08-08 16:38:38.982] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:38.982] [main_logger] [debug] COMM_COUNTER : 8/20
+[2025-08-08 16:38:38.982] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:38.982] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:38.982] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:38,1947.3224,33.361385;
+[2025-08-08 16:38:39.084] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:39.084] [main_logger] [debug] COMM_COUNTER : 9/20
+[2025-08-08 16:38:39.084] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:39.084] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:39.084] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:39,1947.4216,33.36453;
+[2025-08-08 16:38:39.185] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:39.185] [main_logger] [debug] COMM_COUNTER : 10/20
+[2025-08-08 16:38:39.185] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:39.185] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:39.186] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:39,1947.5012,33.36704;
+[2025-08-08 16:38:39.287] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:39.287] [main_logger] [debug] COMM_COUNTER : 11/20
+[2025-08-08 16:38:39.287] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:39.287] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:39.287] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:39,1947.591,33.36988;
+[2025-08-08 16:38:39.389] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:39.389] [main_logger] [debug] COMM_COUNTER : 12/20
+[2025-08-08 16:38:39.389] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:39.389] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:39.389] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:39,1947.4083,33.364105;
+[2025-08-08 16:38:39.491] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:39.491] [main_logger] [debug] COMM_COUNTER : 13/20
+[2025-08-08 16:38:39.491] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:39.491] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:39.491] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:39,1947.2972,33.360577;
+[2025-08-08 16:38:39.593] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:39.593] [main_logger] [debug] COMM_COUNTER : 14/20
+[2025-08-08 16:38:39.593] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:39.593] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:39.593] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:39,1947.0988,33.354237;
+[2025-08-08 16:38:39.694] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:39.694] [main_logger] [debug] COMM_COUNTER : 15/20
+[2025-08-08 16:38:39.694] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:39.694] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:39.694] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:39,1946.9728,33.35023;
+[2025-08-08 16:38:39.796] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:39.796] [main_logger] [debug] COMM_COUNTER : 16/20
+[2025-08-08 16:38:39.796] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:39.796] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:39.796] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:39,1946.8776,33.347263;
+[2025-08-08 16:38:39.797] [main_logger] [info] [CONTROL] received send to [SENSOR]
+[2025-08-08 16:38:39.798] [main_logger] [debug] SENDING TO SUBSCRIBER SENSOR
+[2025-08-08 16:38:39.798] [main_logger] [info] [CONTROL] received send to [COMM]
+[2025-08-08 16:38:39.798] [main_logger] [debug] SENDING TO SUBSCRIBER COMM
+[2025-08-08 16:38:39.798] [main_logger] [info] [CONTROL][PARACHUTE] : 2,5,1;
+[2025-08-08 16:38:39.898] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:39.898] [main_logger] [debug] COMM_COUNTER : 17/20
+[2025-08-08 16:38:39.898] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:39.898] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:39.898] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:39,1946.8838,33.34744;
+[2025-08-08 16:38:40.000] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:40.000] [main_logger] [debug] COMM_COUNTER : 18/20
+[2025-08-08 16:38:40.000] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:40.000] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:40.000] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:39,1946.8248,33.345585;
+[2025-08-08 16:38:40.102] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:40.102] [main_logger] [debug] COMM_COUNTER : 19/20
+[2025-08-08 16:38:40.102] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:40.102] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:40.102] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:40,1946.7988,33.344795;
+[2025-08-08 16:38:40.203] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:40.203] [main_logger] [debug] COMM_COUNTER : 20/20
+[2025-08-08 16:38:40.203] [main_logger] [info] Sending to COMM app: 0,1,16:38:40,1946.8523,33.34645;
+[2025-08-08 16:38:40.203] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:40.203] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:40.203] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:40,1946.8523,33.34645;
+[2025-08-08 16:38:40.305] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:40.305] [main_logger] [debug] COMM_COUNTER : 1/20
+[2025-08-08 16:38:40.305] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:40.305] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:40.305] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:40,1947.0634,33.35316;
+[2025-08-08 16:38:40.407] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:40.407] [main_logger] [debug] COMM_COUNTER : 2/20
+[2025-08-08 16:38:40.407] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:40.407] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:40.407] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:40,1946.9791,33.35046;
+[2025-08-08 16:38:40.509] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:40.509] [main_logger] [debug] COMM_COUNTER : 3/20
+[2025-08-08 16:38:40.509] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:40.509] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:40.509] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:40,1946.8767,33.34723;
+[2025-08-08 16:38:40.611] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:40.611] [main_logger] [debug] COMM_COUNTER : 4/20
+[2025-08-08 16:38:40.611] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:40.611] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:40.611] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:40,1946.7822,33.344296;
+[2025-08-08 16:38:40.712] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:40.712] [main_logger] [debug] COMM_COUNTER : 5/20
+[2025-08-08 16:38:40.712] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:40.712] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:40.712] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:40,1946.6925,33.34144;
+[2025-08-08 16:38:40.814] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:40.814] [main_logger] [debug] COMM_COUNTER : 6/20
+[2025-08-08 16:38:40.814] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:40.814] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:40.814] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:40,1946.5555,33.337093;
+[2025-08-08 16:38:40.916] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:40.916] [main_logger] [debug] COMM_COUNTER : 7/20
+[2025-08-08 16:38:40.916] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:40.916] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:40.916] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:40,1946.4768,33.33452;
+[2025-08-08 16:38:41.018] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:41.018] [main_logger] [debug] COMM_COUNTER : 8/20
+[2025-08-08 16:38:41.018] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:41.018] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:41.018] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:41,1946.4784,33.334553;
+[2025-08-08 16:38:41.120] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:41.120] [main_logger] [debug] COMM_COUNTER : 9/20
+[2025-08-08 16:38:41.120] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:41.120] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:41.120] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:41,1946.5074,33.335487;
+[2025-08-08 16:38:41.221] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:41.221] [main_logger] [debug] COMM_COUNTER : 10/20
+[2025-08-08 16:38:41.221] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:41.221] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:41.221] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:41,1946.5366,33.33646;
+[2025-08-08 16:38:41.323] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:41.323] [main_logger] [debug] COMM_COUNTER : 11/20
+[2025-08-08 16:38:41.323] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:41.323] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:41.323] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:41,1946.6028,33.338524;
+[2025-08-08 16:38:41.425] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:41.425] [main_logger] [debug] COMM_COUNTER : 12/20
+[2025-08-08 16:38:41.425] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:41.425] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:41.425] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:41,1946.5823,33.33794;
+[2025-08-08 16:38:41.527] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:41.527] [main_logger] [debug] COMM_COUNTER : 13/20
+[2025-08-08 16:38:41.527] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:41.527] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:41.527] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:41,1946.5925,33.33824;
+[2025-08-08 16:38:41.628] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:41.628] [main_logger] [debug] COMM_COUNTER : 14/20
+[2025-08-08 16:38:41.628] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:41.628] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:41.628] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:41,1946.7256,33.34248;
+[2025-08-08 16:38:41.730] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:41.730] [main_logger] [debug] COMM_COUNTER : 15/20
+[2025-08-08 16:38:41.730] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:41.730] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:41.730] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:41,1946.798,33.344757;
+[2025-08-08 16:38:41.832] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:41.832] [main_logger] [debug] COMM_COUNTER : 16/20
+[2025-08-08 16:38:41.832] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:41.832] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:41.832] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:41,1946.946,33.3494;
+[2025-08-08 16:38:41.934] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:41.934] [main_logger] [debug] COMM_COUNTER : 17/20
+[2025-08-08 16:38:41.934] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:41.934] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:41.934] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:41,1946.9965,33.351006;
+[2025-08-08 16:38:42.036] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:42.036] [main_logger] [debug] COMM_COUNTER : 18/20
+[2025-08-08 16:38:42.036] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:42.036] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:42.036] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:42,1947.0839,33.35378;
+[2025-08-08 16:38:42.137] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:42.137] [main_logger] [debug] COMM_COUNTER : 19/20
+[2025-08-08 16:38:42.137] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:42.137] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:42.137] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:42,1947.0743,33.353493;
+[2025-08-08 16:38:42.239] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:42.239] [main_logger] [debug] COMM_COUNTER : 20/20
+[2025-08-08 16:38:42.239] [main_logger] [info] Sending to COMM app: 0,1,16:38:42,1946.9862,33.35065;
+[2025-08-08 16:38:42.239] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:42.239] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:42.239] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:42,1946.9862,33.35065;
+[2025-08-08 16:38:42.341] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:42.341] [main_logger] [debug] COMM_COUNTER : 1/20
+[2025-08-08 16:38:42.341] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:42.341] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:42.341] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:42,1946.9106,33.34829;
+[2025-08-08 16:38:42.443] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:42.443] [main_logger] [debug] COMM_COUNTER : 2/20
+[2025-08-08 16:38:42.443] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:42.443] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:42.443] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:42,1946.7751,33.34405;
+[2025-08-08 16:38:42.544] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:42.544] [main_logger] [debug] COMM_COUNTER : 3/20
+[2025-08-08 16:38:42.544] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:42.544] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:42.544] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:42,1946.6492,33.34006;
+[2025-08-08 16:38:42.646] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:42.646] [main_logger] [debug] COMM_COUNTER : 4/20
+[2025-08-08 16:38:42.646] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:42.646] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:42.646] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:42,1946.6382,33.339725;
+[2025-08-08 16:38:42.748] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:42.748] [main_logger] [debug] COMM_COUNTER : 5/20
+[2025-08-08 16:38:42.748] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:42.748] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:42.748] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:42,1946.7114,33.34207;
+[2025-08-08 16:38:42.850] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:42.850] [main_logger] [debug] COMM_COUNTER : 6/20
+[2025-08-08 16:38:42.850] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:42.850] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:42.850] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:42,1946.8146,33.345303;
+[2025-08-08 16:38:42.952] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:42.952] [main_logger] [debug] COMM_COUNTER : 7/20
+[2025-08-08 16:38:42.952] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:42.952] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:42.952] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:42,1946.9098,33.348305;
+[2025-08-08 16:38:43.053] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:43.053] [main_logger] [debug] COMM_COUNTER : 8/20
+[2025-08-08 16:38:43.053] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:43.053] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:43.054] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:43,1946.8146,33.34532;
+[2025-08-08 16:38:43.155] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:43.155] [main_logger] [debug] COMM_COUNTER : 9/20
+[2025-08-08 16:38:43.155] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:43.155] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:43.155] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:43,1946.85,33.346344;
+[2025-08-08 16:38:43.257] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:43.257] [main_logger] [debug] COMM_COUNTER : 10/20
+[2025-08-08 16:38:43.257] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:43.257] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:43.257] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:43,1946.6713,33.340748;
+[2025-08-08 16:38:43.359] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:43.359] [main_logger] [debug] COMM_COUNTER : 11/20
+[2025-08-08 16:38:43.359] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:43.359] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:43.359] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:43,1946.6074,33.338684;
+[2025-08-08 16:38:43.461] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:43.461] [main_logger] [debug] COMM_COUNTER : 12/20
+[2025-08-08 16:38:43.461] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:43.461] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:43.461] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:43,1946.4524,33.333775;
+[2025-08-08 16:38:43.562] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:43.562] [main_logger] [debug] COMM_COUNTER : 13/20
+[2025-08-08 16:38:43.562] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:43.563] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:43.563] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:43,1946.4185,33.3327;
+[2025-08-08 16:38:43.664] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:43.664] [main_logger] [debug] COMM_COUNTER : 14/20
+[2025-08-08 16:38:43.664] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:43.664] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:43.664] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:43,1946.4296,33.333035;
+[2025-08-08 16:38:43.766] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:43.766] [main_logger] [debug] COMM_COUNTER : 15/20
+[2025-08-08 16:38:43.766] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:43.766] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:43.766] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:43,1946.5453,33.33676;
+[2025-08-08 16:38:43.868] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:43.868] [main_logger] [debug] COMM_COUNTER : 16/20
+[2025-08-08 16:38:43.868] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:43.868] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:43.868] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:43,1946.6327,33.33955;
+[2025-08-08 16:38:43.969] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:43.970] [main_logger] [debug] COMM_COUNTER : 17/20
+[2025-08-08 16:38:43.970] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:43.970] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:43.970] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:43,1946.7343,33.342762;
+[2025-08-08 16:38:44.071] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:44.071] [main_logger] [debug] COMM_COUNTER : 18/20
+[2025-08-08 16:38:44.071] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:44.071] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:44.071] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:44,1946.8381,33.346027;
+[2025-08-08 16:38:44.173] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:44.173] [main_logger] [debug] COMM_COUNTER : 19/20
+[2025-08-08 16:38:44.173] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:44.173] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:44.173] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:44,1946.8579,33.346626;
+[2025-08-08 16:38:44.275] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:44.275] [main_logger] [debug] COMM_COUNTER : 20/20
+[2025-08-08 16:38:44.275] [main_logger] [info] Sending to COMM app: 0,1,16:38:44,1946.813,33.345253;
+[2025-08-08 16:38:44.275] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:44.275] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:44.275] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:44,1946.813,33.345253;
+[2025-08-08 16:38:44.377] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:44.377] [main_logger] [debug] COMM_COUNTER : 1/20
+[2025-08-08 16:38:44.377] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:44.377] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:44.377] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:44,1946.883,33.347424;
+[2025-08-08 16:38:44.478] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:44.478] [main_logger] [debug] COMM_COUNTER : 2/20
+[2025-08-08 16:38:44.478] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:44.478] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:44.478] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:44,1946.8673,33.34693;
+[2025-08-08 16:38:44.580] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:44.580] [main_logger] [debug] COMM_COUNTER : 3/20
+[2025-08-08 16:38:44.580] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:44.580] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:44.580] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:44,1946.8248,33.34555;
+[2025-08-08 16:38:44.682] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:44.682] [main_logger] [debug] COMM_COUNTER : 4/20
+[2025-08-08 16:38:44.682] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:44.682] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:44.682] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:44,1946.831,33.34578;
+[2025-08-08 16:38:44.784] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:44.784] [main_logger] [debug] COMM_COUNTER : 5/20
+[2025-08-08 16:38:44.784] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:44.784] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:44.784] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:44,1946.9484,33.349434;
+[2025-08-08 16:38:44.885] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:44.886] [main_logger] [debug] COMM_COUNTER : 6/20
+[2025-08-08 16:38:44.886] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:44.886] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:44.886] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:44,1946.9689,33.350105;
+[2025-08-08 16:38:44.987] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:44.987] [main_logger] [debug] COMM_COUNTER : 7/20
+[2025-08-08 16:38:44.987] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:44.987] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:44.987] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:44,1946.9185,33.349827;
+[2025-08-08 16:38:45.089] [main_logger] [info] [SENSOR] received send to [COMM]
+[2025-08-08 16:38:45.089] [main_logger] [debug] COMM_COUNTER : 8/20
+[2025-08-08 16:38:45.089] [main_logger] [info] [SENSOR] received send to [CONTROL]
+[2025-08-08 16:38:45.089] [main_logger] [debug] SENDING TO SUBSCRIBER CONTROL
+[2025-08-08 16:38:45.089] [main_logger] [info] [SENSOR][BARO] : 0,1,16:38:45,1946.9839,33.350567;

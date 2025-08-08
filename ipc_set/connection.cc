@@ -13,9 +13,9 @@
 // };
 
 std::unordered_map<int, std::vector<int>> subscribe_map{
-    {SENSOR_ID, {COMM_ID}}, // sensor app => comm app
+    {SENSOR_ID, {COMM_ID, CONTROL_ID}}, // sensor app의 구독자 
     {COMM_ID, {SENSOR_ID, CONTROL_ID}}, // comm app => sensor app, control app
-    {CONTROL_ID, {SENSOR_ID}} // control app => sensor app
+    {CONTROL_ID, {SENSOR_ID, COMM_ID}} // control app => sensor app
 };
 
 /*///////////////////////////////////////////////////////

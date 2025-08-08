@@ -240,7 +240,7 @@ int main() {
               if (app_fd_list[subscriber_id] != -1) { // 해당 앱이 연결되어 있는지 확인
                 // communication_app 통신 주기에 맞춰 일단 SB에서 주기에 맞춰 준다.
                 // 주기는 시간이 아닌 counter(횟수)로 관리
-                if (buffer_app_id == SENSOR_ID && subscriber_id == COMM_ID) {
+                if (buffer_app_id == SENSOR_ID && subscriber_id == COMM_ID && buffer_message_id < 3) {
                   comm_counter[buffer_message_id]++;
                   SB::logger->debug("COMM_COUNTER : {}/{}", comm_counter[buffer_message_id], comm_period[buffer_message_id]);
 
@@ -253,6 +253,7 @@ int main() {
                 }
                 else{
                   send(app_fd_list[subscriber_id], buffer, n, 0); // 구독자에게 데이터 전송
+                  SB::logger->debug("SENDING TO SUBSCRIBER {}", app_names[subscriber_id]);
                 }
               }
             }
