@@ -92,6 +92,8 @@ int main() {
  
   // 특정 레벨 이상의 로그가 발생하면 즉시 파일에 쓰도록 설정 (추가적인 안전장치)
   SB::logger->flush_on(spdlog::level::critical);
+  // 몇 초마다 자동 flush 설정
+  spdlog::flush_every(std::chrono::seconds(10));
 
   // 8. 프로그램 메인 로직
   SB::logger->info("========================================");
