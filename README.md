@@ -1,5 +1,6 @@
 # 미리 설치할 파일(외부 라이브러리)-------------
 
+
 ## spdlog
 
 ```
@@ -25,7 +26,6 @@ make로 빌드를 하기위한 파일을 만들어줌
 cmake ..
 ```
 CMakeLists.txt 파일을 바탕으로 진행됨. 해당 파일이 build 폴더랑 같은 폴더에 있으므로, build 속에서는 .. 으로 그 부모 폴더를 가리켜야 한다.
-
 
 ## make 
 프로젝트 빌드 프로그램(?)
@@ -59,6 +59,7 @@ wget, unzip 안되면 sudo apt install 하면 됨
 sudo systemctl start pigpiod
 ```
 로 데몬 실행 후에 프로그램 실행해야함
+
 
 
 ## tmux (복붙 편하게 하려면)
@@ -151,7 +152,18 @@ cd supervisor_app/build/
 
 build 폴더 만들기와 cmake, run_make 모두 최초 1회만 진행하면 됨. (코드 변경 없을 시..)
 
+## Cross Compile 세팅
 
+wsl 2 Debian 기준
+external 폴더에서 
+```
+git clone https://github.com/joan2937/pigpio.git
+```
+
+arm64 컴파일러
+```
+sudo apt-get install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
+```
 
 # 폴더 설명
 
@@ -195,4 +207,5 @@ cat /dev/serial0
 echo "test" > /dev/serial0
 ```
 이걸 통해 송신 테스트 가능
+
 
