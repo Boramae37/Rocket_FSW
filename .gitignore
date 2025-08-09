@@ -1,5 +1,6 @@
 # 빌드 폴더 제외
 **/build/
+**/build-arm-cross/
 
 # vsconde 편집 기록 무시
 .vscode/
@@ -9,4 +10,4 @@
 
 sensor_app/lib/BMP3_SensorAPI/
 
-run/
+# run/

@@ -1,0 +1,1 @@
+/usr/bin/aarch64-linux-gnu-g++ -O3 -DNDEBUG CMakeFiles/communication.dir/main.cc.o CMakeFiles/communication.dir/home/we/Rocket_FSW/ipc_set/connection.cc.o -o /home/we/Rocket_FSW/run/communication  _deps/spdlog-build/libspdlog.a 

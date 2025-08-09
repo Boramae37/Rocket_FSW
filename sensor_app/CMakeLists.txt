@@ -12,14 +12,29 @@ project(
   DESCRIPTION "Rocket_FSW_Project_Sensor"
   LANGUAGES C CXX
 )
+
+include(FetchContent)
+
+FetchContent_Declare(
+  spdlog
+  GIT_REPOSITORY https://github.com/gabime/spdlog.git
+  GIT_TAG        v1.12.0  # 원하는 버전
+)
+
+FetchContent_MakeAvailable(spdlog)
 # 실행 파일 저장 위치.. run 폴더에 넣기
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/../run)
 
+# pigpio 라이브러리 경로 설정
+set(PIGPIO_ROOT "${CMAKE_SOURCE_DIR}/../external/pigpio")
+
+# pigpio 헤더 파일 경로
+include_directories(${PIGPIO_ROOT})
 
 
 # spdlog 패키지 찾기
-find_package(spdlog REQUIRED)
-
+# find_package(spdlog REQUIRED)
+# add_subdirectory(${CMAKE_SOURCE_DIR}/../external/spdlog)
 
 # 확인할 디렉토리 추가
 #add_subdirectory(lib/BMP_SensorAPI)
@@ -32,7 +47,7 @@ target_include_directories(sensor PRIVATE ${CMAKE_SOURCE_DIR}/lib)
 target_include_directories(sensor PRIVATE ${CMAKE_SOURCE_DIR}/../ipc_set)
 
 # pigpio 라이브러리 링크
-target_link_libraries(sensor PRIVATE pigpiod_if2)
+target_link_libraries(sensor PRIVATE ${PIGPIO_ROOT}/libpigpiod_if2.so ${PIGPIO_ROOT}/libpigpio.so pthread rt)
 target_link_libraries(sensor PRIVATE spdlog::spdlog)
 
 # program 에 communication 를 링크

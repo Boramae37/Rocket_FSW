@@ -1,0 +1,1 @@
+/usr/bin/aarch64-linux-gnu-g++ -O3 -DNDEBUG CMakeFiles/softwarebus.dir/main.cc.o CMakeFiles/softwarebus.dir/home/we/Rocket_FSW/ipc_set/connection.cc.o -o /home/we/Rocket_FSW/run/softwarebus  _deps/spdlog-build/libspdlog.a 
