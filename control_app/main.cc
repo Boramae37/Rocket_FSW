@@ -39,9 +39,10 @@ int main(){
 
   char *token;
 
+  int message_id;
+
+
   // message class
-  
-  
   char message_buf[SB_BUFFER_SIZE];
 
   //////////////////////////////////////////////////////////////////////////
@@ -93,8 +94,8 @@ int main(){
 ///////////////////////////////////////////////////////////////////////
 
   printf("THIS IS FUCKING CONTROL APP\n"); 
-
-  while (!parachute_deployed) {
+  bool keeprun = true;
+  while (keeprun) {
     nready = epoll_wait(epoll_fd, events, MAX_EVENTS, -1);
     for (int i = 0; i < nready; i++) {
       temp_fd = events[i].data.fd;
@@ -102,45 +103,51 @@ int main(){
         // 데이터가 도착함 → read/recv 사용
         ret = recv(temp_fd, buffer, sizeof(buffer), 0);
         buffer[ret] = '\0';
-        
-        if (ret > 0) {
-          // 낙하산 전개 조건
-          // barometer 데이터 인지 확인 ... 근데 이거 software bus에서 해도 될듯?
-          if (buffer[2] - '0' == BARO_ID){
-            // 첫 번째 토큰
-            token = strtok(buffer, ",");
-            // 두 번째 토큰
-            token = strtok(NULL, ",");
-            // 세 번째 토큰
-            token = strtok(NULL, ",");
-            // 네 번쨰 토큰 = 고도
-            token = strtok(NULL, ","); 
-            temp_barometer = atof(token);
-            printf("CONTROL : RECEIVED : %f\n", temp_barometer);
-            if (max_barometer < temp_barometer) {
-              max_barometer = temp_barometer;
-            }
-            else if(max_barometer - temp_barometer > 1){ // m 단위
-              parachute_counter++;
-              if (parachute_counter > 1) {
-                parachute_deployed = true;
-                set_servo_pulsewidth(pi, PWM_PIN, 500); // 해제 
-                printf("Parachute Deployed\n");
-                strcpy(message_buf, PARACHUTE_STATUS);
-                msg.set_message_id(PARACHUTE_MESSAGEID);
-                msg.set_data(message_buf);
-                write(sockfd, msg.get_message(), SB_BUFFER_SIZE);
-              }
-            }
 
+        message_id = buffer[2] - '0';
+        
+        // 낙하산 전개 조건
+        // barometer 데이터 인지 확인 ... 근데 이거 software bus에서 해도 될듯?
+        if (message_id == BARO_ID && !parachute_deployed){
+          // 첫 번째 토큰
+          token = strtok(buffer, ",");
+          // 두 번째 토큰
+          token = strtok(NULL, ",");
+          // 세 번째 토큰
+          token = strtok(NULL, ",");
+          // 네 번쨰 토큰 = 고도
+          token = strtok(NULL, ","); 
+          temp_barometer = atof(token);
+          printf("CONTROL : RECEIVED : %f\n", temp_barometer);
+          if (max_barometer < temp_barometer) {
+            max_barometer = temp_barometer;
+            parachute_counter = 0; // reset counter
           }
-          
+          else if(max_barometer - temp_barometer > 1){ // m 단위
+            parachute_counter++;
+            if (parachute_counter > 1) {
+              parachute_deployed = true;
+              set_servo_pulsewidth(pi, PWM_PIN, 500); // 해제 
+              printf("Parachute Deployed\n");
+              auto [out, size] = fmt::format_to_n(message_buf, SB_BUFFER_SIZE - 1, "{},CONTROL STOPING", PARACHUTE_STATUS);
+              *out = '\0';
+              msg.set_message_id(PARACHUTE_MESSAGEID);
+              msg.set_data(message_buf);
+              write(sockfd, msg.get_message(), SB_BUFFER_SIZE);
+            }
+          }
+        }
+        else if (message_id == COMMAND_MESSAGEID && buffer[4] - '0' == STOP_COMMAND){
+          auto [out, size] = fmt::format_to_n(message_buf, SB_BUFFER_SIZE - 1, "{},CONTROL STOPING", STOP_RECEIVED);
+          *out = '\0';
+          msg.set_message_id(COMMAND_MESSAGEID);
+          msg.set_data(message_buf);
+          write(sockfd, msg.get_message(), SB_BUFFER_SIZE);
         }
       }
-      
     }
   }
 
-  printf("[TERMINATING CONTORL APP]\n");
+  fmt::print("[TERMINATING CONTROL APP]\n");
 
 }

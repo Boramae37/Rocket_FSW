@@ -87,8 +87,7 @@ int main() {
   // 7. 로거를 전역으로 등록하여 spdlog::info(...) 형태로 쉽게 사용
   spdlog::register_logger(SB::logger);
   
-  // 로깅 레벨 설정
-  SB::logger->set_level(spdlog::level::trace); // 모든 레벨의 로그를 기록
+ 
   // 특정 레벨 이상의 로그가 발생하면 즉시 파일에 쓰도록 설정 (추가적인 안전장치)
   SB::logger->flush_on(spdlog::level::critical);
 
@@ -99,6 +98,8 @@ int main() {
   
   #ifndef DEBUG
     fmt::print("[알림] 릴리즈 모드로 실행 중입니다. 로그는 'logs/app_log.txt' 파일에만 기록됩니다.\n");
+     // 로깅 레벨 설정
+    SB::logger->set_level(spdlog::level::info); // info 이상만 기록(debug, trace 출력 안됨)
   #endif
   fmt::print("프로그램 실행 중... (Ctrl+C를 눌러 종료하세요)\n");
 
@@ -199,6 +200,8 @@ int main() {
   int comm_counter[3] = { 0 };
   int comm_period[3] = { COMM_PERIOD_IMU, COMM_PERIOD_BARO, COMM_PERIOD_GPS };
 
+  int running_app[APP_NUM] = { 0 };
+
   while(1) {
     nready = epoll_wait(epoll_fd, events, MAX_EVENTS, -1);
 
@@ -223,17 +226,34 @@ int main() {
           close(fd);
         }
         else {
-          if (buffer[2] - '0' == SET_FD_COMMAND){
+          // 데이터 처리
+          buffer[n] = '\0';
+          buffer_app_id = buffer[0] - '0'; // 첫 번째 문자를 앱 ID로 변환
+          buffer_message_id = buffer[2] - '0'; // 세 번째 문자를 메시지 ID로 변환
+          
+          // 등록
+          if (buffer_message_id == SET_FD_COMMAND){
             app_fd_list[buffer[0] - '0'] = fd; // fd를 앱 ID에 매핑
             SB::logger->info("App {} connected with fd {}", app_names[buffer[0] - '0'].data(), fd);
+            running_app[buffer_app_id] = 1; // 앱이 실행 중임을 표시
+          }
+          
+          // 프로그램 종료
+          else if (buffer_message_id == COMMAND_MESSAGEID && buffer[4] - '0' == STOP_RECEIVED) {
+            running_app[buffer_app_id] = 0; // 앱이 종료됨을 표시
+            if (running_app[SENSOR_ID] == 0 && running_app[CONTROL_ID] == 0) {
+              auto [out, size] = fmt::format_to_n(buffer, SB_BUFFER_SIZE - 1, "{},{},ALL APPS STOPPED", COMM_ID, COMMAND_MESSAGEID, STOP_COMMAND);
+              *out = '\0';
+              send(app_fd_list[COMM_ID], buffer, size, 0); // 커뮤니케이션 앱에 알림
+              SB::logger->flush();
+              spdlog::shutdown();
+              SB::logger->info("모든 앱이 종료되었습니다. Software Bus을 닫습니다.");
+              close(sb_host_socket);
+              exit(EXIT_SUCCESS);
+            }
           }
           else {
-            // 데이터 처리
-            buffer[n] = '\0';
-            buffer_app_id = buffer[0] - '0'; // 첫 번째 문자를 앱 ID로 변환
-            buffer_message_id = buffer[2] - '0'; // 세 번째 문자를 메시지 ID로 변환
             
-
             // 구독자들에게 공유
             for (int subscriber_id : app_subscribers[buffer_app_id]) {
               SB::logger->info("[{}] received send to [{}]", app_names[buffer_app_id].data(), app_names[subscriber_id].data());

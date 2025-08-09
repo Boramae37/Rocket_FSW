@@ -20,7 +20,7 @@ for APP_DIR in */; do
         # 1. CMake를 실행하여 빌드 파일을 생성합니다.
         # -S : 소스 디렉터리 (app 폴더)
         # -B : 빌드 디렉터리 (app/build 폴더)
-        cmake -S "${APP_DIR}" -B "${BUILD_DIR}"
+        cmake -S "${APP_DIR}" -B "${BUILD_DIR}" -DCMAKE_BUILD_TYPE=Release
 
         # 2. 실제 빌드를 실행합니다.
         #cmake --build "${BUILD_DIR}"

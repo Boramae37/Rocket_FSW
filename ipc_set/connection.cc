@@ -5,6 +5,7 @@
 #include <unordered_map>
 #include <algorithm>
 
+#include "spdlog/fmt/fmt.h"
 
 // std::vector<std::vector<int>> subscribe_map = {
 //   {1},    // sensor app => comm app
@@ -15,7 +16,7 @@
 std::unordered_map<int, std::vector<int>> subscribe_map{
     {SENSOR_ID, {COMM_ID, CONTROL_ID}}, // sensor app의 구독자 
     {COMM_ID, {SENSOR_ID, CONTROL_ID}}, // comm app => sensor app, control app
-    {CONTROL_ID, {SENSOR_ID, COMM_ID}} // control app => sensor app
+    {CONTROL_ID, {COMM_ID}} // control app => comm
 };
 
 /*///////////////////////////////////////////////////////
@@ -39,7 +40,10 @@ void Message::set_data(char* data) {
   // this->message[sizeof(this->message) - 1] = '\0'; // Ensure null termination
   
   // snprintf guarantees null-termination
-  this->message_length = snprintf(this->buffer, sizeof(buffer), "%d,%d,%s%c", this->app_id, this->message_id, data, TELE_END);
+  //this->message_length = snprintf(this->buffer, sizeof(buffer), "%d,%d,%s%c", this->app_id, this->message_id, data, TELE_END);
+  
+  auto ret = fmt::format_to_n(this->buffer , sizeof(this->buffer)-1, "{},{},{},{}", this->app_id, this->message_id, data, TELE_END);
+  *ret.out = '\0';
 }
 
 

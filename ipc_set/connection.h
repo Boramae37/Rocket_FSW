@@ -32,6 +32,7 @@ constexpr int INFO_ID = 7;
 constexpr int STOP_COMMAND = 0; // stop command
 constexpr int START_COMMAND = 1; // start command
 constexpr int STATE_COMMAND = 2; // state command
+constexpr int STOP_RECEIVED = 3;
 
 constexpr char PARACHUTE_STATUS[] = "1"; // 메시지 내용
 
