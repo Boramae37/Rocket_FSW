@@ -42,8 +42,9 @@ void Message::set_data(char* data) {
   // snprintf guarantees null-termination
   //this->message_length = snprintf(this->buffer, sizeof(buffer), "%d,%d,%s%c", this->app_id, this->message_id, data, TELE_END);
   
-  auto ret = fmt::format_to_n(this->buffer , sizeof(this->buffer)-1, "{},{},{},{}", this->app_id, this->message_id, data, TELE_END);
+  auto ret = fmt::format_to_n(this->buffer , sizeof(this->buffer)-1, "{},{},{}{}", this->app_id, this->message_id, data, TELE_END);
   *ret.out = '\0';
+  //this->message_length = ret.size; // Set the message length
 }
 
 

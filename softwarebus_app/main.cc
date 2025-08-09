@@ -43,6 +43,7 @@ void signal_handler(int signal) {
     
     // spdlog의 모든 자원을 정리하고, 큐에 남아있는 로그를 파일에 강제로 쓰게 합니다.
     spdlog::shutdown();
+
     
     // 프로그램을 정상 종료시킵니다.
     exit(signal);
@@ -73,6 +74,7 @@ int main() {
     // 컬러 콘솔 싱크를 생성하여 sinks 벡터에 추가
     sinks.push_back(std::make_shared<spdlog::sinks::stdout_sink_mt>());
     fmt::print("[알림] 디버그 모드로 실행되어 콘솔 출력이 활성화되었습니다.\n");
+    
   #endif
 
   // 5. 파일 싱크 추가 (항상 활성화)
@@ -101,6 +103,11 @@ int main() {
      // 로깅 레벨 설정
     SB::logger->set_level(spdlog::level::info); // info 이상만 기록(debug, trace 출력 안됨)
   #endif
+
+  #ifdef DEBUG
+    SB::logger->set_level(spdlog::level::trace); // info 이상만 기록(debug, trace 출력 안됨)
+  #endif
+
   fmt::print("프로그램 실행 중... (Ctrl+C를 눌러 종료하세요)\n");
 
 /////////////////////////////////////////////////////////////////////////////////
@@ -115,7 +122,7 @@ int main() {
   app_fd_list[CONTROL_ID] = -1; // 컨트롤 앱은 소켓을 열지 않음
 
   // 앱 이름 벡터, index는 app_id와 동일
-  std::vector<std::string> app_names = {"SENSOR", "COMM", "CONTROL"}; 
+  std::vector<std::string> app_names = {"SENSOR", "COMM", "CONTROL", "SB"}; 
 
   // 메시지 이름 벡터, index는 message_id와 동일
   std::vector<std::string> message_names = {"IMU", "BARO", "GPS", "COMMAND", "ERROR", "PARACHUTE", "SET_FD_COMMAND", "INFO"};
@@ -145,7 +152,7 @@ int main() {
   int n; // number of bytes read
   int fd; // epoll에서 받은 파일 디스크립터
 
-  
+
   
   unlink(SOCKET_NAME); // 소켓 이름이 중복되면 안되니까 미리 삭제
 
@@ -154,7 +161,7 @@ int main() {
     SB::logger->error("socket not created: {}", strerror(errno));
     exit(EXIT_FAILURE);
   }
-  
+
   /*
   * For portability clear the whole structure, since some
   * implementations have additional (nonstandard) fields in
@@ -233,21 +240,24 @@ int main() {
           
           // 등록
           if (buffer_message_id == SET_FD_COMMAND){
-            app_fd_list[buffer[0] - '0'] = fd; // fd를 앱 ID에 매핑
-            SB::logger->info("App {} connected with fd {}", app_names[buffer[0] - '0'].data(), fd);
+            app_fd_list[buffer_app_id] = fd; // fd를 앱 ID에 매핑
+            SB::logger->info("App {} connected with fd {}", app_names[buffer_app_id].data(), fd);
             running_app[buffer_app_id] = 1; // 앱이 실행 중임을 표시
           }
           
           // 프로그램 종료
           else if (buffer_message_id == COMMAND_MESSAGEID && buffer[4] - '0' == STOP_RECEIVED) {
+            fmt::print("[SB][information] STOPED {}\n", app_names[buffer_app_id]);
             running_app[buffer_app_id] = 0; // 앱이 종료됨을 표시
             if (running_app[SENSOR_ID] == 0 && running_app[CONTROL_ID] == 0) {
-              auto [out, size] = fmt::format_to_n(buffer, SB_BUFFER_SIZE - 1, "{},{},ALL APPS STOPPED", COMM_ID, COMMAND_MESSAGEID, STOP_COMMAND);
+              auto [out, size] = fmt::format_to_n(buffer, SB_BUFFER_SIZE - 1, "{},{},{},ALL APPS STOPPED;", SB_ID, COMMAND_MESSAGEID, STOP_COMMAND);
               *out = '\0';
               send(app_fd_list[COMM_ID], buffer, size, 0); // 커뮤니케이션 앱에 알림
+              
+              SB::logger->info("모든 앱이 종료되었습니다. Software Bus을 닫습니다.");
               SB::logger->flush();
               spdlog::shutdown();
-              SB::logger->info("모든 앱이 종료되었습니다. Software Bus을 닫습니다.");
+              
               close(sb_host_socket);
               exit(EXIT_SUCCESS);
             }
@@ -256,7 +266,7 @@ int main() {
             
             // 구독자들에게 공유
             for (int subscriber_id : app_subscribers[buffer_app_id]) {
-              SB::logger->info("[{}] received send to [{}]", app_names[buffer_app_id].data(), app_names[subscriber_id].data());
+              SB::logger->debug("[{}] received send to [{}]", app_names[buffer_app_id].data(), app_names[subscriber_id].data());
               if (app_fd_list[subscriber_id] != -1) { // 해당 앱이 연결되어 있는지 확인
                 // communication_app 통신 주기에 맞춰 일단 SB에서 주기에 맞춰 준다.
                 // 주기는 시간이 아닌 counter(횟수)로 관리
@@ -267,7 +277,7 @@ int main() {
 
                   if (comm_counter[buffer_message_id] == comm_period[buffer_message_id]) {
                     comm_counter[buffer_message_id] = 0;
-                    SB::logger->info("Sending to COMM app: {}", buffer);
+                    SB::logger->debug("Sending to COMM app: {}", buffer);
                     send(app_fd_list[subscriber_id], buffer, n, 0); // 구독
                   }
                 }
@@ -279,7 +289,7 @@ int main() {
             }
             // 받은 데이터 에코
             sensor_counter[buffer_message_id]++;
-            //SB::logger->info("{} {} {}", sensor_counter[0], sensor_counter[1], sensor_counter[2]);
+            SB::logger->info("{} {} {}", sensor_counter[0], sensor_counter[1], sensor_counter[2]);
             SB::logger->info("[{}][{}] : {}", app_names[buffer_app_id].data(), message_names[buffer_message_id].data(), buffer);
           }
         }

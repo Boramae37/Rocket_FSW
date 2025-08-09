@@ -14,11 +14,11 @@ sleep 1
 
 # 스크립트 파일이 위치한 디렉터리를 기준으로 경로 설정 (더 안정적)
 SCRIPT_DIR=$( cd -- "$( dirname -- "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )
-APP_PATH="${SCRIPT_DIR}/supervisor_app/build/supervisor"
+APP_PATH="${SCRIPT_DIR}/run/supervisor"
 
 if [ -f "$APP_PATH" ]; then
     echo "START supervisor..."
-    cd "${SCRIPT_DIR}/supervisor_app/build/"
+    cd "${SCRIPT_DIR}/run/"
     ./supervisor
 else
     echo "오류: supervisor 실행 파일을 찾을 수 없습니다: ${APP_PATH}"

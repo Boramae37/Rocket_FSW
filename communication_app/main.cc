@@ -123,8 +123,7 @@ int main(){
                   snprintf(sb_buffer, SB_BUFFER_SIZE, "%d,%d,%d\n", COMM_ID, COMMAND_MESSAGEID, STOP_COMMAND);
                   write(sockfd, sb_buffer, SB_BUFFER_SIZE); // 소프트웨어 버스로 데이터 전송
                   fmt::print("[COMM][UART] STOP COMMAND RECEIVED : {}\n", uart_buffer);
-                  keep_running = false; // stop the sensor threads
-                  break;
+                  
                 }
                 // start command
                 else if (command_id == START_COMMAND){
@@ -158,15 +157,18 @@ int main(){
           // fmt::print("COMM received {}\n", sb_buffer);
           write(uart_fd, sb_buffer, ret); // 읽은 데이터를 UART로 전송
           // printf("[COMM][SB] Translating %d bytes : %s\n", ret, sb_buffer); // 소프트웨어 버스로부터 받은 데이터 출력
-          if (sb_buffer[0]-'0' == COMM_ID && sb_buffer[2] - '0' == COMMAND_MESSAGEID && sb_buffer[4] - '0' == STOP_COMMAND) {
+          if (sb_buffer[0]-'0' == SB_ID && sb_buffer[2] - '0' == COMMAND_MESSAGEID && sb_buffer[4] - '0' == STOP_COMMAND) {
+            fmt::print("[COMM] : STOP COMMAND RECEIVED\n");
+            
             keep_running = false;
+            break;
           }
         }
       }
     }
   });
   listen_thread.join();
-  fmt::print("COMM die");
+  fmt::print("COMM die\n");
 }
 
 int setup_uart(const char* device) {

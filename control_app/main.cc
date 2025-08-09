@@ -46,7 +46,7 @@ int main(){
   char message_buf[SB_BUFFER_SIZE];
 
   //////////////////////////////////////////////////////////////////////////
-  // Software Bus 연결을 위한 공통 부분(물론 SENSOR_ID등 등록 부분은 바꿔야함)
+  // Software Bus 연결을 위한 공통 부분
   //////////////////////////////////////////////////////////////////////////
 
   // Socket setup
@@ -72,6 +72,7 @@ int main(){
   msg.set_data(buffer);
   write(sockfd, msg.get_message(), SB_BUFFER_SIZE);
   msg.set_message_id(PARACHUTE_MESSAGEID); 
+  fmt::print("[CONTROL] Sending 등록 : {}\n", msg.get_message());
 ///////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////
 
@@ -97,6 +98,7 @@ int main(){
   bool keeprun = true;
   while (keeprun) {
     nready = epoll_wait(epoll_fd, events, MAX_EVENTS, -1);
+    //printf("%d\n", msg.app_id);
     for (int i = 0; i < nready; i++) {
       temp_fd = events[i].data.fd;
       if (temp_fd == sockfd) {
@@ -128,8 +130,8 @@ int main(){
             if (parachute_counter > 1) {
               parachute_deployed = true;
               set_servo_pulsewidth(pi, PWM_PIN, 500); // 해제 
-              printf("Parachute Deployed\n");
-              auto [out, size] = fmt::format_to_n(message_buf, SB_BUFFER_SIZE - 1, "{},CONTROL STOPING", PARACHUTE_STATUS);
+              //printf("Parachute Deployed\n");
+              auto [out, size] = fmt::format_to_n(message_buf, SB_BUFFER_SIZE - 1, "{},PARACHUTE DEPLOYED", PARACHUTE_STATUS);
               *out = '\0';
               msg.set_message_id(PARACHUTE_MESSAGEID);
               msg.set_data(message_buf);
@@ -140,9 +142,13 @@ int main(){
         else if (message_id == COMMAND_MESSAGEID && buffer[4] - '0' == STOP_COMMAND){
           auto [out, size] = fmt::format_to_n(message_buf, SB_BUFFER_SIZE - 1, "{},CONTROL STOPING", STOP_RECEIVED);
           *out = '\0';
+          fmt::print("[CONTROL] STOP COMMAND RECEIVED\n");
           msg.set_message_id(COMMAND_MESSAGEID);
           msg.set_data(message_buf);
+          
+          //fmt::print("[CONTROL] Sending STOP RECEIVED message to SB {}\n", msg.get_message());
           write(sockfd, msg.get_message(), SB_BUFFER_SIZE);
+          keeprun = false;
         }
       }
     }

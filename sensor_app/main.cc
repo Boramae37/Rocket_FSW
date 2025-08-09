@@ -118,7 +118,7 @@ int main(){
   imu.init();
   usleep(1000000); // 1 sec
   
-  char temp_msg[SB_BUFFER_SIZE] = "0,7,SENSOR APP READY, WAITING FOR A COMMAND";
+  char temp_msg[SB_BUFFER_SIZE] = "0,7,SENSOR APP READY, WAITING FOR A COMMAND;";
   fmt::print("SENSOR APP READ. Waiting Command\n");
   write(sockfd, temp_msg, SB_BUFFER_SIZE);
 
@@ -127,16 +127,24 @@ int main(){
     
     // unix domain socket에서 read 기본적으로 blocking 되어 있음.
     ret = read(sockfd, buffer, SB_BUFFER_SIZE);
-    buffer[ret] = '\0';
-    ret = strlen(buffer);
-    buffer[ret] = '\0'; // null-terminate the string 
-    fmt::print("SENSOR read buffer : size {} : {}\n", ret,buffer);
-  
+    if (ret < 0) {
+      perror("read");
+      close(sockfd);
+      exit(EXIT_FAILURE);
+    }
+    else{
+      buffer[ret] = '\0';
+      //ret = strlen(buffer);
+      buffer[ret] = '\0'; // null-terminate the string 
+      fmt::print("SENSOR read buffer : size {} : {}\n", ret,buffer);
     
-    if((buffer[2] - '0' == COMMAND_MESSAGEID)&&(buffer[4] - '0' == START_COMMAND)){
-      fmt::print("[SESOR] START COMMAND RECEIVED, STOP SENSOR APP\n");
-      break;
-    } 
+      
+      if((buffer[2] - '0' == COMMAND_MESSAGEID)&&(buffer[4] - '0' == START_COMMAND)){
+        fmt::print("[SESOR] START COMMAND RECEIVED, START SENSOR APP\n");
+        break;
+      } 
+    }
+    
     memset(buffer, 0, SB_BUFFER_SIZE); 
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
   }
@@ -146,41 +154,46 @@ int main(){
   //* 센서 ID는 "connection.h"에서 정의된 상수 사용
   fmt::print("[SENSOR] Starting Barometer threads...\n");
   std::thread barometer_thread(
-    [&] { thread_read_sensor (std::ref(baro), 100, BARO_ID); }
+    [&] { thread_read_sensor (std::ref(baro), 4, BARO_ID); }
   );
   
-
-  /*
+  
   fmt::print("[SENSOR] Starting IMU threads...\n");
   std::thread imu_thread(
-    [&] { thread_read_sensor(std::ref(imu), 12, IMU_ID); }
+    [&] { thread_read_sensor(std::ref(imu), 4, IMU_ID); }
   );
-  */
+
+  fmt::print("[SENSOR] Starting GPS threads...\n");
+  std::thread gps_thread(
+    [&] { thread_read_sensor(std::ref(gps), 1000, GPS_ID); }
+  );
+  
 
   // SB에서 오는 명령 처리하는 메인 스레드 파트.. (0.5초마다 확인 예정.)
   while(1){
     read(sockfd, buffer, SB_BUFFER_SIZE);
     ret = strlen(buffer);
     buffer[ret] = '\0'; // null-terminate the string
-    if((buffer[2] - '0' == COMMAND_MESSAGEID)&&(buffer[5] - '0' == STOP_COMMAND)){
+    if((buffer[2] - '0' == COMMAND_MESSAGEID)&&(buffer[4] - '0' == STOP_COMMAND)){
       fmt::print("[SESOR] STOP COMMAND RECEIVED, STOP SENSOR APP\n");
-      snprintf(buffer, SB_BUFFER_SIZE, "%d,%d,%d\n", SENSOR_ID, INFO_ID, STOP_COMMAND);
+      snprintf(buffer, SB_BUFFER_SIZE, "%d,%d,%d\n", SENSOR_ID, COMMAND_MESSAGEID, STOP_RECEIVED);
       //ret = strlen(buffer);
       write(sockfd, buffer, SB_BUFFER_SIZE); // sb_buffer_size는 고정. 왜냐면 SB에서 읽을때 고정 길이로 읽음.
-      //keep_running = false; // stop the sensor threads
+      keep_running = false; // stop the sensor threads
       break; // exit the loop
     }
     
     std::this_thread::sleep_for(std::chrono::milliseconds(500));
   }
 
-  std::this_thread::sleep_for(std::chrono::seconds(1));
+  //std::this_thread::sleep_for(std::chrono::seconds(1));
   keep_running = false;
   
 
   barometer_thread.join();
-  //imu_thread.join();
-  
+  imu_thread.join();
+  gps_thread.join();
+
   fmt::print("[SENSOR] Sensor threads stopped.\n");
   // sensor 죽어요 메세지 보내고, sb에서느 각 앱 죽는지 모두 확인하고, 종료하면 될듯?
   return 0;

@@ -18,7 +18,7 @@ int main() {
   if(pid[softwarebus_app] == 0) {
     // 자식 프로세스에서 softwarebus_app 실행
     std::cout << "PID["<< getpid() <<"] Launch Software Bus Application" << std::endl;
-    execl("../../run/softwarebus", "softwarebus", NULL);
+    execl("softwarebus", "softwarebus", NULL);
     std::cerr << "Failed to launch Software Bus Application" << std::endl;
     exit(1);
   } else if (pid[softwarebus_app] < 0) {
@@ -36,7 +36,7 @@ int main() {
 
     std::cout << "PID["<< getpid() <<"] Launch Sensor Application" << std::endl;
     // 새로운 프로그램으로 덮어 씌운다.
-    execl("../../run/sensor", "sensor", NULL);
+    execl("sensor", "sensor", NULL);
     std::cout << "Failed to launch Sensor Application" << std::endl;
     exit(1);
   }
@@ -57,7 +57,7 @@ int main() {
 
     std::cout << "PID["<< getpid() <<"] Launch Communication Application" << std::endl;
     // 새로운 프로그램으로 덮어 씌운다.
-    execl("../../run/communication", "communication", NULL);
+    execl("communication", "communication", NULL);
     std::cout << "Failed to launch Communication Application" << std::endl;
     exit(1);
   }
@@ -79,7 +79,7 @@ int main() {
 
     std::cout << "PID["<< getpid() <<"] Launch Control Application" << std::endl;
     // 새로운 프로그램으로 덮어 씌운다.
-    execl("../../run/control", "control", NULL);
+    execl("control", "control", NULL);
     std::cout << "Failed to launch Control Application" << std::endl;
     exit(1);
   }
@@ -106,5 +106,6 @@ int main() {
   std::cout << "[supervisor] : Communication App terminated" << std::endl;
   std::cout << "[supervisor] : Control App terminated" << std::endl;
   std::cout << "[supervisor] : Software Bus App terminated" << std::endl;
+  exit(0);
   return 0;
 }
