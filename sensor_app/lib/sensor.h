@@ -18,6 +18,7 @@ class BMP390 : public Sensor{
 
     float temperature;
     float pressure;
+    float barometer;
     float barometer_data;
 
     struct nvm_calib_data_st{

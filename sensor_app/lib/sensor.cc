@@ -485,7 +485,7 @@ void BMP390::read_data(){
    * this->pressure, temperature에 대입*/
   if (read_status){
     this->compensate_data();
-    this->pressure = 44330.0 * (1.0 - pow((this->pressure / SEA_LEVEL_PRESSURE), 0.1903)); // barometric formula
+    this->barometer = 44330.0 * (1.0 - pow((this->pressure / SEA_LEVEL_PRESSURE), 0.1903)); // barometric formula
   }
   else{
     fmt::print("Failed to read\n");
@@ -541,7 +541,7 @@ void BMP390::reset(){
 }
 
 std::vector<float> BMP390::get_data(){
-  return {this->pressure, this->temperature};
+  return {this->barometer,this->pressure, this->temperature};
 }
 
 
