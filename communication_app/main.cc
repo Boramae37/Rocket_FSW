@@ -20,7 +20,7 @@
 #include "connection.h" // for communication with software bus
 
 
-constexpr char SERIAL_PORT[] = "/dev/ttyAMA0"; // UART 포트 이름
+constexpr char SERIAL_PORT[] = "/dev/ttyUSB0"; // UART 포트 이름
 constexpr int BAUD_RATE = B115200; // UART 통신 속도
 constexpr int UART_BUFFER_SIZE = SB_BUFFER_SIZE; // 소프트웨어 버스 메시지 크기
 
