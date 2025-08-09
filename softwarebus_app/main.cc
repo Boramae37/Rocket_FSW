@@ -29,7 +29,7 @@
 
 #include "connection.h" // SOCKET_NAME
 
-#define DEBUG
+// #define DEBUG
 
 // 시그널 핸들러에서 전역 로거에 접근할 수 있도록 전역 네임스페이스에 선언
 namespace SB {
@@ -291,7 +291,7 @@ int main() {
             }
             // 받은 데이터 에코
             sensor_counter[buffer_message_id]++;
-            SB::logger->info("{} {} {}", sensor_counter[0], sensor_counter[1], sensor_counter[2]);
+            SB::logger->debug("{} {} {}", sensor_counter[0], sensor_counter[1], sensor_counter[2]);
             SB::logger->info("[{}][{}] : {}", app_names[buffer_app_id].data(), message_names[buffer_message_id].data(), buffer);
           }
         }
