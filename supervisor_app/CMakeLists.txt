@@ -10,6 +10,7 @@ project(
 
 # 확인할 디렉토리 추가
 #add_subdirectory(lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_SOURCE_DIR}/../run)
 
 add_executable (supervisor main.cc)
 

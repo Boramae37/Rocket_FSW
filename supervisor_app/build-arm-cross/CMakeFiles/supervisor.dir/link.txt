@@ -1,1 +1,1 @@
-/usr/bin/aarch64-linux-gnu-g++ -O3 -DNDEBUG CMakeFiles/supervisor.dir/main.cc.o -o supervisor 
+/usr/bin/aarch64-linux-gnu-g++ -O3 -DNDEBUG CMakeFiles/supervisor.dir/main.cc.o -o /home/we/Rocket_FSW/run/supervisor 

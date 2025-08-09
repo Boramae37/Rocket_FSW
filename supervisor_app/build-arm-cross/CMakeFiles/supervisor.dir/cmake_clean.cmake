@@ -1,8 +1,8 @@
 file(REMOVE_RECURSE
+  "/home/we/Rocket_FSW/run/supervisor"
+  "/home/we/Rocket_FSW/run/supervisor.pdb"
   "CMakeFiles/supervisor.dir/main.cc.o"
   "CMakeFiles/supervisor.dir/main.cc.o.d"
-  "supervisor"
-  "supervisor.pdb"
 )
 
 # Per-language clean rules from dependency scanning.
