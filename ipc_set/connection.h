@@ -8,7 +8,7 @@
 
 
 #define SOCKET_NAME "/tmp/9Lq7BNBnBycd6nxy.socket"
-#define SB_BUFFER_SIZE 512 // socket message size, 센서, 특히 imu 센서 길이 잘 확인해서 결정할 것
+#define SB_BUFFER_SIZE 1024 // socket message size, 센서, 특히 imu 센서 길이 잘 확인해서 결정할 것
 
 #define MAX_EVENTS 10
 
@@ -43,7 +43,7 @@ constexpr char TELE_END = ';'; // Telemetry end character
 
 // Communication App 주기 (몇 회마다 보낼지)
 constexpr int COMM_PERIOD_IMU = 20;
-constexpr int COMM_PERIOD_BARO = 20;
+constexpr int COMM_PERIOD_BARO = 10;
 constexpr int COMM_PERIOD_GPS = 1;
 
 // Subscribe Map

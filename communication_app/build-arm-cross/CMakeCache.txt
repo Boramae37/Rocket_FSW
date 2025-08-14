@@ -383,9 +383,6 @@ SPDLOG_WCHAR_SUPPORT:BOOL=OFF
 //Value Computed by CMake
 spdlog_BINARY_DIR:STATIC=/home/we/Rocket_FSW/communication_app/build-arm-cross/_deps/spdlog-build
 
-//The directory containing a CMake configuration file for spdlog.
-spdlog_DIR:PATH=spdlog_DIR-NOTFOUND
-
 //Value Computed by CMake
 spdlog_IS_TOP_LEVEL:STATIC=OFF
 

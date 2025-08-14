@@ -34,8 +34,8 @@ int main(){
 
   bool parachute_deployed = false;
   int parachute_counter = 0;
-  int temp_barometer = 0;
-  int max_barometer = 0;
+  int temp_barometer = -999999;
+  int max_barometer = -999999;
 
   char *token;
 
@@ -125,7 +125,7 @@ int main(){
             max_barometer = temp_barometer;
             parachute_counter = 0; // reset counter
           }
-          else if(max_barometer - temp_barometer > 1){ // m 단위
+          else if(max_barometer - temp_barometer > 5){ // m 단위
             parachute_counter++;
             if (parachute_counter > 1) {
               parachute_deployed = true;

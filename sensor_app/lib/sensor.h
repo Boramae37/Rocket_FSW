@@ -42,8 +42,8 @@ class BMP390 : public Sensor{
     }; 
     nvm_calib_data_st nvm_calib_data;
 
-    float calib_data_t[4]; // par_t1, t2, t3, t_lin
-    float calib_data_p[11]; // par_p1 ... p11
+    double calib_data_t[4]; // par_t1, t2, t3, t_lin
+    double calib_data_p[11]; // par_p1 ... p11
     
 
   public:

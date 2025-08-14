@@ -29,7 +29,7 @@
 
 #include "connection.h" // SOCKET_NAME
 
-// #define DEBUG
+//#define DEBUG
 
 // 시그널 핸들러에서 전역 로거에 접근할 수 있도록 전역 네임스페이스에 선언
 namespace SB {

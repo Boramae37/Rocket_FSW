@@ -43,9 +43,9 @@ constexpr std::string_view LINUX_I2C_PATH = "/dev/i2c-1";
 
 #define BMP390_I2C_ADDR 0x77 // 0x76 or 0x77
 
-#define BMP390_PRESSURE_ADDR_0 0x09 // MSB
-#define BMP390_PRESSURE_ADDR_1 0x08
-#define BMP390_PRESSURE_ADDR_2 0x07 // LSB
+#define BMP390_PRESSURE_ADDR_0 0x06 // MSB
+#define BMP390_PRESSURE_ADDR_1 0x05
+#define BMP390_PRESSURE_ADDR_2 0x04 // LSB
 
 #define BMP390_PWRCTRL_ADDR 0x1B // power mode select. sleep(00), normal(11), forced(10,01) + p,t enable check sheet
 #define BMP390_PWR_MODE 0x33 // normal, both pressure and temperature enabled
@@ -53,20 +53,20 @@ constexpr std::string_view LINUX_I2C_PATH = "/dev/i2c-1";
 #define BMP390_CMD_ADDR 0x7E
 
 // constants fot compensating data (bmp390)
-#define const_2p3 8.0f
-#define const_2p6 64.0f
-#define const_2p8 256.0f
-#define const_2p14 16384.0f
-#define const_2p15 32768.0f
-#define const_2p20 1048576.0f
-#define const_2p29 536870912.0
-#define const_2p30 1073741824.0
-#define const_2p32 4294967296.0f
-#define const_2p37 137438953472.0f
-#define const_2p48 281474976710656.0f
-#define const_2p65 36893488147419103232.0f
+constexpr float const_2p3 = 8.0f;
+constexpr float const_2p6 = 64.0f;
+constexpr float const_2p8 = 256.0f;
+constexpr float const_2p14 = 16384.0f;
+constexpr float const_2p15 = 32768.0f;
+constexpr float const_2p20 = 1048576.0f;
+constexpr float const_2p29 = 536870912.0f;
+constexpr float const_2p30 = 1073741824.0f;
+constexpr float const_2p32 = 4294967296.0f;
+constexpr float const_2p37 = 137438953472.0f;
+constexpr float const_2p48 = 281474976710656.0f;
+constexpr float const_2p65 = 36893488147419103232.0f;
 
-constexpr double SEA_LEVEL_PRESSURE = 101325.0; // sea level pressure in pascal
+constexpr double SEA_LEVEL_PRESSURE = 100080.0; // sea level pressure in pascal
 
 
 ////////// BNO055 Sensor //////////////////////////////////////////////////////
@@ -449,21 +449,21 @@ bool BMP390::init(){
   this->nvm_calib_data.par_p11 = static_cast<int8_t>(i2c_read(this->slave_addr, 0x45, 1));
   
   // convert calib_data into floating point number.. (parse data)
-  this->calib_data_t[0] = static_cast<float>(this->nvm_calib_data.par_t1)*const_2p8;
-  this->calib_data_t[1] = static_cast<float>(this->nvm_calib_data.par_t2)/const_2p30;
-  this->calib_data_t[2] = static_cast<float>(this->nvm_calib_data.par_t3)/const_2p48;
+  this->calib_data_t[0] = static_cast<double>(this->nvm_calib_data.par_t1)*const_2p8;
+  this->calib_data_t[1] = static_cast<double>(this->nvm_calib_data.par_t2)/const_2p30;
+  this->calib_data_t[2] = static_cast<double>(this->nvm_calib_data.par_t3)/const_2p48;
   
-  this->calib_data_p[0] = (static_cast<float>(this->nvm_calib_data.par_p1)- const_2p14) / const_2p20;
-  this->calib_data_p[1] = (static_cast<float>(this->nvm_calib_data.par_p2)- const_2p14) / const_2p29;
-  this->calib_data_p[2] = static_cast<float>(this->nvm_calib_data.par_p3) / const_2p32;
-  this->calib_data_p[3] = static_cast<float>(this->nvm_calib_data.par_p4) / const_2p37;
-  this->calib_data_p[4] = static_cast<float>(this->nvm_calib_data.par_p5) * const_2p3;
-  this->calib_data_p[5] = static_cast<float>(this->nvm_calib_data.par_p6) / const_2p6;
-  this->calib_data_p[6] = static_cast<float>(this->nvm_calib_data.par_p7) / const_2p8;
-  this->calib_data_p[7] = static_cast<float>(this->nvm_calib_data.par_p8) / const_2p15;
-  this->calib_data_p[8] = static_cast<float>(this->nvm_calib_data.par_p9) / const_2p48;
-  this->calib_data_p[9] = static_cast<float>(this->nvm_calib_data.par_p10) / const_2p48;
-  this->calib_data_p[10] = static_cast<float>(this->nvm_calib_data.par_p11) / const_2p65;
+  this->calib_data_p[0] = static_cast<double>(((this->nvm_calib_data.par_p1)- const_2p14) / const_2p20);
+  this->calib_data_p[1] = static_cast<double>(((this->nvm_calib_data.par_p2)- const_2p14) / const_2p29);
+  this->calib_data_p[2] = static_cast<double>((this->nvm_calib_data.par_p3) / const_2p32);
+  this->calib_data_p[3] = static_cast<double>((this->nvm_calib_data.par_p4) / const_2p37);
+  this->calib_data_p[4] = static_cast<double>((this->nvm_calib_data.par_p5) * const_2p3);
+  this->calib_data_p[5] = static_cast<double>((this->nvm_calib_data.par_p6) / const_2p6);
+  this->calib_data_p[6] = static_cast<double>((this->nvm_calib_data.par_p7) / const_2p8);
+  this->calib_data_p[7] = static_cast<double>((this->nvm_calib_data.par_p8) / const_2p15);
+  this->calib_data_p[8] = static_cast<double>((this->nvm_calib_data.par_p9) / const_2p48);
+  this->calib_data_p[9] = static_cast<double>((this->nvm_calib_data.par_p10) / const_2p48);
+  this->calib_data_p[10] = static_cast<double>((this->nvm_calib_data.par_p11) / const_2p65);
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   // 여기서 한 번 읽으면, 이후 read only 함수로 read_data 구현 가능..  
@@ -527,10 +527,11 @@ void BMP390::compensate_data(){
   partial_out2 = static_cast<float>(this->pressure * (this->calib_data_p[0] + partial_data1 + partial_data2 + partial_data3));
 
   partial_data1 = this->pressure * this->pressure;
-  partial_data2 = this->calib_data_p[8] + this->calib_data_p[9] * this->temperature;
+  partial_data2 = this->calib_data_p[8] + (this->calib_data_p[9] * this->temperature);
   partial_data3 = partial_data1 * partial_data2;
   partial_data4 = partial_data3 + ((this->pressure*this->pressure*this->pressure)*this->calib_data_p[10]);
   this->pressure = partial_out1 + partial_out2 + partial_data4;
+  // this->pressure += 20000;
 }
 
 
@@ -738,11 +739,31 @@ void ULTIMATEGPS::read_data(){
 
   std::string_view view(this->buffer);
 
+
   this->start_idx = view.find("$GPGGA");
+
+  if (this->start_idx == std::string_view::npos){
+    this->longitude = 0;
+    this->latitude = 0;
+    return;
+  }
+  
   this->end_idx = view.find("\r\n", this->start_idx);
 
+  if(this->end_idx == std::string_view::npos){
+    this->longitude = 0;
+    this->latitude = 0;
+    return;
+  }
+  
+  if (this->end_idx - this->start_idx > 511){
+    this->longitude = 0;
+    this->latitude = 0;
+    return;
+  }
   std::string_view gpgga_message = view.substr(this->start_idx, this->end_idx - this->start_idx);
   
+
   std::vector<std::string_view> fields;
   size_t curret_pos = 0;
 
@@ -783,7 +804,7 @@ void ULTIMATEGPS::read_data(){
 }
 
 std::vector<float> ULTIMATEGPS::get_data(){
-  return {this->latitude, this->longitude, this->altitude};
+  return {this->latitude, this->longitude};
 }
 
 

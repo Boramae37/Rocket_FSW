@@ -154,13 +154,13 @@ int main(){
   //* 센서 ID는 "connection.h"에서 정의된 상수 사용
   fmt::print("[SENSOR] Starting Barometer threads...\n");
   std::thread barometer_thread(
-    [&] { thread_read_sensor (std::ref(baro), 4, BARO_ID); }
+    [&] { thread_read_sensor (std::ref(baro), 20, BARO_ID); }
   );
   
   
   fmt::print("[SENSOR] Starting IMU threads...\n");
   std::thread imu_thread(
-    [&] { thread_read_sensor(std::ref(imu), 4, IMU_ID); }
+    [&] { thread_read_sensor(std::ref(imu), 3, IMU_ID); }
   );
 
   fmt::print("[SENSOR] Starting GPS threads...\n");
