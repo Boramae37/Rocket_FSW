@@ -1,6 +1,0 @@
-/home/we/Rocket_FSW/sensor_app/build-arm-cross/CMakeFiles/sensor.dir
-/home/we/Rocket_FSW/sensor_app/build-arm-cross/CMakeFiles/edit_cache.dir
-/home/we/Rocket_FSW/sensor_app/build-arm-cross/CMakeFiles/rebuild_cache.dir
-/home/we/Rocket_FSW/sensor_app/build-arm-cross/_deps/spdlog-build/CMakeFiles/spdlog.dir
-/home/we/Rocket_FSW/sensor_app/build-arm-cross/_deps/spdlog-build/CMakeFiles/edit_cache.dir
-/home/we/Rocket_FSW/sensor_app/build-arm-cross/_deps/spdlog-build/CMakeFiles/rebuild_cache.dir

@@ -1,3 +1,0 @@
-/home/we/Rocket_FSW/supervisor_app/build-arm-cross/CMakeFiles/supervisor.dir
-/home/we/Rocket_FSW/supervisor_app/build-arm-cross/CMakeFiles/edit_cache.dir
-/home/we/Rocket_FSW/supervisor_app/build-arm-cross/CMakeFiles/rebuild_cache.dir
