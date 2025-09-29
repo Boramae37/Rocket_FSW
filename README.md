@@ -123,6 +123,11 @@ sudo reboot
 
 ## 실행
 
+```
+tmux
+```
+실행(ssh에서 그냥 실행할 경우, 로켓에서 멀어지면서 와이파이 연결이 끊기면서, ssh 세션이 종료되어 프로그램이 정지할 수 있음)
+
 각 _app 폴더 안에 build 폴더를 만들어줘야 함
 그리고 각 build 폴더에서 
 ```
@@ -152,8 +157,9 @@ cd supervisor_app/build/
 
 build 폴더 만들기와 cmake, run_make 모두 최초 1회만 진행하면 됨. (코드 변경 없을 시..)
 
-## Cross Compile 세팅
+## Cross Compile
 
+### 설치(세팅)
 wsl 2 Debian 기준
 external 폴더에서 
 ```
@@ -164,6 +170,22 @@ arm64 컴파일러
 ```
 sudo apt-get install gcc-aarch64-linux-gnu g++-aarch64-linux-gnu
 ```
+
+### 실행
+
+```
+./cross_build.sh
+```
+
+이제 실행파일이 run 폴더 안에 생김
+따라서, 이 run 폴더를 통째로 라즈베리파이로 넘긴다. 이때 scp 명령어를 이용한다.
+
+```
+scp -r <보낼_파일_경로> pi@<라즈베리파이_IP>:<받을_경로>
+```
+띄어쓰기에 매우 주의 해야한다. 띄어쓰기 잘못하면 반대로 옮겨질 수도 있다.
+
+우리는 폴더를 통째로 옮겨야 하므로, -r 을 추가한 것이다.
 
 # 폴더 설명
 
@@ -207,5 +229,6 @@ cat /dev/serial0
 echo "test" > /dev/serial0
 ```
 이걸 통해 송신 테스트 가능
+
 
 
