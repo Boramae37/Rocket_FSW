@@ -12,6 +12,16 @@ sudo apt install libspdlog-dev
 
     sudo apt install libfmt-dev -->
 
+### 왜 사용하는가?
+
+로그를 남기는 것은 매우 중요한 기능이다. 그런데 일반적인 printf나 cout을 이용하면 로그를 찍는게 느리거나, 위험하거나, 불편하다.
+따라서, spdlog를 이용하여 편리하고 빠르게 로그를 남겨 성능을 향상시키도록 한다. 
+여기서 편리하다는 건, 로그 파일에도 프린트하고, 평소 디버깅을 위해 터미널에도 같이 출력하는 등의 모드 전환이 편리하거나, 쉽게 둘 다 잘 찍어주는 등의 기능이 있다는 것이다.
+
+다만 이를 위해서 Release 모드로 compile 해야 한다. 이때, 라즈베리파이의 저열한 성능으로는 spdlog 라이브러리를 포함한 프로그램의 compile이 매우 어렵다. Release 모드로 compile을 하면 최적화 작업이 들어가기 때문이다.
+
+따라서 Cross Compile이 필수나 다름없다.
+
 ## cmake
 
 ```
@@ -229,6 +239,7 @@ cat /dev/serial0
 echo "test" > /dev/serial0
 ```
 이걸 통해 송신 테스트 가능
+
 
 
 
